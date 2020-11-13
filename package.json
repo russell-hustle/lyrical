@@ -18,6 +18,17 @@
       {
         "command": "color-geyser.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "color-geyser.hiMark",
+        "title": "Oh hi Mark!"
+      }
+    ],
+    "themes": [
+      {
+        "label": "Color Geyser",
+        "uiTheme": "hc-black",
+        "path": "./themes/current-color-theme.json"
       }
     ]
   },
