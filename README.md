@@ -1,4 +1,1 @@
 # code_camp
-
-client_id 8bcb169f90554b209a351f9016ec7b04
-client_secret b6e3d58e0f884aed8fa358beea0aed3e
