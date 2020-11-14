@@ -25,7 +25,6 @@
 					<v-btn v-else icon @click="playTrack">
 						<v-icon>mdi-play</v-icon>
 					</v-btn>
-					<v-btn icon>
 					<v-btn icon @click="skipTrack">
 						<v-icon>mdi-skip-next</v-icon>
 					</v-btn>
