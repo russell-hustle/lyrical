@@ -11,11 +11,7 @@
 						>
 							<v-icon>mdi-close</v-icon>
 						</v-btn>
-						<v-img
-							class="mx-auto"
-							width="80%"
-							:src="getThemedImage"
-						></v-img>
+						<v-img class="mx-auto" :src="getThemedImage"></v-img>
 						<v-card-title class="headline justify-center">
 							About
 						</v-card-title>

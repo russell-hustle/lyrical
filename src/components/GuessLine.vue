@@ -5,11 +5,14 @@
 				>{{ word }}
 			</span>
 		</p>
-		<p v-for="option in data.lines[0].options" :key="option.id"></p>
-		<p>{{ line.words }}</p>
-		<p v-for="option in line.options" :key="option.id">
-			<v-btn @click="createSentance">{{ option }}</v-btn>
-		</p>
+		<v-col class="mx-auto">
+			<v-btn
+				class="mx-2"
+				v-for="(option, index) in fullOptions"
+				:key="index"
+				>{{ option }}</v-btn
+			>
+		</v-col>
 	</div>
 </template>
 
@@ -24,28 +27,20 @@ export default {
 		},
 	},
 	data() {
-		return {
-			data: {
-				lines: [
-					{
-						words: [
-							"I'm through with standing in line to clubs I'll never get in",
-						],
-						guess: true,
-						guess_index: 4,
-						options: ["randing", "tanding", "landing"],
-						correct: "standing",
-					},
-				],
-			},
-		};
+		return {};
 	},
 	computed: {
 		cutWord() {
-			return [
-				...this.line.words.substring(0, this.line.correct),
-				this.line.words.substring(0, this.line.correct),
-			];
+			// replace guessed word with underscores
+			let copy = [...this.line.words];
+			let index = this.line.guess_index;
+			copy[index] = "__________";
+			console.log(copy);
+			return copy;
+		},
+		fullOptions() {
+			console.log([...this.line.options, this.line.correct]);
+			return [...this.line.options, this.line.correct];
 		},
 	},
 	methods: {},

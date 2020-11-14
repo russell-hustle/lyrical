@@ -9,9 +9,11 @@
 			</p>
 		</v-row>
 
-		<v-list v-for="(line, index) in fakelyrics.lines" :key="index">
+		<v-list v-for="(line, index) in lines" :key="index">
 			<guess-line v-if="line.guess" :line="line" />
-			<p v-else>{{ line.words }}</p>
+			<p v-else>
+				{{ line.words.join(" ") }}
+			</p>
 		</v-list>
 
 		<v-footer fixed padless>
@@ -36,17 +38,22 @@ export default {
 	},
 	data() {
 		return {
-			fakelyrics: {
-				lines: [
-						{
-							words: ["this", "is", "the", "music", "line"],
-							guess: true,
-							guess_index: 4,
-							options: ["busic", "trusic", "nusic"],
-							correct: "music",
-						},
-				]
-			},
+			lines: [
+				{
+					words: ["this", "is", "the", "music", "line"],
+					guess: true,
+					guess_index: 3,
+					options: ["busic", "trusic", "nusic"],
+					correct: "music",
+				},
+				{
+					words: ["ammon", "is", "the", "whack", "line"],
+					guess: false,
+					guess_index: 2,
+					options: ["busic", "trusic", "nusic"],
+					correct: "music",
+				},
+			],
 			current: null,
 			lyrics: [],
 			dummy:

@@ -18,7 +18,7 @@ spotify.interceptors.request.use(
 );
 
 const lyrics = axios.create({
-	baseURL: 'localhost:5000/lyrics',
+	baseURL: 'https://lyrics-microservice.azurewebsites.net',
 	headers: {
 		"Content-Type": "application/x-www-form-urlencoded"
 	},
