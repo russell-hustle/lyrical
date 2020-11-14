@@ -2,10 +2,7 @@
 	<div>
 		<div id="toolbar">
 			<v-tooltip bottom>
-				<v-dialog
-					v-model="aboutModal"
-					transition="dialog-top-transition"
-				>
+				<v-dialog v-model="aboutModal" transition="fade-transition">
 					<v-card id="about-modal" tile eager elevation="20">
 						<v-btn
 							id="modal-close"
@@ -14,13 +11,11 @@
 						>
 							<v-icon>mdi-close</v-icon>
 						</v-btn>
-						<v-img
+						<img
 							class="mx-auto"
-							aspect-ratio="3"
 							width="60%"
 							:src="getThemedImage"
-							lazy-src
-						></v-img>
+						/>
 						<v-card-text class="text-h5"
 							>This web app was made for Southern Utah Code Camp
 							2020 Remote. It was worked on exclusively by deez
@@ -104,5 +99,9 @@ export default {
 #modal-close {
 	position: absolute;
 	right: 0;
+}
+
+.v-image .v-responsive__content {
+	width: 1000px;
 }
 </style>
