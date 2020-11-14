@@ -8,6 +8,12 @@ import store from './store';
 Vue.prototype.$spotify = spotify;
 Vue.prototype.$lyrics = lyrics;
 
+// For rate limiting
+const RATE = 800;
+const SECONDS = 5;
+Vue.prototype.$POLL_RATE = RATE;
+Vue.prototype.$TIMEOUT = (1000 / RATE) * SECONDS;
+
 Vue.config.productionTip = false;
 
 new Vue({

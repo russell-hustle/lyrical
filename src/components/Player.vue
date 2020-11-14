@@ -19,9 +19,13 @@
 					<v-btn icon @click="prevTrack">
 						<v-icon>mdi-skip-previous</v-icon>
 					</v-btn>
-					<v-btn icon @click="pauseTrack">
+					<v-btn v-if="this.current.is_playing" icon @click="pauseTrack">
 						<v-icon>mdi-pause</v-icon>
 					</v-btn>
+					<v-btn v-else icon @click="playTrack">
+						<v-icon>mdi-play</v-icon>
+					</v-btn>
+					<v-btn icon>
 					<v-btn icon @click="skipTrack">
 						<v-icon>mdi-skip-next</v-icon>
 					</v-btn>
@@ -32,7 +36,7 @@
 </template>
 <script>
 export default {
-// current.is_playing
+	// current.is_playing
 	name: "Player",
 	props: {
 		current: {
@@ -63,46 +67,45 @@ export default {
 		},
 		pauseTrack() {
 			this.$spotify
-			.put("/player/pause")
-			.then((response) => {
-				if ( response == 204 ) {
-					console.log("device worked");
-				}
-			})
-			.catch((error) => {
-				console.log(error);
-			})
-			.then(() => {
-			})
+				.put("/player/pause")
+				.then((response) => {
+					if (response == 204) {
+						console.log("device worked");
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+				})
+				.then(() => {});
 		},
 		skipTrack() {
 			this.$spotify
-			.post("/player/next")
-			.then((response) => {
-				console.log(response);
-			})
-			.catch((error) => {
-				// handle error
-				console.log(error);
-			})
-			.then(() => {
-				// always executed
-			})
+				.post("/player/next")
+				.then((response) => {
+					console.log(response);
+				})
+				.catch((error) => {
+					// handle error
+					console.log(error);
+				})
+				.then(() => {
+					// always executed
+				});
 		},
 		prevTrack() {
 			this.$spotify
-			.post("/player/previous")
-			.then((response) => {
-				console.log(response);
-			})
-			.catch((error) => {
-				// handle error
-				console.log(error);
-			})
-			.then(() => {
-				// always executed
-			})
-			},
+				.post("/player/previous")
+				.then((response) => {
+					console.log(response);
+				})
+				.catch((error) => {
+					// handle error
+					console.log(error);
+				})
+				.then(() => {
+					// always executed
+				});
+		},
 	},
 };
 </script>
