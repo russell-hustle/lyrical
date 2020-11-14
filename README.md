@@ -1,4 +1,8 @@
-# color_geyser
+# Spotify Lyrics Guesser
+
+# by -- Ammon Taylor, Mark Abraham, Will Dickinson
+
+# APIs -- Flask, VSCode, Spotify API, Vue
 
 ## Project setup
 ```
