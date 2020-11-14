@@ -26,6 +26,7 @@ const lyrics = axios.create({
 	},
 });
 
+
 // Serializes data into application/x-www-form-urlencoded
 lyrics.interceptors.request.use(
 	function (config) {

@@ -16,16 +16,17 @@
 
 			<v-row>
 				<v-col class="pa-0 pb-4">
-					<v-btn icon>
+					<v-btn icon @click="prevTrack">
 						<v-icon>mdi-skip-previous</v-icon>
 					</v-btn>
-					<v-btn v-if="this.current.is_playing" icon>
+					<v-btn v-if="this.current.is_playing" icon @click="pauseTrack">
 						<v-icon>mdi-pause</v-icon>
 					</v-btn>
-					<v-btn v-else icon>
+					<v-btn v-else icon @click="playTrack">
 						<v-icon>mdi-play</v-icon>
 					</v-btn>
 					<v-btn icon>
+					<v-btn icon @click="skipTrack">
 						<v-icon>mdi-skip-next</v-icon>
 					</v-btn>
 				</v-col>
@@ -36,9 +37,9 @@
 		</div>
 	</v-container>
 </template>
-
 <script>
 export default {
+	// current.is_playing
 	name: "Player",
 	props: {
 		current: {
@@ -50,6 +51,49 @@ export default {
 			return (
 				100 * (this.current.progress_ms / this.current.item.duration_ms)
 			);
+		},
+	},
+	methods: {
+		pauseTrack() {
+			this.$spotify
+				.put("/player/pause")
+				.then((response) => {
+					if (response == 204) {
+						console.log("device worked");
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+				})
+				.then(() => {});
+		},
+		skipTrack() {
+			this.$spotify
+				.post("/player/next")
+				.then((response) => {
+					console.log(response);
+				})
+				.catch((error) => {
+					// handle error
+					console.log(error);
+				})
+				.then(() => {
+					// always executed
+				});
+		},
+		prevTrack() {
+			this.$spotify
+				.post("/player/previous")
+				.then((response) => {
+					console.log(response);
+				})
+				.catch((error) => {
+					// handle error
+					console.log(error);
+				})
+				.then(() => {
+					// always executed
+				});
 		},
 	},
 };

@@ -14,7 +14,7 @@ export default {
 		return {
 			client_id: "8bcb169f90554b209a351f9016ec7b04", // Your client id
 			redirect_uri: "http://localhost:8080", // Your redirect uri
-			scope: "user-read-currently-playing",
+			scope: "user-read-currently-playing user-modify-playback-state",
 		};
 	},
 	computed: {
