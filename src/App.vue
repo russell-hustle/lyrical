@@ -5,42 +5,15 @@
 				<router-view></router-view>
 			</v-container>
 		</v-main>
-		<div id="toolbar">
-			<v-tooltip bottom>
-				<template v-slot:activator="{ on, attrs }">
-					<v-btn
-						class="pa-5"
-						@click="$vuetify.theme.dark = !$vuetify.theme.dark"
-						icon
-						v-bind="attrs"
-						v-on="on"
-					>
-						<v-icon>mdi-information</v-icon>
-					</v-btn>
-				</template>
-				<span>About</span>
-			</v-tooltip>
-			<v-tooltip bottom>
-				<template v-slot:activator="{ on, attrs }">
-					<v-btn
-						class="pa-5"
-						@click="aboutModal = true"
-						icon
-						v-bind="attrs"
-						v-on="on"
-					>
-						<v-icon>mdi-white-balance-sunny</v-icon>
-					</v-btn>
-				</template>
-				<span v-if="$vuetify.theme.dark">Light Mode</span>
-				<span v-else>Dark Mode</span>
-			</v-tooltip>
-		</div>
+		<tool-bar />
 	</v-app>
 </template>
 
 <script>
+import ToolBar from "./components/ToolBar.vue";
+
 export default {
+	components: { ToolBar },
 	data() {
 		return {
 			aboutModal: false,

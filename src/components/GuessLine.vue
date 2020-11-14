@@ -1,6 +1,13 @@
 <template>
 	<div class="option_line">
-		<p>{{ data.lines[0].words }}</p>
+		<p>
+			<span
+				v-for="(word, index) in line.words"
+				v-if="line.correct != index"
+				:key="index"
+				>{{ word }}
+			</span>
+		</p>
 		<p v-for="option in data.lines[0].options" :key="option.id">
 			<v-btn @click="createSentance">{{ option }}</v-btn>
 		</p>
@@ -35,9 +42,12 @@ export default {
 		};
 	},
 	computed: {
-		// getLines() {
-		// 	return this.lyrics.split("\n");
-		// },
+		cutWord() {
+			return [
+				...this.line.words.substring(0, this.line.correct),
+				this.line.words.substring(0, this.line.correct),
+			];
+		},
 	},
 	methods: {
 		createSentance() {},
