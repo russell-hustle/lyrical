@@ -8,12 +8,18 @@
 				</p>
 				<img :src="this.current.item.album.images[1].url" />
 
-				<v-list v-for="(line, index) in lines" :key="index">
-					<guess-line v-if="line.guessing" :line="line" />
-					<p v-else>
-						{{ line.words }}
-					</p>
-				</v-list>
+				<div v-if="this.lines.length != 0">
+					<v-list v-for="(line, index) in lines" :key="index">
+						<guess-line v-if="line.guessing" :line="line" />
+						<p v-else>
+							{{ line.words }}
+						</p>
+					</v-list>
+				</div>
+				<div v-else>
+					<h1>Sorry!</h1>
+					<h3>We couldn't find any lyrics for that song.</h3>
+				</div>
 			</v-col>
 		</v-row>
 		<v-footer fixed padless>

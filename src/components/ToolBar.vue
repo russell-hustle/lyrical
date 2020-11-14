@@ -28,6 +28,7 @@
 						>
 					</v-card>
 				</v-dialog>
+
 				<template v-slot:activator="{ on, attrs }">
 					<v-btn
 						class="pa-5"
@@ -40,6 +41,19 @@
 					</v-btn>
 				</template>
 				<span>About</span>
+			</v-tooltip>
+			<v-tooltip bottom>
+				<template v-slot:activator="{ on, attrs }">
+					<v-btn
+						icon
+						href="https://github.com/mabraham23/code_camp"
+						v-bind="attrs"
+						v-on="on"
+					>
+						<v-icon>mdi-github</v-icon>
+					</v-btn>
+				</template>
+				<span>Source Code</span>
 			</v-tooltip>
 			<v-tooltip bottom>
 				<template v-slot:activator="{ on, attrs }">
