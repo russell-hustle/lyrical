@@ -7,7 +7,9 @@
 		</p>
 		<v-col class="mx-auto">
 			<v-btn
+				@click="checkanswer(option)"
 				class="mx-2"
+				:color=""
 				v-for="(option, index) in fullOptions"
 				:key="index"
 				>{{ option }}</v-btn
@@ -43,6 +45,21 @@ export default {
 			return [...this.line.options, this.line.correct];
 		},
 	},
-	methods: {},
+	methods: {
+		checkanswer(option) {
+			// console.log(option);
+			// console.log([...this.line.correct]);
+			if ( option == this.line.correct ) {					
+				
+				// console.log("turn it green and switch to next one");
+				// display correct message
+				// switch to the next question
+				// add to score
+			}
+			else {
+				// console.log("turn it red and switch to next one");
+			}
+		}
+	},
 };
 </script>
