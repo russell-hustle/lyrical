@@ -8,6 +8,7 @@
 		<v-col class="mx-auto">
 			<v-btn
 				v-for="(option, index) in fullOptions"
+				:class="{ 'disable-events': alreadyGuessed }"
 				:key="index"
 				@click="selectAnswer(option, index)"
 				:color="buttons[index]"
@@ -32,6 +33,7 @@ export default {
 		return {
 			fullOptions: [],
 			buttons: ["", "", "", ""],
+			alreadyGuessed: false,
 		};
 	},
 	computed: {
@@ -46,6 +48,7 @@ export default {
 	},
 	methods: {
 		selectAnswer(idx) {
+			this.alreadyGuessed = true;
 			// check idx for user score
 			console.log(idx);
 			let n = [];
@@ -64,3 +67,9 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.disable-events {
+	pointer-events: none;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
 	<v-container v-if="current != null" class="fill-height">
-		<v-row>
+		<v-row style="height: 100%">
 			<v-col>
 				<h1>{{ current.item.name }}</h1>
 				<v-btn @click="getCurrentSong">Refresh info</v-btn>
@@ -119,7 +119,7 @@ export default {
 	mounted() {
 		setInterval(() => {
 			this.getCurrentSong();
-		}, 2000);
+		}, 250);
 	},
 };
 </script>
