@@ -1,28 +1,46 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<v-app>
+		<v-navigation-drawer app v-if="$route.name != 'Landing'">
+			<h2 class="mx-auto">Song</h2>
+		</v-navigation-drawer>
+
+		<v-app-bar app v-if="$route.name != 'Landing'">
+			<h1>Color Geyser</h1>
+		</v-app-bar>
+
+		<!-- Sizes your content based upon application components -->
+		<v-main class="red">
+			<!-- Provides the application the proper gutter -->
+			<v-container fluid class="fill-height">
+				<!-- If using vue-router -->
+				<router-view></router-view>
+			</v-container>
+		</v-main>
+
+		<v-footer app>
+			<h2 class="mx-auto">Made with hate</h2>
+		</v-footer>
+	</v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+	data() {
+		return {};
+	},
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+html {
+	height: 100vh;
+}
+
+body {
+	height: 100%;
+}
+
+* {
+	text-align: center;
 }
 </style>
