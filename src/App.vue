@@ -5,7 +5,7 @@
 		</v-app-bar>
 
 		<!-- Sizes your content based upon application components -->
-		<v-main class="red">
+		<v-main class="yellow accent-2">
 			<!-- Provides the application the proper gutter -->
 			<v-container fluid class="fill-height">
 				<!-- If using vue-router -->
@@ -13,7 +13,7 @@
 			</v-container>
 		</v-main>
 
-		<v-footer app>
+		<v-footer>
 			<v-col>
 				<h2 class="mx-auto">Made with hate</h2>
 				<p id="about" @click="toAbout">About</p>
@@ -50,6 +50,8 @@ body {
 
 #about {
 	&:hover {
+		cursor: pointer;
+		color: red;
 	}
 }
 </style>

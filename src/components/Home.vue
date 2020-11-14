@@ -7,7 +7,9 @@
 				{{ artist.name }}
 			</p>
 		</v-row>
-		<p>{{ lyrics }}</p>
+		<p v-for="(line, index) in getLines" :key="index">
+			{{ line }}
+		</p>
 		<v-btn @click="getCurrentSong">ammon sucks</v-btn>
 	</v-container>
 </template>
@@ -20,6 +22,11 @@ export default {
 			currentSong: {},
 			lyrics: "",
 		};
+	},
+	computed: {
+		getLines() {
+			return this.lyrics.split("\n");
+		},
 	},
 	methods: {
 		getCurrentSong() {
@@ -46,8 +53,7 @@ export default {
 				})
 				.then((response) => {
 					// handle success
-					console.log(response);
-					this.lyrics = response;
+					this.lyrics = response.data;
 				})
 				.catch((error) => {
 					// handle error
@@ -59,9 +65,9 @@ export default {
 		},
 	},
 	mounted() {
-		// setInterval(() => {
-		// 	this.getCurrentSong();
-		// }, 2000);
+		setInterval(() => {
+			this.getCurrentSong();
+		}, 2000);
 	},
 };
 </script>
