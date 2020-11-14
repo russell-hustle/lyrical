@@ -7,11 +7,11 @@
 		</p>
 		<v-col class="mx-auto">
 			<v-btn
-				@click="checkanswer(option)"
-				class="mx-2"
-				:color=""
 				v-for="(option, index) in fullOptions"
 				:key="index"
+				@click="selectAnswer(option, index)"
+				:color="buttons[index]"
+				class="mx-2"
 				>{{ option }}</v-btn
 			>
 		</v-col>
@@ -29,7 +29,10 @@ export default {
 		},
 	},
 	data() {
-		return {};
+		return {
+			fullOptions: [],
+			buttons: ["", "", "", ""],
+		};
 	},
 	computed: {
 		cutWord() {
@@ -40,26 +43,24 @@ export default {
 			console.log(copy);
 			return copy;
 		},
-		fullOptions() {
-			console.log([...this.line.options, this.line.correct]);
-			return [...this.line.options, this.line.correct];
-		},
 	},
 	methods: {
-		checkanswer(option) {
-			// console.log(option);
-			// console.log([...this.line.correct]);
-			if ( option == this.line.correct ) {					
-				
-				// console.log("turn it green and switch to next one");
-				// display correct message
-				// switch to the next question
-				// add to score
+		selectAnswer(idx) {
+			// check idx for user score
+			console.log(idx);
+			let n = [];
+			for (let index = 0; index < this.fullOptions.length; index++) {
+				n.push(
+					this.fullOptions[index] == this.line.correct
+						? "green"
+						: "red"
+				);
 			}
-			else {
-				// console.log("turn it red and switch to next one");
-			}
-		}
+			this.buttons = n;
+		},
+	},
+	created() {
+		this.fullOptions = [...this.line.options, this.line.correct];
 	},
 };
 </script>
