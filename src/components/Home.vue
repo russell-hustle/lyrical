@@ -80,7 +80,6 @@ export default {
 				this.$spotify
 					.get("/player/currently-playing")
 					.then((response) => {
-						console.log(response);
 						if (response.status == 429) {
 							this.timeout = this.$TIMEOUT;
 						}
@@ -150,7 +149,7 @@ export default {
 }
 
 #score {
-	position: absolute;
+	position: fixed;
 	top: 10px;
 	left: 20px;
 }
