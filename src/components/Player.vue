@@ -1,6 +1,6 @@
 <template>
 	<v-container fluid class="pa-0">
-		<div v-if="current.is_playing">
+		<div>
 			<v-progress-linear
 				:value="percentComplete"
 				class="my-0"
@@ -28,9 +28,6 @@
 				</v-col>
 			</v-row>
 		</div>
-		<div v-else>
-			<h1>No song currently playing!</h1>
-		</div>
 	</v-container>
 </template>
 <script>
@@ -50,6 +47,20 @@ export default {
 		},
 	},
 	methods: {
+		playTrack() {
+			this.$spotify
+			.put("/player/play")
+			.then((response) => {
+				if ( response == 204 ) {
+					console.log("device worked");
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			})
+			.then(() => {
+			})
+		},
 		pauseTrack() {
 			this.$spotify
 			.put("/player/pause")
