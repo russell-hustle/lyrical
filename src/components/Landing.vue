@@ -1,7 +1,9 @@
 <template>
 	<v-container>
-		<h1>SPOTIFY LYRICS GAME OF HELL</h1>
-		<v-btn :href="spotify_url" color="green">Login With Spotify</v-btn>
+		<h1 class="mb-12">SPOTIFY LYRICS GAME OF HELL</h1>
+		<v-btn :href="spotify_url" elevation="10" color="green" x-large
+			>Login With Spotify</v-btn
+		>
 	</v-container>
 </template>
 

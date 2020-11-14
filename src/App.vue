@@ -1,26 +1,41 @@
 <template>
 	<v-app>
-		<div id="full-height" class="d-flex">
-			<v-app-bar app v-if="$route.name != 'Landing'">
-				<h1 class="mx-auto">Color Geyser</h1>
-			</v-app-bar>
-
-			<!-- Sizes your content based upon application components -->
-			<v-main class="flex-grow-1 yellow accent-2">
-				<!-- Provides the application the proper gutter -->
-				<v-container fluid class="fill-height">
-					<!-- If using vue-router -->
-					<router-view></router-view>
-				</v-container>
-			</v-main>
+		<v-main id="full-height" class="flex-grow-1">
+			<v-container fluid class="fill-height">
+				<router-view></router-view>
+			</v-container>
+		</v-main>
+		<div id="toolbar">
+			<v-tooltip bottom>
+				<template v-slot:activator="{ on, attrs }">
+					<v-btn
+						class="pa-5"
+						@click="$vuetify.theme.dark = !$vuetify.theme.dark"
+						icon
+						v-bind="attrs"
+						v-on="on"
+					>
+						<v-icon>mdi-information</v-icon>
+					</v-btn>
+				</template>
+				<span>About</span>
+			</v-tooltip>
+			<v-tooltip bottom>
+				<template v-slot:activator="{ on, attrs }">
+					<v-btn
+						class="pa-5"
+						@click="$vuetify.theme.dark = !$vuetify.theme.dark"
+						icon
+						v-bind="attrs"
+						v-on="on"
+					>
+						<v-icon>mdi-white-balance-sunny</v-icon>
+					</v-btn>
+				</template>
+				<span v-if="$vuetify.theme.dark">Light Mode</span>
+				<span v-else>Dark Mode</span>
+			</v-tooltip>
 		</div>
-
-		<v-footer>
-			<v-col>
-				<h2 class="mx-auto">Made with hate</h2>
-				<p id="about" @click="toAbout">About</p>
-			</v-col>
-		</v-footer>
 	</v-app>
 </template>
 
@@ -30,6 +45,9 @@ export default {
 		return {};
 	},
 	methods: {
+		toHome() {
+			this.$router.push({ name: "Home" });
+		},
 		toAbout() {
 			this.$router.push({ name: "About" });
 		},
@@ -51,13 +69,18 @@ body {
 }
 
 #full-height {
-	height: 100vh;
+	min-height: 100vh;
 }
 
-#about {
+#title {
 	&:hover {
 		cursor: pointer;
-		color: red;
 	}
+}
+
+#toolbar {
+	position: absolute;
+	right: 40px;
+	top: 0;
 }
 </style>

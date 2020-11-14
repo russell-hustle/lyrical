@@ -27,6 +27,7 @@ const lyrics = axios.create({
 // Serializes data into application/x-www-form-urlencoded
 lyrics.interceptors.request.use(
 	function (config) {
+		console.log(config.data);
 		config.data = qs.stringify(config.data);
 		return config;
 	},
