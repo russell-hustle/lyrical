@@ -1,11 +1,7 @@
 <template>
 	<v-app>
-		<v-navigation-drawer app v-if="$route.name != 'Landing'">
-			<h2 class="mx-auto">Song</h2>
-		</v-navigation-drawer>
-
 		<v-app-bar app v-if="$route.name != 'Landing'">
-			<h1>Color Geyser</h1>
+			<h1 class="mx-auto">Color Geyser</h1>
 		</v-app-bar>
 
 		<!-- Sizes your content based upon application components -->
@@ -18,7 +14,10 @@
 		</v-main>
 
 		<v-footer app>
-			<h2 class="mx-auto">Made with hate</h2>
+			<v-col>
+				<h2 class="mx-auto">Made with hate</h2>
+				<p id="about" @click="toAbout">About</p>
+			</v-col>
 		</v-footer>
 	</v-app>
 </template>
@@ -27,6 +26,11 @@
 export default {
 	data() {
 		return {};
+	},
+	methods: {
+		toAbout() {
+			this.$router.push({ name: "About" });
+		},
 	},
 };
 </script>
@@ -42,5 +46,10 @@ body {
 
 * {
 	text-align: center;
+}
+
+#about {
+	&:hover {
+	}
 }
 </style>
