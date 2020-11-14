@@ -1,24 +1,28 @@
 <template>
-	<v-container v-if="current != null">
-		<h1>{{ current.item.name }}</h1>
-		<v-btn @click="getCurrentSong">Refresh info</v-btn>
+	<v-container v-if="current != null" class="fill-height">
+		<v-row>
+			<v-col>
+				<h1>{{ current.item.name }}</h1>
+				<v-btn @click="getCurrentSong">Refresh info</v-btn>
 
-		<v-row class="mx-auto">
-			<p v-for="artist in current.item.artists" :key="artist.id">
-				{{ artist.name }}
-			</p>
+				<v-row class="mx-auto">
+					<p v-for="artist in current.item.artists" :key="artist.id">
+						{{ artist.name }}
+					</p>
+				</v-row>
+
+				<v-list v-for="(line, index) in lines" :key="index">
+					<guess-line v-if="line.guess" :line="line" />
+					<p v-else>
+						{{ line.words.join(" ") }}
+					</p>
+				</v-list>
+
+				<v-footer fixed padless>
+					<player :current="current" />
+				</v-footer>
+			</v-col>
 		</v-row>
-
-		<v-list v-for="(line, index) in lines" :key="index">
-			<guess-line v-if="line.guess" :line="line" />
-			<p v-else>
-				{{ line.words.join(" ") }}
-			</p>
-		</v-list>
-
-		<v-footer fixed padless>
-			<player :current="current" />
-		</v-footer>
 	</v-container>
 	<v-container v-else>
 		<h1>No song detected!</h1>
