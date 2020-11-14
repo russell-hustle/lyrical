@@ -19,13 +19,16 @@
 					<v-btn icon @click="prevTrack">
 						<v-icon>mdi-skip-previous</v-icon>
 					</v-btn>
-					<v-btn v-if="this.current.is_playing" icon @click="pauseTrack">
+					<v-btn
+						v-if="this.current.is_playing"
+						icon
+						@click="pauseTrack"
+					>
 						<v-icon>mdi-pause</v-icon>
 					</v-btn>
 					<v-btn v-else icon @click="playTrack">
 						<v-icon>mdi-play</v-icon>
 					</v-btn>
-					<v-btn icon>
 					<v-btn icon @click="skipTrack">
 						<v-icon>mdi-skip-next</v-icon>
 					</v-btn>
