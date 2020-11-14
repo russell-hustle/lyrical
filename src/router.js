@@ -23,14 +23,6 @@ const routes = [
     }
   },
   {
-    path: '/about',
-    name: 'About',
-    component: require('./components/About.vue').default,
-    meta: {
-      requireAuth: false
-    }
-  },
-  {
     path: '*',
     redirect: '/'
   }
