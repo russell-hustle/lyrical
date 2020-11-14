@@ -8,9 +8,14 @@
 				{{ artist.name }}
 			</p>
 		</v-row>
-		<v-list v-for="(line, index) in lyrics" :key="index">
+		<!-- <v-list v-for="(line, index) in lyrics" :key="index">
 			<guess-line v-if="line.guess" :line="line" />
-			<p v-else>{{ line }}</p>
+			<p v-else>{{ line.words }}</p>
+		</v-list> -->
+
+		<v-list v-for="(line, index) in fakelyrics" :key="index">
+			<guess-line v-if="line.guess" :line="line" />
+			<p v-else>{{ line.words }}</p>
 		</v-list>
 
 		<v-footer fixed padless>
@@ -32,6 +37,17 @@ export default {
 	components: {
 		Player,
 		GuessLine,
+	},
+	fakelyrics: {
+		lines: [
+				{
+					words: ["this is the music line"],
+					guess: true,
+					guess_index: 4,
+					options: ["busic", "trusic", "nusic"],
+					correct: "musics",
+				},
+			]
 	},
 	data() {
 		return {
@@ -75,6 +91,7 @@ export default {
 				.then((response) => {
 					// handle success
 					this.lyrics = response.data;
+					console.log(response);
 				})
 				.catch((error) => {
 					// handle error

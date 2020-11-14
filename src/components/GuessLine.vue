@@ -1,14 +1,13 @@
 <template>
 	<div class="option_line">
 		<p>
-			<span
-				v-for="(word, index) in line.words"
-				v-if="line.correct != index"
-				:key="index"
+			<span v-for="(word, index) in cutWord" :key="index"
 				>{{ word }}
 			</span>
 		</p>
-		<p v-for="option in data.lines[0].options" :key="option.id">
+		<p v-for="option in data.lines[0].options" :key="option.id"></p>
+		<p>{{ line.words }}</p>
+		<p v-for="option in line.options" :key="option.id">
 			<v-btn @click="createSentance">{{ option }}</v-btn>
 		</p>
 	</div>
