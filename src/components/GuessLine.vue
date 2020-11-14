@@ -1,6 +1,6 @@
 <template>
 	<div class="option_line">
-		<p>{{ data.lines[0].words }} </p>
+		<p>{{ data.lines[0].words }}</p>
 		<p v-for="option in data.lines[0].options" :key="option.id">
 			<v-btn @click="createSentance">{{ option }}</v-btn>
 		</p>
@@ -10,20 +10,28 @@
 
 <script>
 export default {
-	name: "OptionalLine",
+	name: "GuessLine",
+	props: {
+		line: {
+			type: Object,
+			required: true,
+		},
+	},
 	data() {
 		return {
 			data: {
 				lines: [
 					{
-						words: ["I'm through with standing in line to clubs I'll never get in"],
+						words: [
+							"I'm through with standing in line to clubs I'll never get in",
+						],
 						guess: true,
 						guess_index: 4,
 						options: ["randing", "tanding", "landing"],
 						correct: "standing",
 					},
-				]
-			}
+				],
+			},
 		};
 	},
 	computed: {
@@ -32,8 +40,7 @@ export default {
 		// },
 	},
 	methods: {
-		createSentance( ) {
-		},
+		createSentance() {},
 		// createOptionalLines(data) {
 
 		// },
@@ -62,11 +69,11 @@ export default {
 		// 			// always executed
 		// 		});
 		// },
-	// },
-	// mounted() {
-	// 	setInterval(() => {
-	// 		this.getCurrentSong();
-	// 	}, 2000);
+		// },
+		// mounted() {
+		// 	setInterval(() => {
+		// 		this.getCurrentSong();
+		// 	}, 2000);
 	},
 };
 </script>

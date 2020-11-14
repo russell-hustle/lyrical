@@ -24,7 +24,7 @@
 				<template v-slot:activator="{ on, attrs }">
 					<v-btn
 						class="pa-5"
-						@click="$vuetify.theme.dark = !$vuetify.theme.dark"
+						@click="aboutModal = true"
 						icon
 						v-bind="attrs"
 						v-on="on"
@@ -42,7 +42,9 @@
 <script>
 export default {
 	data() {
-		return {};
+		return {
+			aboutModal: false,
+		};
 	},
 	methods: {
 		toHome() {
