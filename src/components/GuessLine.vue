@@ -48,41 +48,6 @@ export default {
 			];
 		},
 	},
-	methods: {
-		createSentance() {},
-		// createOptionalLines(data) {
-
-		// },
-		// createAnswers( options, correct ) {
-		// 	var answer_array = [];
-		// 	for option in options {
-		// 		answer_array.append(option);
-		// 		ans
-		// 		}
-		// },
-		// getLyrics() {
-		// 	this.$lyrics
-		// 		.post("/lyrics", {
-		// 			title: this.currentSong.name,
-		// 			artist: this.currentSong.artists[0].name,
-		// 		})
-		// 		.then((response) => {
-		// 			// handle success
-		// 			this.lyrics = response.data;
-		// 		})
-		// 		.catch((error) => {
-		// 			// handle error
-		// 			console.log(error);
-		// 		})
-		// 		.then(() => {
-		// 			// always executed
-		// 		});
-		// },
-		// },
-		// mounted() {
-		// 	setInterval(() => {
-		// 		this.getCurrentSong();
-		// 	}, 2000);
-	},
+	methods: {},
 };
 </script>
