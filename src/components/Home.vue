@@ -6,7 +6,7 @@
 				<p class="font-italic">
 					{{ all_artists }}
 				</p>
-				<v-divider class="mb-10"></v-divider>
+				<img :src="this.current.item.album.images[1].url" />
 
 				<div v-if="this.lines.length != 0">
 					<v-list v-for="(line, index) in lines" :key="index">
@@ -47,6 +47,7 @@ export default {
 			current: null,
 			lines: [],
 			timeout: 0,
+			// image: this.current.item.album.images[0].url,
 		};
 	},
 	computed: {
@@ -64,6 +65,7 @@ export default {
 				this.$spotify
 					.get("/player/currently-playing")
 					.then((response) => {
+						console.log( response );
 						if (response.status == 429) {
 							this.timeout = this.$TIMEOUT;
 						}
