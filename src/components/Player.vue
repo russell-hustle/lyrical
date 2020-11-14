@@ -19,8 +19,11 @@
 					<v-btn icon>
 						<v-icon>mdi-skip-previous</v-icon>
 					</v-btn>
-					<v-btn icon>
+					<v-btn v-if="this.current.is_playing" icon>
 						<v-icon>mdi-pause</v-icon>
+					</v-btn>
+					<v-btn v-else icon>
+						<v-icon>mdi-play</v-icon>
 					</v-btn>
 					<v-btn icon>
 						<v-icon>mdi-skip-next</v-icon>

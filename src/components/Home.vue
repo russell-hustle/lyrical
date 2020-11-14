@@ -1,14 +1,11 @@
 <template>
-	<v-container v-if="current != null" class="fill-height">
+	<v-container id="content" v-if="current != null" class="fill-height">
 		<v-row style="height: 100%">
 			<v-col>
 				<h1>{{ current.item.name }}</h1>
-
-				<v-row class="mx-auto">
-					<p v-for="artist in current.item.artists" :key="artist.id">
-						{{ artist.name }}
-					</p>
-				</v-row>
+				<p class="font-italic">
+					{{ all_artists }}
+				</p>
 
 				<v-list v-for="(line, index) in lines" :key="index">
 					<guess-line v-if="line.guessing" :line="line" />
@@ -16,16 +13,15 @@
 						{{ line.words }}
 					</p>
 				</v-list>
-
-				<v-footer fixed padless>
-					<player :current="current" />
-				</v-footer>
 			</v-col>
 		</v-row>
+		<v-footer fixed padless>
+			<player :current="current" />
+		</v-footer>
 	</v-container>
 	<v-container v-else>
-		<h1>No song detected!</h1>
-		<v-btn @click="getCurrentSong">Try again</v-btn>
+		<h1>No song detected</h1>
+		<h3>Start playing music in spotify to get started</h3>
 	</v-container>
 </template>
 
@@ -41,56 +37,58 @@ export default {
 	},
 	data() {
 		return {
-			lines: [
-				{
-					words: ["this", "is", "the", "music", "line"],
-					guess: true,
-					guess_index: 3,
-					options: ["busic", "trusic", "nusic"],
-					correct: "music",
-				},
-				{
-					words: ["ammon", "is", "the", "whack", "line"],
-					guess: false,
-					guess_index: 2,
-					options: ["busic", "trusic", "nusic"],
-					correct: "whack",
-				},
-				{
-					words: ["buzz", "in", "the", "whack", "line"],
-					guess: false,
-					guess_index: 2,
-					options: ["busic", "trusic", "nusic"],
-					correct: "buzz",
-				},
-			],
 			current: null,
+			lines: [],
+			timeout: 0,
 		};
 	},
-	computed: {},
+	computed: {
+		all_artists() {
+			let artists = "";
+			for (const artist of this.current.item.artists) {
+				artists += `${artist.name} `;
+			}
+			return `By ${artists}`;
+		},
+	},
 	methods: {
 		getCurrentSong() {
-			this.$spotify
-				.get("/player/currently-playing")
-				.then((response) => {
-					// handle success
-					// console.log(response);
-					// Only update lyrics data on song change
-					let prev =
-						this.current == null ? "old" : this.current.item.name;
-					this.current = response.data == "" ? null : response.data;
-					if (prev != this.current.item.name) {
-						console.log("Song changed! Refreshing lyrics data!");
-						this.getLyrics();
-					}
-				})
-				.catch((error) => {
-					// handle error
-					console.log(error);
-				})
-				.then(() => {
-					// always executed
-				});
+			if (this.timeout <= 0) {
+				this.$spotify
+					.get("/player/currently-playing")
+					.then((response) => {
+						if (response.status == 429) {
+							this.timeout = this.$TIMEOUT;
+						}
+						// handle success
+						// console.log(response);
+						// Only update lyrics data on song change
+						let prev =
+							this.current == null
+								? "old"
+								: this.current.item.name;
+						this.current =
+							response.data == "" ? null : response.data;
+						if (
+							this.current != null &&
+							prev != this.current.item.name
+						) {
+							console.log(
+								"Song changed! Refreshing lyrics data!"
+							);
+							this.getLyrics();
+						}
+					})
+					.catch((error) => {
+						// handle error
+						console.error(error);
+					})
+					.then(() => {
+						// always executed
+					});
+			} else {
+				this.timeout--;
+			}
 		},
 		getLyrics() {
 			this.$lyrics
@@ -105,7 +103,7 @@ export default {
 				})
 				.catch((error) => {
 					// handle error
-					console.log(error);
+					console.error(error);
 				})
 				.then(() => {
 					// always executed
@@ -115,20 +113,13 @@ export default {
 	mounted() {
 		setInterval(() => {
 			this.getCurrentSong();
-		}, 250);
+		}, this.$POLL_RATE);
 	},
 };
 </script>
 
-
-// data: {
-// 	lines: [
-// 		line: {
-// 			words: []
-// 			guess: true,
-// 			guess_index: [],
-// 			options: [].
-// 			correct: word
-// 		}
-// 	]
-// }
+<style lang="scss">
+#content {
+	margin-bottom: 80px;
+}
+</style>
