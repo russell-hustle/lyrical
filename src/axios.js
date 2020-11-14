@@ -2,6 +2,7 @@ import axios from 'axios';
 import qs from 'querystring';
 import store from './store';
 
+
 const spotify = axios.create({
 	baseURL: 'https://api.spotify.com/v1/me',
 });
@@ -18,7 +19,8 @@ spotify.interceptors.request.use(
 );
 
 const lyrics = axios.create({
-	baseURL: 'https://lyrics-microservice.azurewebsites.net',
+	baseURL: 'http://127.0.0.1:5000/',
+	// baseURL: 'https://lyrics-microservice.azurewebsites.net',
 	headers: {
 		"Content-Type": "application/x-www-form-urlencoded"
 	},

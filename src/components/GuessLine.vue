@@ -1,22 +1,17 @@
 <template>
-	<div class="option_line">
-		<p>
-			<span v-for="(word, index) in cutWord" :key="index"
-				>{{ word }}
-			</span>
-		</p>
-		<v-col class="mx-auto">
-			<v-btn
-				v-for="(option, index) in fullOptions"
-				:class="{ 'disable-events': alreadyGuessed }"
-				:key="index"
-				@click="selectAnswer(option, index)"
-				:color="buttons[index]"
-				class="mx-2"
-				>{{ option }}</v-btn
-			>
-		</v-col>
-	</div>
+	<v-row class="d-inline-flex">
+		<p>{{ start }}</p>
+		<v-text-field
+			class="guess-input mx-4"
+			:background-color="color"
+			:readonly="guessed"
+			v-model="answer"
+			@keydown="enter"
+			dense
+			solo
+		></v-text-field>
+		<p>{{ end }}</p>
+	</v-row>
 </template>
 
 
@@ -31,45 +26,44 @@ export default {
 	},
 	data() {
 		return {
-			fullOptions: [],
-			buttons: ["", "", "", ""],
-			alreadyGuessed: false,
+			start: "",
+			end: "",
+			answer: "",
+			color: null,
+			guessed: false,
 		};
 	},
-	computed: {
-		cutWord() {
-			// replace guessed word with underscores
-			let copy = [...this.line.words];
-			let index = this.line.guess_index;
-			copy[index] = "__________";
-			console.log(copy);
-			return copy;
-		},
-	},
+	computed: {},
 	methods: {
-		selectAnswer(idx) {
-			this.alreadyGuessed = true;
-			// check idx for user score
-			console.log(idx);
-			let n = [];
-			for (let index = 0; index < this.fullOptions.length; index++) {
-				n.push(
-					this.fullOptions[index] == this.line.correct
-						? "green"
-						: "red"
-				);
+		enter(e) {
+			if (e.key == "Enter") {
+				this.correct = this.answer == this.line.correct;
+				this.color = this.correct ? "green" : "red";
+				this.guessed = true;
 			}
-			this.buttons = n;
 		},
 	},
-	created() {
-		this.fullOptions = [...this.line.options, this.line.correct];
+	mounted() {
+		let idx = this.line.guess_index;
+		this.start = this.line.words.slice(0, idx).join(" ");
+		// Check for trailing comma
+		let add = "";
+		if (this.line.correct[this.line.correct.length - 1] == ",") {
+			add += this.line.correct[this.line.correct.length - 1];
+			this.line.correct = this.line.correct.slice(0, -1);
+		}
+		this.end = this.line.words.slice(idx + 1).join(" ");
+		this.end = add + " " + this.end;
 	},
 };
 </script>
 
 <style lang="scss">
-.disable-events {
-	pointer-events: none;
+.v-text-field .v-input__control .v-input__slot {
+	min-height: auto !important;
+	display: flex !important;
+	align-items: center !important;
+	width: 160px;
+	height: 26px;
 }
 </style>
