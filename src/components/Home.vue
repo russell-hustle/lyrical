@@ -8,9 +8,13 @@
 				</p>
 				<v-divider class="mb-10"></v-divider>
 
-				<div v-if="this.lines.length != 0">
+				<div v-if="this.lines.length != 0" class="rounded-xl">
 					<v-list v-for="(line, index) in lines" :key="index">
-						<guess-line v-if="line.guessing" :line="line" />
+						<guess-line
+							v-if="line.guessing"
+							@enter="score"
+							:line="line"
+						/>
 						<p v-else>
 							{{ line.words }}
 						</p>
@@ -25,6 +29,9 @@
 		<v-footer fixed padless>
 			<player :current="current" />
 		</v-footer>
+		<div id="score">
+			<h2>Score: {{ this.correct }} / {{ this.correct + this.wrong }}</h2>
+		</div>
 	</v-container>
 	<v-container v-else>
 		<h1>No song detected</h1>
@@ -47,6 +54,8 @@ export default {
 			current: null,
 			lines: [],
 			timeout: 0,
+			correct: 0,
+			wrong: 0,
 		};
 	},
 	computed: {
@@ -59,6 +68,13 @@ export default {
 		},
 	},
 	methods: {
+		score(correct) {
+			if (correct) {
+				this.correct++;
+			} else {
+				this.wrong++;
+			}
+		},
 		getCurrentSong() {
 			if (this.timeout <= 0) {
 				this.$spotify
@@ -84,6 +100,8 @@ export default {
 								"Song changed! Refreshing lyrics data!"
 							);
 							this.getLyrics();
+							this.correct = 0;
+							this.wrong = 0;
 						}
 					})
 					.catch((error) => {
@@ -128,5 +146,11 @@ export default {
 <style lang="scss">
 #content {
 	margin-bottom: 80px;
+}
+
+#score {
+	position: absolute;
+	top: 10px;
+	left: 20px;
 }
 </style>

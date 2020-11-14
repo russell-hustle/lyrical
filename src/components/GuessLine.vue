@@ -9,6 +9,7 @@
 			@keydown="enter"
 			dense
 			solo
+			light
 		></v-text-field>
 		<p>{{ end }}</p>
 	</v-row>
@@ -40,6 +41,7 @@ export default {
 				this.correct = this.answer == this.line.correct;
 				this.color = this.correct ? "green" : "red";
 				this.guessed = true;
+				this.$emit("enter", this.correct);
 			}
 		},
 	},
@@ -65,5 +67,9 @@ export default {
 	align-items: center !important;
 	width: 160px;
 	height: 26px;
+}
+
+.v-list:first-of-type {
+	padding-top: 30px;
 }
 </style>
