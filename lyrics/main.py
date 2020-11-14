@@ -18,13 +18,18 @@ class MyHTTPRequestHandler(BaseHTTPRequestHandler):
         print('request BODY:', body)
         parsed_body = parse_qs(body)
         print('request parsed body', parsed_body)
-        artist = parsed_body['artist']
-        title = parsed_body['title']
-        lyrics = self.getLyrics(artist, title)
-        self.wfile.write(bytes(json.dumps(lyrics), 'utf-8'))
-        self.send_response(201)
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.end_headers()
+        try:
+            artist = parsed_body['artist'][0]
+            title = parsed_body['title'][0]
+            lyrics = self.getLyrics(artist, title)
+            self.send_response(201)
+            self.send_header('Content-Type','application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            self.wfile.write(bytes(json.dumps(lyrics), 'utf-8'))
+        except:
+            print('data was not formatted properly')
+            self.handle404()
 
     def getLyrics(self, artist, title):
         pageurl = "https://makeitpersonal.co/lyrics?artist=" + artist + "&title=" + title
@@ -45,8 +50,8 @@ class MyHTTPRequestHandler(BaseHTTPRequestHandler):
     
     def do_POST(self):
         print('the path is', self.path)
-        if self.path == "/lyrics":
-            self.handleSendMessage()
+        if "/lyrics" in self.path:
+            self.handleGetLyrics()
         else:
             self.handle404()
 
