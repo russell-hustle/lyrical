@@ -23,8 +23,8 @@
 						></v-img>
 						<v-card-text class="text-h5"
 							>This web app was made for Southern Utah Code Camp
-							2020 Remote. It was worked on exclusively by deez
-							nuts.</v-card-text
+							2020 Remote. It was worked on exclusively by some good gentlemen
+							</v-card-text
 						>
 					</v-card>
 				</v-dialog>
