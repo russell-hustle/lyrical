@@ -8,20 +8,13 @@
 					</v-btn>
 					<img class="mx-auto" width="60%" :src="getThemedImage" />
 					<v-card-text class="text-h5"
-						>This web app was made for Southern Utah Code Camp 2020
-						Remote. It was completed in 24 hours.
+						>This web app was made for Southern Utah Code Camp 2020 Remote by team Ru$$el Hustle.
 					</v-card-text>
 				</v-card>
 			</v-dialog>
 
 			<template v-slot:activator="{ on, attrs }">
-				<v-btn
-					class="pa-5"
-					@click="aboutModal = true"
-					icon
-					v-bind="attrs"
-					v-on="on"
-				>
+				<v-btn class="pa-5" @click="aboutModal = true" icon v-bind="attrs" v-on="on">
 					<v-icon>mdi-information</v-icon>
 				</v-btn>
 			</template>
@@ -29,12 +22,7 @@
 		</v-tooltip>
 		<v-tooltip bottom>
 			<template v-slot:activator="{ on, attrs }">
-				<v-btn
-					icon
-					href="https://github.com/mabraham23/code_camp"
-					v-bind="attrs"
-					v-on="on"
-				>
+				<v-btn icon href="https://github.com/russell-hustle/lyrical" v-bind="attrs" v-on="on">
 					<v-icon>mdi-github</v-icon>
 				</v-btn>
 			</template>
@@ -42,13 +30,7 @@
 		</v-tooltip>
 		<v-tooltip bottom>
 			<template v-slot:activator="{ on, attrs }">
-				<v-btn
-					class="pa-5"
-					@click="$vuetify.theme.dark = !$vuetify.theme.dark"
-					icon
-					v-bind="attrs"
-					v-on="on"
-				>
+				<v-btn class="pa-5" @click="$vuetify.theme.dark = !$vuetify.theme.dark" icon v-bind="attrs" v-on="on">
 					<v-icon>mdi-white-balance-sunny</v-icon>
 				</v-btn>
 			</template>
@@ -60,19 +42,19 @@
 
 <script>
 export default {
-	name: "ToolBar",
+	name: 'ToolBar',
 	data() {
 		return {
 			aboutModal: false,
-			darkImg: require("@/assets/codecamp-dark.png"),
-			lightImg: require("@/assets/codecamp-light.png"),
+			darkImg: require('@/assets/codecamp-dark.png'),
+			lightImg: require('@/assets/codecamp-light.png')
 		};
 	},
 	computed: {
 		getThemedImage() {
 			return this.$vuetify.theme.dark ? this.darkImg : this.lightImg;
-		},
-	},
+		}
+	}
 };
 </script>
 

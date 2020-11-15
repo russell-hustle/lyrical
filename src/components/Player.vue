@@ -1,12 +1,7 @@
 <template>
 	<v-container fluid class="pa-0">
 		<div>
-			<v-progress-linear
-				:value="percentComplete"
-				color="green"
-				class="my-0"
-				height="3"
-			></v-progress-linear>
+			<v-progress-linear :value="percentComplete" color="green" class="my-0" height="3"></v-progress-linear>
 
 			<v-row>
 				<v-col class="pa-0 mt-2">
@@ -18,39 +13,23 @@
 			<v-row>
 				<v-col class="pa-0 pb-2">
 					<v-hover v-slot="{ hover }">
-						<v-btn
-							:color="hover ? 'green' : ''"
-							icon
-							@click="prevTrack"
-						>
+						<v-btn :color="hover ? 'green' : ''" icon @click="prevTrack">
 							<v-icon>mdi-skip-previous</v-icon>
 						</v-btn>
 					</v-hover>
 					<v-hover v-if="this.current.is_playing" v-slot="{ hover }">
-						<v-btn
-							:color="hover ? 'green' : ''"
-							icon
-							@click="pauseTrack"
-						>
+						<v-btn :color="hover ? 'green' : ''" icon @click="pauseTrack">
 							<v-icon>mdi-pause</v-icon>
 						</v-btn>
 					</v-hover>
 
 					<v-hover v-else v-slot="{ hover }">
-						<v-btn
-							:color="hover ? 'green' : ''"
-							icon
-							@click="playTrack"
-						>
+						<v-btn :color="hover ? 'green' : ''" icon @click="playTrack">
 							<v-icon>mdi-play</v-icon>
 						</v-btn>
 					</v-hover>
 					<v-hover v-slot="{ hover }">
-						<v-btn
-							:color="hover ? 'green' : ''"
-							icon
-							@click="skipTrack"
-						>
+						<v-btn :color="hover ? 'green' : ''" icon @click="skipTrack">
 							<v-icon>mdi-skip-next</v-icon>
 						</v-btn>
 					</v-hover>
@@ -62,26 +41,24 @@
 <script>
 export default {
 	// current.is_playing
-	name: "Player",
+	name: 'Player',
 	props: {
 		current: {
-			type: Object,
-		},
+			type: Object
+		}
 	},
 	computed: {
 		percentComplete() {
-			return (
-				100 * (this.current.progress_ms / this.current.item.duration_ms)
-			);
-		},
+			return 100 * (this.current.progress_ms / this.current.item.duration_ms);
+		}
 	},
 	methods: {
 		playTrack() {
-			this.$spotify
-				.put("/player/play")
+			this.$spotify.http
+				.put('/player/play')
 				.then((response) => {
 					if (response == 204) {
-						console.log("device worked");
+						console.log('device worked');
 					}
 				})
 				.catch((error) => {
@@ -90,11 +67,11 @@ export default {
 				.then(() => {});
 		},
 		pauseTrack() {
-			this.$spotify
-				.put("/player/pause")
+			this.$spotify.http
+				.put('/player/pause')
 				.then((response) => {
 					if (response == 204) {
-						console.log("device worked");
+						console.log('device worked');
 					}
 				})
 				.catch((error) => {
@@ -103,8 +80,8 @@ export default {
 				.then(() => {});
 		},
 		skipTrack() {
-			this.$spotify
-				.post("/player/next")
+			this.$spotify.http
+				.post('/player/next')
 				.then((response) => {
 					console.log(response);
 				})
@@ -117,8 +94,8 @@ export default {
 				});
 		},
 		prevTrack() {
-			this.$spotify
-				.post("/player/previous")
+			this.$spotify.http
+				.post('/player/previous')
 				.then((response) => {
 					console.log(response);
 				})
@@ -129,8 +106,8 @@ export default {
 				.then(() => {
 					// always executed
 				});
-		},
-	},
+		}
+	}
 };
 </script>
 

@@ -2,11 +2,19 @@ import Vue from 'vue';
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import router from './router';
-import { spotify, lyrics } from './axios';
+import { spotify, lyrics, genius } from './axios';
 import store from './store';
 
-Vue.prototype.$spotify = spotify;
+Vue.prototype.$spotify = {
+  http: spotify,
+  client_id: '8bcb169f90554b209a351f9016ec7b04',
+  redirect_uri: process.env.NODE_ENV === 'production' ? 'https://spotify-lyrical.netlify.app/' : 'http://localhost:8080',
+  scopes: 'user-read-currently-playing user-modify-playback-state',
+
+};
 Vue.prototype.$lyrics = lyrics;
+Vue.prototype.$genius = genius;
+Vue.prototype.$genius_key = "TyQSN0a4oA7_NUcqKoaM3FH40G86CctyPIbkMD_CTYSbSzj2gAA24NR5NX5qlWes";
 
 // For rate limiting
 const RATE = 800;

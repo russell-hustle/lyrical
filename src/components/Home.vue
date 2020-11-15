@@ -47,6 +47,8 @@
 import GuessLine from './GuessLine.vue';
 import Player from './Player.vue';
 
+import { getLyrics } from 'genius-lyrics-api';
+
 export default {
 	name: 'Home',
 	components: {
@@ -85,7 +87,7 @@ export default {
 		},
 		getCurrentSong() {
 			if (this.timeout <= 0) {
-				this.$spotify
+				this.$spotify.http
 					.get('/player/currently-playing')
 					.then((response) => {
 						this.loadingSong = false;
@@ -137,6 +139,29 @@ export default {
 				.then(() => {
 					// always executed
 				});
+			this.test();
+		},
+		test() {
+			getLyrics({
+				apiKey: this.$genius_key,
+				title: this.current.item.name,
+				artist: this.current.item.artists[0].name,
+				optimizeQuery: true
+			}).then((lyrics) => console.log(lyrics));
+			// this.$genius
+			// 	.get('', {
+			// 		title: this.current.item.name,
+			// 		artist: this.current.item.artists[0].name
+			// 	})
+			// 	.then((response) => {
+			// 		// handle success
+			// 		console.log(response);
+			// 	})
+			// 	.catch((error) => {
+			// 		// handle error
+			// 		console.error(error);
+			// 	})
+			// 	.then(() => {});
 		}
 	},
 	mounted() {
