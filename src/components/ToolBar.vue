@@ -1,71 +1,60 @@
 <template>
-	<div>
-		<div id="toolbar">
-			<v-tooltip bottom>
-				<v-dialog v-model="aboutModal" transition="fade-transition">
-					<v-card id="about-modal" tile eager elevation="20">
-						<v-btn
-							id="modal-close"
-							icon
-							@click="aboutModal = false"
-						>
-							<v-icon>mdi-close</v-icon>
-						</v-btn>
-						<img
-							class="mx-auto"
-							width="60%"
-							:src="getThemedImage"
-						/>
-						<v-card-text class="text-h5"
-							>This web app was made for Southern Utah Code Camp
-							2020 Remote. It was worked on exclusively by some good gentlemen
-							</v-card-text
-						>
-					</v-card>
-				</v-dialog>
+	<div id="toolbar">
+		<v-tooltip bottom>
+			<v-dialog v-model="aboutModal" transition="fade-transition">
+				<v-card id="about-modal" tile eager elevation="20">
+					<v-btn id="modal-close" icon @click="aboutModal = false">
+						<v-icon>mdi-close</v-icon>
+					</v-btn>
+					<img class="mx-auto" width="60%" :src="getThemedImage" />
+					<v-card-text class="text-h5"
+						>This web app was made for Southern Utah Code Camp 2020
+						Remote. It was completed in 24 hours.
+					</v-card-text>
+				</v-card>
+			</v-dialog>
 
-				<template v-slot:activator="{ on, attrs }">
-					<v-btn
-						class="pa-5"
-						@click="aboutModal = true"
-						icon
-						v-bind="attrs"
-						v-on="on"
-					>
-						<v-icon>mdi-information</v-icon>
-					</v-btn>
-				</template>
-				<span>About</span>
-			</v-tooltip>
-			<v-tooltip bottom>
-				<template v-slot:activator="{ on, attrs }">
-					<v-btn
-						icon
-						href="https://github.com/mabraham23/code_camp"
-						v-bind="attrs"
-						v-on="on"
-					>
-						<v-icon>mdi-github</v-icon>
-					</v-btn>
-				</template>
-				<span>Source Code</span>
-			</v-tooltip>
-			<v-tooltip bottom>
-				<template v-slot:activator="{ on, attrs }">
-					<v-btn
-						class="pa-5"
-						@click="$vuetify.theme.dark = !$vuetify.theme.dark"
-						icon
-						v-bind="attrs"
-						v-on="on"
-					>
-						<v-icon>mdi-white-balance-sunny</v-icon>
-					</v-btn>
-				</template>
-				<span v-if="$vuetify.theme.dark">Light Mode</span>
-				<span v-else>Dark Mode</span>
-			</v-tooltip>
-		</div>
+			<template v-slot:activator="{ on, attrs }">
+				<v-btn
+					class="pa-5"
+					@click="aboutModal = true"
+					icon
+					v-bind="attrs"
+					v-on="on"
+				>
+					<v-icon>mdi-information</v-icon>
+				</v-btn>
+			</template>
+			<span>About</span>
+		</v-tooltip>
+		<v-tooltip bottom>
+			<template v-slot:activator="{ on, attrs }">
+				<v-btn
+					icon
+					href="https://github.com/mabraham23/code_camp"
+					v-bind="attrs"
+					v-on="on"
+				>
+					<v-icon>mdi-github</v-icon>
+				</v-btn>
+			</template>
+			<span>Source Code</span>
+		</v-tooltip>
+		<v-tooltip bottom>
+			<template v-slot:activator="{ on, attrs }">
+				<v-btn
+					class="pa-5"
+					@click="$vuetify.theme.dark = !$vuetify.theme.dark"
+					icon
+					v-bind="attrs"
+					v-on="on"
+				>
+					<v-icon>mdi-white-balance-sunny</v-icon>
+				</v-btn>
+			</template>
+			<span v-if="$vuetify.theme.dark">Light Mode</span>
+			<span v-else>Dark Mode</span>
+		</v-tooltip>
 	</div>
 </template>
 

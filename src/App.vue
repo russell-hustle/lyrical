@@ -5,7 +5,7 @@
 				<router-view></router-view>
 			</v-container>
 		</v-main>
-		<tool-bar />
+		<tool-bar id="toolbar" />
 	</v-app>
 </template>
 
@@ -54,7 +54,7 @@ body {
 }
 
 #toolbar {
-	position: absolute;
+	position: fixed;
 	right: 40px;
 	top: 0;
 }
