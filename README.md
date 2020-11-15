@@ -1,8 +1,28 @@
 # Spotify Lyrics Guesser
 
-# by -- Ammon Taylor, Mark Abraham, Will Dickinson
+### Ammon Taylor, Mark Abraham, Will Dickinson, Hunter Nielson
 
-# APIs -- Flask, VSCode, Spotify API, Vue
+---
+
+## Frontend
+
+Technologies
+- Vue & plugins like vue-router and vuex
+- Axios
+- Vuetify
+
+Integrates with the Spotify API
+
+## Backend
+
+A Flask app that gets song requests and tries to find lyrics through a [public API](https://makeitpersonal.co)
+
+We parse the lyrics and return data in a specific format to create a lyrics guessing game.
+
+---
+
+
+# Frontend Compilation
 
 ## Project setup
 ```
