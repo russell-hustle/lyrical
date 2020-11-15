@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<h1 class="mb-12">LYCTIONARY</h1>
+		<h1 class="mb-12">Lyrical</h1>
 		<v-btn :href="spotify_url" elevation="10" color="green" x-large
 			>Login With Spotify</v-btn
 		>

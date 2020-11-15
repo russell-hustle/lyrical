@@ -1,7 +1,11 @@
 {
-  "name": "color_geyser",
+  "name": "lyrical",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mabraham23/code_camp"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
