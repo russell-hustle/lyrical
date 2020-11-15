@@ -1,3 +1,0 @@
-[submodule "lyrics_microservice"]
-	path = lyrics_microservice
-	url = git@github.com:human37/lyrics_microservice.git
