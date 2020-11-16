@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import router from './router';
-import { spotify, lyrics, genius } from './axios';
+import { spotify } from './axios';
 import store from './store';
 
 Vue.prototype.$spotify = {
@@ -12,8 +12,7 @@ Vue.prototype.$spotify = {
   scopes: 'user-read-currently-playing user-modify-playback-state',
 
 };
-Vue.prototype.$lyrics = lyrics;
-Vue.prototype.$genius = genius;
+
 Vue.prototype.$genius_key = "TyQSN0a4oA7_NUcqKoaM3FH40G86CctyPIbkMD_CTYSbSzj2gAA24NR5NX5qlWes";
 
 // For rate limiting
