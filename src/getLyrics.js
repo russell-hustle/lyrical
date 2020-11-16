@@ -1,4 +1,5 @@
 import axios from 'axios';
+import cio from 'cheerio-without-node-native';
 
 // Sanitizes search parameters
 function getTitle(title, artist) {
@@ -30,9 +31,6 @@ async function searchSong(title, artist) {
 	});
 	return results;
 }
-
-// ?
-const cio = require('cheerio-without-node-native');
 
 /**
  * Scrapes the lyrics based on the song URL
