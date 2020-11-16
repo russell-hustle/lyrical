@@ -47,7 +47,7 @@
 import GuessLine from './GuessLine.vue';
 import Player from './Player.vue';
 
-import { getLyrics } from 'genius-lyrics-api';
+import { getLyrics } from '../getLyrics';
 
 export default {
 	name: 'Home',
