@@ -33,7 +33,7 @@ async function searchSong(title, artist) {
 	return results;
 }
 
-const server_url = process.env.NODE_ENV === 'production' ? 'https://lyrical-middleman.herokuapp.com/' : 'http://localhost:5000';
+const server_url = 'https://lyrical-middleman.herokuapp.com';
 
 /**
  * Scrapes the lyrics based on the song URL
