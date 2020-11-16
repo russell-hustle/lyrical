@@ -95,6 +95,12 @@ export default {
 						if (response.status == 429) {
 							this.timeout = this.$TIMEOUT;
 						}
+						// If our token has expired
+						// FIX: don't redirect and tell user they must login again
+						if (response.status == 401) {
+							this.$store.setExpired();
+							this.$router.push({ name: 'Landing' });
+						}
 						// Only update lyrics data on song change
 						let prev = this.current == null ? 'old' : this.current.item.name;
 						this.current = response.data == '' ? null : response.data;

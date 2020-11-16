@@ -1,5 +1,6 @@
 import axios from 'axios';
 import cio from 'cheerio-without-node-native';
+import qs from 'querystring';
 
 // Sanitizes search parameters
 function getTitle(title, artist) {
@@ -32,18 +33,24 @@ async function searchSong(title, artist) {
 	return results;
 }
 
+const server_url = process.env.NODE_ENV === 'production' ? 'http://lyrical-flask-env.eba-h9e2m8mh.us-west-1.elasticbeanstalk.com' : 'http://localhost:5000';
+
 /**
  * Scrapes the lyrics based on the song URL
  * @param {string} url - Genius URL
  */
 async function extractLyrics(url) {
-	let { data } = await axios.get(url, {
+	let { data } = await axios({
+		method: 'post',
+		url: `${server_url}/lyrics`,
+		data: qs.stringify({
+			url: url,
+		}),
 		headers: {
-			Authorization: `Bearer ${genius_key}`
+			'content-type': 'application/x-www-form-urlencoded'
 		}
 	});
 	const $ = cio.load(data);
-	console.log($);
 	let lyrics = $('div[class="lyrics"]').text().trim();
 	if (!lyrics) {
 		lyrics = '';

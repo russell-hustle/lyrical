@@ -10,23 +10,10 @@
 </template>
 
 <script>
-import ToolBar from "./components/ToolBar.vue";
+import ToolBar from './components/ToolBar.vue';
 
 export default {
-	components: { ToolBar },
-	data() {
-		return {
-			aboutModal: false,
-		};
-	},
-	methods: {
-		toHome() {
-			this.$router.push({ name: "Home" });
-		},
-		toAbout() {
-			this.$router.push({ name: "About" });
-		},
-	},
+	components: { ToolBar }
 };
 </script>
 
@@ -45,12 +32,6 @@ body {
 
 #full-height {
 	min-height: 100vh;
-}
-
-#title {
-	&:hover {
-		cursor: pointer;
-	}
 }
 
 #toolbar {

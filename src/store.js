@@ -14,6 +14,9 @@ export default new Vuex.Store({
       state.access_token = tokens.access_token;
       state.refresh_token = tokens.refresh_token;
       state.authenticated = true;
+    },
+    setExpired(state) {
+      state.authenticated = false;
     }
   },
   actions: {
