@@ -37,7 +37,11 @@ async function searchSong(title, artist) {
  * @param {string} url - Genius URL
  */
 async function extractLyrics(url) {
-	let { data } = await axios.get(url);
+	let { data } = await axios.get(url, {
+		headers: {
+			Authorization: `Bearer ${genius_key}`
+		}
+	});
 	const $ = cio.load(data);
 	console.log($);
 	let lyrics = $('div[class="lyrics"]').text().trim();
