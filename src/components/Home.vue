@@ -47,7 +47,7 @@
 import GuessLine from './GuessLine.vue';
 import Player from './Player.vue';
 
-import { getLyrics } from '../getLyrics';
+import { getLyrics, parseLines } from '../getLyrics';
 
 export default {
 	name: 'Home',
@@ -104,13 +104,8 @@ export default {
 								console.log('Song changed! Refreshing lyrics data!');
 								this.loadingLyrics = true;
 								// Get lyrics data
-								getLyrics({
-									apiKey: this.$genius_key,
-									title: this.current.item.name,
-									artist: this.current.item.artists[0].name,
-									optimizeQuery: true
-								}).then((lyrics) => {
-									let parsedLines = this.parseLyrics(lyrics);
+								getLyrics(this.current.item.name, this.current.item.artists[0].name).then((lyrics) => {
+									let parsedLines = parseLines(lyrics);
 									if (parsedLines.length != 0) {
 										this.lines = parsedLines;
 										this.loadingLyrics = false;
@@ -133,67 +128,6 @@ export default {
 			} else {
 				this.timeout--;
 			}
-		},
-		parseLyrics(lyrics) {
-			let lines = lyrics.split('\n');
-			let parsedLines = [];
-			// Remove genius stanza tags
-			lines = lines.filter((line) => line.charAt(0) != '[');
-
-			let wordCounter = 0;
-			let badEndings = [',', '!', '?'];
-			let chosen = false;
-
-			for (const line of lines) {
-				let words = line.split(' ');
-				for (const word of words) {
-					// Every 12 words
-					if (wordCounter > 12) {
-						// If we have a good word
-						if (word.length > 4) {
-							wordCounter = 0;
-							chosen = true;
-							let lineWords = words;
-							let idx = words.indexOf(word);
-							let newWord = word;
-							// Check for trailing baddies
-							let ending = word.charAt(word.length - 1);
-							if (badEndings.includes(ending)) {
-								// Remove last char
-								newWord = newWord.substring(0, word.length - 1);
-								// Decide where to put the char
-								// Add new word with it
-								if (words[idx] == word) {
-									lineWords.push(ending);
-								}
-								// Add it to start of next word
-								else {
-									lineWords[idx + 1] = `${ending} ${lineWords[idx + 1]}`;
-								}
-							}
-							parsedLines.push({
-								words: lineWords,
-								guessing: true,
-								guess_index: idx,
-								correct: newWord
-							});
-						}
-					}
-					wordCounter++;
-				}
-				// If we didn't select a word in this line
-				if (!chosen) {
-					parsedLines.push({
-						words: line,
-						guessing: false,
-						guess_index: null,
-						correct: null
-					});
-				}
-				chosen = false;
-			}
-
-			return parsedLines;
 		}
 	},
 	mounted() {
