@@ -13,7 +13,7 @@ Vue.prototype.$spotify = {
 
 };
 
-Vue.prototype.$genius_key = "DvVSp9K-_1mcj9mP2DESuJgaBkj5aLlYL9fIhc-q15aNgwrU_5X_cElhFqAeoA62";
+Vue.prototype.$genius_key = "jnk3Z7zFGcLZsSgZPk0kGifKBUhJzYlhqgDJmbYPCJBxKUVjE1EtudaHvco_90Tr";
 
 // For rate limiting
 const RATE = 800;
