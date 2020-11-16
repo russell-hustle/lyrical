@@ -15,34 +15,25 @@ Integrates with the Spotify API
 
 ## Backend
 
-A Flask app that gets song requests and tries to find lyrics through a [public API](https://makeitpersonal.co)
+A Flask app that gets song requests and tries to find lyrics through a the Genius API.
+
+A server was only necessary to bypass CORS, so thanks a lot CORS...
 
 We parse the lyrics and return data in a specific format to create a lyrics guessing game.
 
 ---
 
+# IMPROVEMENTS
 
-# Frontend Compilation
+- Make guessing case insensitive
+- Handle token expiration better
+- Webpack optimization errors?
+- Look into [vue config](https://cli.vuejs.org/config/).
+- Use server better
+- Fix everything I hacked together to get it deployed
+- Scrolling with song???
+- Handle no lyrics found better
+- Optimize everything...
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+If we are crazy we can even do searching songs through our app and use more of the Spotify API
