@@ -1,3 +1,5 @@
+![Travis CI](https://travis-ci.org/russell-hustle/lyrical.svg?branch=main)
+
 # Spotify Lyrics Guesser
 
 ### Ammon Taylor, Mark Abraham, Will Dickinson, Hunter Nielson
