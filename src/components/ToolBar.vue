@@ -1,18 +1,18 @@
 <template>
 	<div id="toolbar">
+		<v-dialog v-model="aboutModal" eager transition="fade-transition">
+			<v-card id="about-modal" tile elevation="20">
+				<v-btn id="modal-close" icon @click="aboutModal = false">
+					<v-icon>mdi-close</v-icon>
+				</v-btn>
+				<v-img class="mx-auto" width="60%" :src="getThemedImage" eager />
+				<!-- <v-img class="mx-auto" width="60%" :src="require('getThemedImage()')" /> -->
+				<v-card-text class="text-h5"
+					>This web app was made for Southern Utah Code Camp 2020 Remote by team Ru$$el Hustle.
+				</v-card-text>
+			</v-card>
+		</v-dialog>
 		<v-tooltip bottom>
-			<v-dialog v-model="aboutModal" transition="fade-transition">
-				<v-card id="about-modal" tile eager elevation="20">
-					<v-btn id="modal-close" icon @click="aboutModal = false">
-						<v-icon>mdi-close</v-icon>
-					</v-btn>
-					<img class="mx-auto" width="60%" :src="getThemedImage" />
-					<v-card-text class="text-h5"
-						>This web app was made for Southern Utah Code Camp 2020 Remote by team Ru$$el Hustle.
-					</v-card-text>
-				</v-card>
-			</v-dialog>
-
 			<template v-slot:activator="{ on, attrs }">
 				<v-btn class="pa-5" @click="aboutModal = true" icon v-bind="attrs" v-on="on">
 					<v-icon>mdi-information</v-icon>
@@ -58,7 +58,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 #about-modal {
 	position: absolute;
 	top: 0;
@@ -72,7 +72,16 @@ export default {
 	right: 0;
 }
 
-.v-image .v-responsive__content {
-	width: 1000px;
+// .v-image .v-responsive__content {
+// 	width: 1000px;
+// }
+
+// Get ride of ripple effect lingering
+.v-btn:before {
+	opacity: 0 !important;
+}
+
+.v-ripple__container {
+	opacity: 0 !important;
 }
 </style>

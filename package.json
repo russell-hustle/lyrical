@@ -16,6 +16,7 @@
     "cheerio-without-node-native": "^1.0.0-rc.2",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
+    "vue-gtag": "^1.10.0",
     "vue-router": "^3.4.9",
     "vuetify": "^2.2.11",
     "vuex": "^3.4.0"

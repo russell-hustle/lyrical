@@ -36,7 +36,7 @@ body {
 
 #toolbar {
 	position: fixed;
-	right: 40px;
+	right: 5%;
 	top: 0;
 }
 </style>

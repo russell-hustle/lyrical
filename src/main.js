@@ -4,6 +4,7 @@ import vuetify from './plugins/vuetify';
 import router from './router';
 import { spotify } from './axios';
 import store from './store';
+import './plugins/vue-gtag';
 
 Vue.prototype.$spotify = {
   http: spotify,
