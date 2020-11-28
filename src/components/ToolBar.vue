@@ -8,7 +8,8 @@
 				<v-img class="mx-auto" width="60%" :src="getThemedImage" eager />
 				<!-- <v-img class="mx-auto" width="60%" :src="require('getThemedImage()')" /> -->
 				<v-card-text class="text-h5"
-					>This web app was made for Southern Utah Code Camp 2020 Remote by team Ru$$el Hustle.
+					>This web app was made for Southern Utah Code Camp 2020 Remote by team Ru$$el Hustle. It even won
+					first place in the Intermediate Division!
 				</v-card-text>
 			</v-card>
 		</v-dialog>
