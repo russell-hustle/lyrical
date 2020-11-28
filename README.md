@@ -28,6 +28,7 @@ We parse the lyrics and return data in a specific format to create a lyrics gues
 # IMPROVEMENTS
 
 - Make guessing case insensitive
+- Mobile friendly (about sometimes not working??)
 - Handle token expiration better
 - Webpack optimization errors?
 - Look into [vue config](https://cli.vuejs.org/config/).
