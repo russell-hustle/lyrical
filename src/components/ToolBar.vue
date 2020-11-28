@@ -72,10 +72,6 @@ export default {
 	right: 0;
 }
 
-// .v-image .v-responsive__content {
-// 	width: 1000px;
-// }
-
 // Get ride of ripple effect lingering
 .v-btn:before {
 	opacity: 0 !important;

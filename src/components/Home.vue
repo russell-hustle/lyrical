@@ -151,7 +151,11 @@ export default {
 
 #score {
 	position: fixed;
-	top: 10px;
-	left: 20px;
+	top: 0px;
+	left: 2%;
+
+	* {
+		line-height: 40px;
+	}
 }
 </style>

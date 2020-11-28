@@ -54,7 +54,9 @@ export default {
 	methods: {
 		enter(e) {
 			if (e.key == 'Enter') {
-				this.correct = this.answer == this.line.correct;
+				this.correct = this.answer.toUpperCase() == this.line.correct.toUpperCase();
+				// If they got it right, then show correct casing
+				if (this.correct) this.answer = this.line.correct;
 				this.color = this.correct ? 'green' : 'red';
 				this.guessed = true;
 				this.$emit('enter', this.correct);
