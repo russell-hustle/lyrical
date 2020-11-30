@@ -31,11 +31,10 @@ We parse the lyrics and return data in a specific format to create a lyrics gues
 - [ ] Handle token expiration better
 - [ ] Webpack optimization errors?
 - [ ] Look into [vue config](https://cli.vuejs.org/config/).
-- [ ] Use server better
-- [ ] Fix everything I hacked together to get it deployed
-- [ ] Scrolling with song???
-- [ ] Handle no lyrics found better
-- [ ] Mobile friendly
+- [ ] Use server better or go serverless
+- [x] Scrolling with song???
+- [ ] Use more sites as fallback for more lyrics
+- [x] Mobile friendly
 - [ ] Optimize everything...
 
 If we are crazy we can even do searching songs through our app and use more of the Spotify API
