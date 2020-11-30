@@ -20,6 +20,7 @@ export default {
 <style lang="scss">
 html {
 	height: 100vh;
+	scroll-behavior: smooth;
 }
 
 body {

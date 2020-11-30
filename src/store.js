@@ -8,6 +8,7 @@ export default new Vuex.Store({
     access_token: null,
     refresh_token: null,
     authenticated: false,
+    autoScroll: true,
   },
   mutations: {
     setTokens(state, tokens) {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     },
     setExpired(state) {
       state.authenticated = false;
+    },
+    toggleAutoScroll(state) {
+      state.autoScroll = !state.autoScroll;
     }
   },
   actions: {

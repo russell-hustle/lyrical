@@ -65,7 +65,8 @@ export default {
 			noSong: false,
 			loadingSong: true,
 			noLyrics: false,
-			loadingLyrics: true
+			loadingLyrics: true,
+			lastScroll: 0
 		};
 	},
 	computed: {
@@ -83,6 +84,16 @@ export default {
 				this.correct++;
 			} else {
 				this.wrong++;
+			}
+		},
+		/** Scroll with song */
+		autoScroll() {
+			if (!this.current || !this.current.item || !this.current.item.duration_ms) return;
+			let percent = this.current.progress_ms / this.current.item.duration_ms;
+			let pixelPercent = percent * document.body.scrollHeight;
+			if (Math.abs(pixelPercent - this.lastScroll) > 400) {
+				this.lastScroll = pixelPercent;
+				window.scrollTo(0, pixelPercent);
 			}
 		},
 		getCurrentSong() {
@@ -139,6 +150,7 @@ export default {
 	mounted() {
 		setInterval(() => {
 			this.getCurrentSong();
+			if (this.$store.state.autoScroll) this.autoScroll();
 		}, this.$POLL_RATE);
 	}
 };

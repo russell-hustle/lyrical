@@ -15,6 +15,16 @@
 		</v-dialog>
 		<v-tooltip bottom>
 			<template v-slot:activator="{ on, attrs }">
+				<v-btn class="pa-5" @click="$store.commit('toggleAutoScroll')" icon v-bind="attrs" v-on="on">
+					<v-icon v-if="$store.state.autoScroll">mdi-arrow-vertical-lock</v-icon>
+					<v-icon v-else>mdi-arrow-up-down</v-icon>
+				</v-btn>
+			</template>
+			<span v-if="$store.state.autoScroll">Disable auto scroll</span>
+			<span v-else>Enable auto scroll</span>
+		</v-tooltip>
+		<v-tooltip bottom>
+			<template v-slot:activator="{ on, attrs }">
 				<v-btn class="pa-5" @click="aboutModal = true" icon v-bind="attrs" v-on="on">
 					<v-icon>mdi-information</v-icon>
 				</v-btn>
