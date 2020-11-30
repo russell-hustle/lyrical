@@ -17,7 +17,7 @@
 					<v-progress-circular indeterminate color="green"></v-progress-circular>
 				</div>
 				<div v-else-if="!noLyrics" class="rounded-xl">
-					<v-list v-for="(line, index) in lines" :key="index">
+					<v-list v-for="(line, index) in lines" :key="index" class="pa-4">
 						<guess-line v-if="line.guessing" @enter="score" :line="line" />
 						<p v-else>
 							{{ line.words }}
