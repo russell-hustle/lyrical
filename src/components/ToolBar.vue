@@ -13,6 +13,7 @@
 				</v-card-text>
 			</v-card>
 		</v-dialog>
+
 		<v-dialog v-model="leaderboardModal" eager transition="fade-transition">
 			<v-card id="leaderboard-modal" tile elevation="20">
 				<v-btn id="modal-close" icon @click="leaderboardModal = false">
@@ -21,12 +22,22 @@
 				<v-card-text class="text-h5"
 					>Leaderboard
 				</v-card-text>
+				<div v-if="loadingLeaderboardData" class="mt-16">
+					<v-progress-circular indeterminate color="green"></v-progress-circular>
+				</div>
+				<div v-else>
+					<v-data-table :headers="leaderboardHeaders" :items="leaderboardData" disable-pagination hide-default-footer="true">
+					</v-data-table>
+					<!-- <v-list v-for="(person, index) in leaderboardData" :key="index">
+						{{ person.user_id }}
+					</v-list> -->
+				</div>
 			</v-card>
 		</v-dialog>
 
 		<v-tooltip bottom>
 			<template v-slot:activator="{ on, attrs }">
-				<v-btn class="pa-5" @click="leaderboardModal = true" icon v-bind="attrs" v-on="on">
+				<v-btn class="pa-5" @click="getData" icon v-bind="attrs" v-on="on">
 					<v-icon >mdi-account-group</v-icon>
 				</v-btn>
 			</template>
@@ -53,7 +64,7 @@
 		</v-tooltip>
 		<v-tooltip bottom>
 			<template v-slot:activator="{ on, attrs }">
-				<v-btn icon href="https://github.com/russell-hustle/lyrical" v-bind="attrs" v-on="on">
+				<v-btn icon href="https://github.com/russell-hustle" v-bind="attrs" v-on="on">
 					<v-icon>mdi-github</v-icon>
 				</v-btn>
 			</template>
@@ -72,12 +83,22 @@
 </template>
 
 <script>
+
+import { getLeaderboardData } from '../getLeaderboard';
+
 export default {
 	name: 'ToolBar',
 	data() {
 		return {
 			aboutModal: false,
 			leaderboardModal: false,
+			leaderboardHeaders: [ 
+				{ text: "Name", value: "user_id", sortable: false },
+				{ text: "Points", value: "points", sortable: true  },
+				{ text: "Efficiency", value: "efficiency", sortable: true },
+			],
+			leaderboardData: [],
+			loadingLeaderboardData: true,	
 			darkImg: require('@/assets/codecamp-dark.png'),
 			lightImg: require('@/assets/codecamp-light.png')
 		};
@@ -86,6 +107,21 @@ export default {
 		getThemedImage() {
 			return this.$vuetify.theme.dark ? this.darkImg : this.lightImg;
 		}
+	},
+	methods : {
+		async getData() {
+			this.leaderboardModal = true;
+			this.leaderboardData = [];
+			const responseData = await getLeaderboardData()
+			responseData.forEach(person => {
+				this.leaderboardData.push({
+					user_id: person.user_id,
+					points: person.points,
+					efficiency: person.efficiency
+				})
+			})
+			this.loadingLeaderboardData = false;
+		},
 	}
 };
 </script>
@@ -117,5 +153,8 @@ export default {
 
 .v-ripple__container {
 	opacity: 0 !important;
+}
+.v-data-table {
+	text-align: center;
 }
 </style>
