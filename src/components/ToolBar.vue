@@ -13,7 +13,27 @@
 				</v-card-text>
 			</v-card>
 		</v-dialog>
+		<v-dialog v-model="leaderboardModal" eager transition="fade-transition">
+			<v-card id="leaderboard-modal" tile elevation="20">
+				<v-btn id="modal-close" icon @click="leaderboardModal = false">
+					<v-icon>mdi-close</v-icon>
+				</v-btn>
+				<v-card-text class="text-h5"
+					>Leaderboard
+				</v-card-text>
+			</v-card>
+		</v-dialog>
+
 		<v-tooltip bottom>
+			<template v-slot:activator="{ on, attrs }">
+				<v-btn class="pa-5" @click="leaderboardModal = true" icon v-bind="attrs" v-on="on">
+					<v-icon >mdi-account-group</v-icon>
+				</v-btn>
+			</template>
+			<span>View Player Leaderboard</span>
+		</v-tooltip>
+		<v-tooltip bottom>
+
 			<template v-slot:activator="{ on, attrs }">
 				<v-btn class="pa-5" @click="$store.commit('toggleAutoScroll')" icon v-bind="attrs" v-on="on">
 					<v-icon v-if="$store.state.autoScroll">mdi-arrow-vertical-lock</v-icon>
@@ -57,6 +77,7 @@ export default {
 	data() {
 		return {
 			aboutModal: false,
+			leaderboardModal: false,
 			darkImg: require('@/assets/codecamp-dark.png'),
 			lightImg: require('@/assets/codecamp-light.png')
 		};
@@ -77,7 +98,13 @@ export default {
 	width: 100vw;
 	margin: auto;
 }
-
+#leaderboard-modal {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	margin: auto;
+}
 #modal-close {
 	position: absolute;
 	right: 0;
