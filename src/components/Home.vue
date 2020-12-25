@@ -48,6 +48,7 @@ import GuessLine from './GuessLine.vue';
 import Player from './Player.vue';
 
 import { getLyrics, parseLines } from '../getLyrics';
+import { updateScore } from '../getLeaderboard';
 
 export default {
 	name: 'Home',
@@ -66,7 +67,8 @@ export default {
 			loadingSong: true,
 			noLyrics: false,
 			loadingLyrics: true,
-			lastScroll: 0
+			lastScroll: 0,
+			currentUserId: null
 		};
 	},
 	computed: {
@@ -85,6 +87,20 @@ export default {
 			} else {
 				this.wrong++;
 			}
+			if (!this.currentUserId) {
+				this.$spotify.http
+				.get('').then((response) => {
+					if (response.status == 429) {
+						this.timeout = this.$TIMEOUT;
+					}
+				console.log('New user has joined: ', response.data.id)
+				this.currentUserId = response.data.id
+				updateScore(this.currentUserId, 1, this.correct / this.wrong, response.data.display_name)
+				});
+			} else {
+				updateScore(this.currentUserId, 1, this.correct / this.wrong)
+			}
+
 		},
 		/** Scroll with song */
 		autoScroll() {

@@ -26,11 +26,8 @@
 					<v-progress-circular indeterminate color="green"></v-progress-circular>
 				</div>
 				<div v-else>
-					<v-data-table :headers="leaderboardHeaders" :items="leaderboardData" disable-pagination hide-default-footer="true">
+					<v-data-table :headers="leaderboardHeaders" :items="leaderboardData" disable-pagination hide-default-footer>
 					</v-data-table>
-					<!-- <v-list v-for="(person, index) in leaderboardData" :key="index">
-						{{ person.user_id }}
-					</v-list> -->
 				</div>
 			</v-card>
 		</v-dialog>
@@ -93,7 +90,7 @@ export default {
 			aboutModal: false,
 			leaderboardModal: false,
 			leaderboardHeaders: [ 
-				{ text: "Name", value: "user_id", sortable: false },
+				{ text: "Name", value: "name", sortable: false },
 				{ text: "Points", value: "points", sortable: true  },
 				{ text: "Efficiency", value: "efficiency", sortable: true },
 			],
@@ -117,7 +114,8 @@ export default {
 				this.leaderboardData.push({
 					user_id: person.user_id,
 					points: person.points,
-					efficiency: person.efficiency
+					efficiency: person.efficiency,
+					name: person.name
 				})
 			})
 			this.loadingLeaderboardData = false;
@@ -154,7 +152,5 @@ export default {
 .v-ripple__container {
 	opacity: 0 !important;
 }
-.v-data-table {
-	text-align: center;
-}
+
 </style>
