@@ -36,7 +36,7 @@ We parse the lyrics and return data in a specific format to create a lyrics gues
 - [ ] Look into [vue config](https://cli.vuejs.org/config/).
 - [ ] Use server better or go serverless
 - [ ] Use more sites as fallback for more lyrics
-- [ ] Make a Leaderboard
+- [x] Make a Leaderboard
 - [ ] Optimize everything...
 
 If we are crazy we can even do searching songs through our app and use more of the Spotify API
