@@ -88,19 +88,17 @@ export default {
 				this.wrong++;
 			}
 			if (!this.currentUserId) {
-				this.$spotify.http
-				.get('').then((response) => {
+				this.$spotify.http.get('').then((response) => {
 					if (response.status == 429) {
 						this.timeout = this.$TIMEOUT;
 					}
-				console.log('New user has joined: ', response.data.id)
-				this.currentUserId = response.data.id
-				updateScore(this.currentUserId, 1, this.correct / this.wrong, response.data.display_name)
+					console.log('New user has joined: ', response.data.id);
+					this.currentUserId = response.data.id;
+					updateScore(this.currentUserId, 1, this.correct / this.wrong, response.data.display_name);
 				});
 			} else {
-				updateScore(this.currentUserId, 1, this.correct / this.wrong)
+				updateScore(this.currentUserId, 1, this.correct / this.wrong);
 			}
-
 		},
 		/** Scroll with song */
 		autoScroll() {
@@ -112,62 +110,58 @@ export default {
 				window.scrollTo(0, pixelPercent);
 			}
 		},
-		getCurrentSong() {
+		async getCurrentSong() {
 			if (this.timeout <= 0) {
-				this.$spotify.http
-					.get('/player/currently-playing')
-					.then((response) => {
-						this.loadingSong = false;
-						// If we exceed spotify rate limit
-						if (response.status == 429) {
-							this.timeout = this.$TIMEOUT;
+				try {
+					let response = await this.$spotify.http.get('/player/currently-playing');
+					console.log(response);
+					this.loadingSong = false;
+					// If we exceed spotify rate limit
+					if (response.status == 429) {
+						this.timeout = this.$TIMEOUT;
+					}
+					// Only update lyrics data on song change
+					let prev = this.current == null ? 'old' : this.current.item.name;
+					this.current = response.data == '' ? null : response.data;
+					this.noSong = this.current == null;
+					if (!this.noSong) {
+						if (prev != this.current.item.name) {
+							console.log('Song changed! Refreshing lyrics data!');
+							this.loadingLyrics = true;
+							// Get lyrics data
+							getLyrics(this.current.item.name, this.current.item.artists[0].name).then((lyrics) => {
+								let parsedLines = parseLines(lyrics);
+								if (parsedLines.length != 0) {
+									this.lines = parsedLines;
+									this.loadingLyrics = false;
+								} else {
+									this.noLyrics = true;
+								}
+							});
+							this.correct = 0;
+							this.wrong = 0;
 						}
-						// If our token has expired
-						// FIX: don't redirect and tell user they must login again
-						if (response.status == 401) {
-							this.$store.setExpired();
-							this.$router.push({ name: 'Landing' });
-						}
-						// Only update lyrics data on song change
-						let prev = this.current == null ? 'old' : this.current.item.name;
-						this.current = response.data == '' ? null : response.data;
-						this.noSong = this.current == null;
-						if (!this.noSong) {
-							if (prev != this.current.item.name) {
-								console.log('Song changed! Refreshing lyrics data!');
-								this.loadingLyrics = true;
-								// Get lyrics data
-								getLyrics(this.current.item.name, this.current.item.artists[0].name).then((lyrics) => {
-									let parsedLines = parseLines(lyrics);
-									if (parsedLines.length != 0) {
-										this.lines = parsedLines;
-										this.loadingLyrics = false;
-									} else {
-										this.noLyrics = true;
-									}
-								});
-								this.correct = 0;
-								this.wrong = 0;
-							}
-						}
-					})
-					.catch((error) => {
-						// handle error
-						console.error(error);
-					})
-					.then(() => {
-						// always executed
-					});
+					}
+					// Mark's shitty access token for testing -->
+					// #access_token=BQCGmoi2_iGWs8dF2elzaZLcBp-UaG9G0SQIlHDG2yZAP9KXs3M2y_SIfNTu92M7kuL-9BxwYoAVBiC4QQc0E7r11JM7kyJ18U1wxeYaPB4pxJjyNsV28OO9lt67lbbMs4n3PT_e7wojhENfM_8rk3a7be-Ve4ViturHe_jY&token_type=Bearer&expires_in=3600
+				} catch (error) {
+					// If our token has expired
+					if (error.response.data.error.message == 'The access token expired') {
+						this.$store.dispatch('expire');
+						this.$router.push({ name: 'Landing' });
+					}
+				}
 			} else {
 				this.timeout--;
 			}
 		}
 	},
 	mounted() {
-		setInterval(() => {
+		let poller = setInterval(() => {
 			this.getCurrentSong();
 			if (this.$store.state.autoScroll) this.autoScroll();
 		}, this.$POLL_RATE);
+		this.$store.commit('startPolling', poller);
 	}
 };
 </script>

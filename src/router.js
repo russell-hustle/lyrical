@@ -38,7 +38,7 @@ router.beforeEach((to, from, next) => {
   // If not auth
   if (!store.state.authenticated) {
     // If we were redirected after spotify login and we successfully authenticated
-    if (to.hash.length > 50) {
+    if (fromSpotify(to.hash)) {
       let data = querystring.decode(to.hash.substring(1));
       store.commit('setTokens', data);
       next({ name: 'Home' });
@@ -59,5 +59,11 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+// TODO: store on server the right way even though it's impossible lmao
+function fromSpotify(hash) {
+  console.log(hash);
+  return hash.length > 50;
+}
 
 export default router;
