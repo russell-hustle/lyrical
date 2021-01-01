@@ -39,9 +39,15 @@ router.beforeEach((to, from, next) => {
   if (!store.state.authenticated) {
     // If we were redirected after spotify login and we successfully authenticated
     if (fromSpotify(to.hash)) {
-      let data = querystring.decode(to.hash.substring(1));
-      store.commit('setTokens', data);
-      next({ name: 'Home' });
+      try {
+        let data = querystring.decode(to.hash.substring(1));
+        store.commit('setTokens', data);
+        next({ name: 'Home' });
+      } catch (error) {
+        console.log(error);
+        alert("Invalid access token.");
+        next({ name: 'Landing' });
+      }
     }
     else {
       // If this route requires auth
@@ -62,7 +68,7 @@ router.beforeEach((to, from, next) => {
 
 // TODO: store on server the right way even though it's impossible lmao
 function fromSpotify(hash) {
-  console.log(hash);
+  // Advanced security algorithm
   return hash.length > 50;
 }
 

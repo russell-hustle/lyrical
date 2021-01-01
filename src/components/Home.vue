@@ -114,7 +114,6 @@ export default {
 			if (this.timeout <= 0) {
 				try {
 					let response = await this.$spotify.http.get('/player/currently-playing');
-					console.log(response);
 					this.loadingSong = false;
 					// If we exceed spotify rate limit
 					if (response.status == 429) {
@@ -148,6 +147,7 @@ export default {
 					// If our token has expired
 					if (error.response.data.error.message == 'The access token expired') {
 						this.$store.dispatch('expire');
+						alert('Your spotify access token has expired. Please log in again to continue using Lyrical.');
 						this.$router.push({ name: 'Landing' });
 					}
 				}

@@ -17,7 +17,7 @@ export default new Vuex.Store({
       state.refresh_token = tokens.refresh_token;
       state.authenticated = true;
     },
-    Unauthenticate(state) {
+    unauthenticate(state) {
       state.authenticated = false;
     },
     toggleAutoScroll(state) {
@@ -33,7 +33,7 @@ export default new Vuex.Store({
   },
   actions: {
     expire(context) {
-      context.commit('Unauthenticate');
+      context.commit('unauthenticate');
       context.commit('stopPolling');
     }
   },
