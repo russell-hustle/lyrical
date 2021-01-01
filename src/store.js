@@ -9,6 +9,7 @@ export default new Vuex.Store({
     refresh_token: null,
     authenticated: false,
     autoScroll: true,
+    poller: null
   },
   mutations: {
     setTokens(state, tokens) {
@@ -16,14 +17,25 @@ export default new Vuex.Store({
       state.refresh_token = tokens.refresh_token;
       state.authenticated = true;
     },
-    setExpired(state) {
+    Unauthenticate(state) {
       state.authenticated = false;
     },
     toggleAutoScroll(state) {
       state.autoScroll = !state.autoScroll;
+    },
+    startPolling(state, intervalId) {
+      state.poller = intervalId;
+    },
+    stopPolling(state) {
+      clearInterval(state.poller);
+      state.poller = null;
     }
   },
   actions: {
+    expire(context) {
+      context.commit('Unauthenticate');
+      context.commit('stopPolling');
+    }
   },
   modules: {
   }
