@@ -95,10 +95,14 @@ export default {
 					}
 				console.log('New user has joined: ', response.data.id)
 				this.currentUserId = response.data.id
-				updateScore(this.currentUserId, 1, this.correct / this.wrong, response.data.display_name)
+				updateScore(this.currentUserId, 0, 1.0, response.data.display_name)
 				});
 			} else {
-				updateScore(this.currentUserId, 1, this.correct / this.wrong)
+				if (correct) {
+					updateScore(this.currentUserId, 1, 1.0)
+				} else {
+					updateScore(this.currentUserId, 0, 0.0)
+				}
 			}
 
 		},
