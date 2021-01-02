@@ -17,7 +17,7 @@ Integrates with the Spotify API
 
 ## Backend
 
-A Flask app that gets song requests and tries to find lyrics through a the Genius API.
+A Flask app that gets song requests and tries to find lyrics through a the Genius API. It also performs queries on an AWS database to manage our leaderboard data.
 
 A server was only necessary to bypass CORS, so thanks a lot CORS...
 
@@ -31,7 +31,7 @@ We parse the lyrics and return data in a specific format to create a lyrics gues
 - [x] Mobile friendly
 - [x] Scrolling with song?
 - [ ] Allow progress bar clicking (if possible using spotify API)
-- [ ] Handle token expiration better
+- [x] Handle token expiration better
 - [ ] Webpack optimization errors?
 - [ ] Look into [vue config](https://cli.vuejs.org/config/).
 - [ ] Use server better or go serverless
