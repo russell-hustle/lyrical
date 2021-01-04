@@ -19,15 +19,12 @@
 				<v-btn id="modal-close" icon @click="leaderboardModal = false">
 					<v-icon>mdi-close</v-icon>
 				</v-btn>
-				<v-card-text class="text-h5"
-					>Leaderboard
-				</v-card-text>
 				<div v-if="loadingLeaderboardData" class="mt-16">
 					<v-progress-circular indeterminate color="green"></v-progress-circular>
 				</div>
 				<div v-else>
-					<v-data-table :headers="leaderboardHeaders" :items="leaderboardData" disable-pagination hide-default-footer>
-					</v-data-table>
+					<v-card-title>Leaderboard</v-card-title>
+					<v-data-table :headers="leaderboardHeaders" :items="leaderboardData"></v-data-table>
 				</div>
 			</v-card>
 		</v-dialog>
@@ -90,9 +87,11 @@ export default {
 			aboutModal: false,
 			leaderboardModal: false,
 			leaderboardHeaders: [ 
-				{ text: "Name", value: "name", sortable: false },
+				{ text: "Rank", value: "rank", sortable: false, align: "center"},
+				{ text: "Name", value: "name", sortable: false, searchable: true },
 				{ text: "Points", value: "points", sortable: true  },
 				{ text: "Efficiency", value: "efficiency", sortable: true },
+				{ text: "Overall Score (points * efficiency)", value: "overall_score", sortable: true },
 			],
 			leaderboardData: [],
 			loadingLeaderboardData: true,	
@@ -115,10 +114,23 @@ export default {
 					user_id: person.user_id,
 					points: person.points,
 					efficiency: person.efficiency,
-					name: person.name
+					overall_score: person.overall_score,
+					name: person.name,
 				})
 			})
+			// sorts the leaderboard and adds the 'rank' value
+			this.leaderboardData.sort(this.compare)
+			for(var i = 0; i < this.leaderboardData.length; i++) {
+				this.leaderboardData[i].rank = i + 1
+			}
 			this.loadingLeaderboardData = false;
+		},
+		compare(a, b) {
+			if (a.overall_score < b.overall_score) {
+				return 1;
+			} else {
+				return -1;
+			}
 		},
 	}
 };
