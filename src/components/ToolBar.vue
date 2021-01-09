@@ -29,7 +29,7 @@
 			</v-card>
 		</v-dialog>
 
-		<v-tooltip bottom>
+		<v-tooltip v-if="!ifOnIOS" bottom>
 			<template v-slot:activator="{ on, attrs }">
 				<v-btn class="pa-5" @click="getData" icon v-bind="attrs" v-on="on">
 					<v-icon >mdi-account-group</v-icon>
@@ -37,8 +37,15 @@
 			</template>
 			<span>View Player Leaderboard</span>
 		</v-tooltip>
-		<v-tooltip bottom>
+		<v-tooltip v-else bottom style="display: none">
+			<template v-slot:activator="{ }">
+				<v-btn class="pa-5" @click="getData" icon v-bind="attrs" v-on="on">
+					<v-icon >mdi-account-group</v-icon>
+				</v-btn>
+			</template>
+		</v-tooltip>
 
+		<v-tooltip v-if="!ifOnIOS" bottom>
 			<template v-slot:activator="{ on, attrs }">
 				<v-btn class="pa-5" @click="$store.commit('toggleAutoScroll')" icon v-bind="attrs" v-on="on">
 					<v-icon v-if="$store.state.autoScroll">mdi-arrow-vertical-lock</v-icon>
@@ -48,7 +55,16 @@
 			<span v-if="$store.state.autoScroll">Disable auto scroll</span>
 			<span v-else>Enable auto scroll</span>
 		</v-tooltip>
-		<v-tooltip bottom>
+		<v-tooltip v-else bottom style="display: none">
+			<template v-slot:activator="{  }">
+				<v-btn class="pa-5" @click="$store.commit('toggleAutoScroll')" icon v-bind="attrs" v-on="on">
+					<v-icon v-if="$store.state.autoScroll">mdi-arrow-vertical-lock</v-icon>
+					<v-icon v-else>mdi-arrow-up-down</v-icon>
+				</v-btn>
+			</template>
+		</v-tooltip>
+
+		<v-tooltip v-if="!ifOnIOS" bottom>
 			<template v-slot:activator="{ on, attrs }">
 				<v-btn class="pa-5" @click="aboutModal = true" icon v-bind="attrs" v-on="on">
 					<v-icon>mdi-information</v-icon>
@@ -56,7 +72,15 @@
 			</template>
 			<span>About</span>
 		</v-tooltip>
-		<v-tooltip bottom>
+		<v-tooltip v-else bottom style="display: none">
+			<template v-slot:activator="{ }">
+				<v-btn class="pa-5" @click="aboutModal = true" icon v-bind="attrs" v-on="on">
+					<v-icon>mdi-information</v-icon>
+				</v-btn>
+			</template>
+		</v-tooltip>
+
+		<v-tooltip v-if="!ifOnIOS" bottom>
 			<template v-slot:activator="{ on, attrs }">
 				<v-btn icon href="https://github.com/russell-hustle" v-bind="attrs" v-on="on">
 					<v-icon>mdi-github</v-icon>
@@ -64,7 +88,15 @@
 			</template>
 			<span>Source Code</span>
 		</v-tooltip>
-		<v-tooltip bottom>
+		<v-tooltip v-else bottom style="display: none">
+			<template v-slot:activator="{ }">
+				<v-btn icon href="https://github.com/russell-hustle" v-bind="attrs" v-on="on">
+					<v-icon>mdi-github</v-icon>
+				</v-btn>
+			</template>
+		</v-tooltip>
+
+		<v-tooltip v-if="!ifOnIOS" bottom>
 			<template v-slot:activator="{ on, attrs }">
 				<v-btn class="pa-5" @click="$vuetify.theme.dark = !$vuetify.theme.dark" icon v-bind="attrs" v-on="on">
 					<v-icon>mdi-white-balance-sunny</v-icon>
@@ -73,6 +105,14 @@
 			<span v-if="$vuetify.theme.dark">Light Mode</span>
 			<span v-else>Dark Mode</span>
 		</v-tooltip>
+		<v-tooltip v-else bottom style="display: none">
+			<template v-slot:activator="{ }">
+				<v-btn class="pa-5" @click="$vuetify.theme.dark = !$vuetify.theme.dark" icon v-bind="attrs" v-on="on">
+					<v-icon>mdi-white-balance-sunny</v-icon>
+				</v-btn>
+			</template>
+		</v-tooltip>
+
 	</div>
 </template>
 
@@ -95,6 +135,7 @@ export default {
 			],
 			leaderboardData: [],
 			loadingLeaderboardData: true,	
+			ifOnIOS: this.$browserDetect.isIOS, 
 			darkImg: require('@/assets/codecamp-dark.png'),
 			lightImg: require('@/assets/codecamp-light.png')
 		};
@@ -102,7 +143,7 @@ export default {
 	computed: {
 		getThemedImage() {
 			return this.$vuetify.theme.dark ? this.darkImg : this.lightImg;
-		}
+		},
 	},
 	methods : {
 		async getData() {
