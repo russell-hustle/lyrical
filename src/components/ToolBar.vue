@@ -29,18 +29,19 @@
 			</v-card>
 		</v-dialog>
 
+		<v-hover v-model="leaderboardTooltip">
+			<v-tooltip v-model="leaderboardTooltip" bottom>
+				<template v-slot:activator="{ on }">
+					<v-btn class="pa-5" @click="getData" icon v-on="on">
+						<v-icon>mdi-account-group</v-icon>
+					</v-btn>
+				</template>
+				<span>View Player Leaderboard</span>
+			</v-tooltip>
+		</v-hover>
 		<v-tooltip bottom>
-			<template v-slot:activator="{ on, attrs }">
-				<v-btn class="pa-5" @click="getData" icon v-bind="attrs" v-on="on">
-					<v-icon >mdi-account-group</v-icon>
-				</v-btn>
-			</template>
-			<span>View Player Leaderboard</span>
-		</v-tooltip>
-		<v-tooltip bottom>
-
-			<template v-slot:activator="{ on, attrs }">
-				<v-btn class="pa-5" @click="$store.commit('toggleAutoScroll')" icon v-bind="attrs" v-on="on">
+			<template v-slot:activator="{ on }">
+				<v-btn class="pa-5" @click="$store.commit('toggleAutoScroll')" icon v-on="on">
 					<v-icon v-if="$store.state.autoScroll">mdi-arrow-vertical-lock</v-icon>
 					<v-icon v-else>mdi-arrow-up-down</v-icon>
 				</v-btn>
@@ -49,24 +50,24 @@
 			<span v-else>Enable auto scroll</span>
 		</v-tooltip>
 		<v-tooltip bottom>
-			<template v-slot:activator="{ on, attrs }">
-				<v-btn class="pa-5" @click="aboutModal = true" icon v-bind="attrs" v-on="on">
+			<template v-slot:activator="{ on }">
+				<v-btn class="pa-5" @click="aboutModal = true" icon v-on="on">
 					<v-icon>mdi-information</v-icon>
 				</v-btn>
 			</template>
 			<span>About</span>
 		</v-tooltip>
 		<v-tooltip bottom>
-			<template v-slot:activator="{ on, attrs }">
-				<v-btn icon href="https://github.com/russell-hustle" v-bind="attrs" v-on="on">
+			<template v-slot:activator="{ on }">
+				<v-btn icon href="https://github.com/russell-hustle" v-on="on">
 					<v-icon>mdi-github</v-icon>
 				</v-btn>
 			</template>
 			<span>Source Code</span>
 		</v-tooltip>
 		<v-tooltip bottom>
-			<template v-slot:activator="{ on, attrs }">
-				<v-btn class="pa-5" @click="$vuetify.theme.dark = !$vuetify.theme.dark" icon v-bind="attrs" v-on="on">
+			<template v-slot:activator="{ on }">
+				<v-btn class="pa-5" @click="$vuetify.theme.dark = !$vuetify.theme.dark" icon v-on="on">
 					<v-icon>mdi-white-balance-sunny</v-icon>
 				</v-btn>
 			</template>
@@ -77,7 +78,6 @@
 </template>
 
 <script>
-
 import { getLeaderboardData } from '../getLeaderboard';
 
 export default {
@@ -86,17 +86,18 @@ export default {
 		return {
 			aboutModal: false,
 			leaderboardModal: false,
-			leaderboardHeaders: [ 
-				{ text: "Rank", value: "rank", sortable: false, align: "center"},
-				{ text: "Name", value: "name", sortable: false, searchable: true },
-				{ text: "Points", value: "points", sortable: true  },
-				{ text: "Efficiency", value: "efficiency", sortable: true },
-				{ text: "Overall Score (points * efficiency)", value: "overall_score", sortable: true },
+			leaderboardHeaders: [
+				{ text: 'Rank', value: 'rank', sortable: false, align: 'center' },
+				{ text: 'Name', value: 'name', sortable: false, searchable: true },
+				{ text: 'Points', value: 'points', sortable: true },
+				{ text: 'Efficiency', value: 'efficiency', sortable: true },
+				{ text: 'Overall Score (points * efficiency)', value: 'overall_score', sortable: true }
 			],
 			leaderboardData: [],
-			loadingLeaderboardData: true,	
+			loadingLeaderboardData: true,
 			darkImg: require('@/assets/codecamp-dark.png'),
-			lightImg: require('@/assets/codecamp-light.png')
+			lightImg: require('@/assets/codecamp-light.png'),
+			leaderboardTooltip: false
 		};
 	},
 	computed: {
@@ -104,24 +105,24 @@ export default {
 			return this.$vuetify.theme.dark ? this.darkImg : this.lightImg;
 		}
 	},
-	methods : {
+	methods: {
 		async getData() {
 			this.leaderboardModal = true;
 			this.leaderboardData = [];
-			const responseData = await getLeaderboardData()
-			responseData.forEach(person => {
+			const responseData = await getLeaderboardData();
+			responseData.forEach((person) => {
 				this.leaderboardData.push({
 					user_id: person.user_id,
 					points: person.points,
 					efficiency: person.efficiency,
 					overall_score: person.overall_score,
-					name: person.name,
-				})
-			})
+					name: person.name
+				});
+			});
 			// sorts the leaderboard and adds the 'rank' value
-			this.leaderboardData.sort(this.compare)
-			for(var i = 0; i < this.leaderboardData.length; i++) {
-				this.leaderboardData[i].rank = i + 1
+			this.leaderboardData.sort(this.compare);
+			for (var i = 0; i < this.leaderboardData.length; i++) {
+				this.leaderboardData[i].rank = i + 1;
 			}
 			this.loadingLeaderboardData = false;
 		},
@@ -131,7 +132,7 @@ export default {
 			} else {
 				return -1;
 			}
-		},
+		}
 	}
 };
 </script>
@@ -156,7 +157,7 @@ export default {
 	right: 0;
 }
 
-// Get ride of ripple effect lingering
+// Get rid of ripple effect lingering
 .v-btn:before {
 	opacity: 0 !important;
 }
@@ -164,5 +165,4 @@ export default {
 .v-ripple__container {
 	opacity: 0 !important;
 }
-
 </style>
