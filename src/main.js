@@ -4,6 +4,7 @@ import vuetify from './plugins/vuetify';
 import router from './router';
 import { spotify } from './axios';
 import store from './store';
+import browserDetect from 'vue-browser-detect-plugin';
 
 Vue.prototype.$spotify = {
   http: spotify,
@@ -20,6 +21,9 @@ Vue.prototype.$POLL_RATE = RATE;
 Vue.prototype.$TIMEOUT = (1000 / RATE) * SECONDS;
 
 Vue.config.productionTip = false;
+
+// For browser detection
+Vue.use(browserDetect);
 
 new Vue({
   vuetify,
