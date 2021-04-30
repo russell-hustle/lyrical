@@ -6,8 +6,6 @@
 
 ---
 
-![image](https://user-images.githubusercontent.com/43868707/116647278-605dfd80-a937-11eb-96ae-0ee03d93bce4.png)
-
 
 
 ## Frontend
