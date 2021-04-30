@@ -6,6 +6,9 @@
 
 ---
 
+![image](https://user-images.githubusercontent.com/43868707/116646690-f3963380-a935-11eb-8a9d-771e97c169db.png)
+
+
 ## Frontend
 
 Technologies
