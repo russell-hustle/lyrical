@@ -6,7 +6,9 @@
 
 ---
 
-!(./Lyrical Demo.gif)
+![alt text][demo]
+
+[demo]: https://github.com/russell-hustle/lyrical/blob/main/LyricalDemo.gif
 
 
 ## Frontend
