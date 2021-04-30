@@ -6,7 +6,7 @@
 
 ---
 
-![image]Lyrical Demo.gif
+!(Lyrical Demo.gif)
 
 
 ## Frontend
