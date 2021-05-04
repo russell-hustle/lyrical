@@ -9,6 +9,7 @@
 Lyrical is a web-app created for playing a game with your favorite songs. If you have a spotify account you can login and then start playing a song. Lyrical will show the lyrics to the corresonding song in a way that gamifies the experience. It gives real time feedback that tells you whether your guess was right or not. Check out the leaderboard to see how you're comparing to other players.
 
 ![alt text][demo]
+
 [demo]: https://github.com/russell-hustle/lyrical/blob/main/LyricalDemo.gif
 
 
