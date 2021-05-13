@@ -33,7 +33,7 @@ async function searchSong(title, artist) {
 	return results;
 }
 
-const server_url = 'https://lyrical-middleman.herokuapp.com';
+const server_url = 'LAMBDA_ENDPOINT';
 
 /**
  * Scrapes the lyrics based on the song URL
@@ -42,7 +42,7 @@ const server_url = 'https://lyrical-middleman.herokuapp.com';
 async function extractLyrics(url) {
 	let { data } = await axios({
 		method: 'post',
-		url: `${server_url}/lyrics`,
+		url: `${server_url}`,
 		data: qs.stringify({
 			url: url,
 		}),

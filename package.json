@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@netlify/functions": "^0.7.2",
     "axios": "^0.21.1",
     "cheerio-without-node-native": "^1.0.0-rc.2",
     "core-js": "^3.6.5",
