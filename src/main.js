@@ -1,17 +1,22 @@
-import Vue from 'vue';
-import App from './App.vue';
-import vuetify from './plugins/vuetify';
-import router from './router';
-import { spotify } from './axios';
-import store from './store';
-import browserDetect from 'vue-browser-detect-plugin';
+import Vue from "vue";
+import App from "./App.vue";
+import vuetify from "./plugins/vuetify";
+import router from "./router";
+import { spotify } from "./axios";
+import store from "./store";
+import browserDetect from "vue-browser-detect-plugin";
+
+if (process.env.NODE_ENV === "staging")
+  const redirect_uri = "htpps://stage-spotify-lyrical.netlify.app/";
+else if (process.env.NODE_ENV === "production")
+  const redirect_uri = "htpps://spotify-lyrical.netlify.app/";
+else const redirect_uri = "http://localhost:8080";
 
 Vue.prototype.$spotify = {
   http: spotify,
-  client_id: '8bcb169f90554b209a351f9016ec7b04',
-  redirect_uri: process.env.NODE_ENV === 'production' ? 'https://spotify-lyrical.netlify.app/' : 'http://localhost:8080',
-  scopes: 'user-read-currently-playing user-modify-playback-state',
-
+  client_id: "8bcb169f90554b209a351f9016ec7b04",
+  redirect_uri: redirect_uri,
+  scopes: "user-read-currently-playing user-modify-playback-state",
 };
 
 // For rate limiting
@@ -29,5 +34,5 @@ new Vue({
   vuetify,
   router,
   store,
-  render: h => h(App)
-}).$mount('#app');
+  render: (h) => h(App),
+}).$mount("#app");
