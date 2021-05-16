@@ -33,7 +33,7 @@ async function searchSong(title, artist) {
 	return results;
 }
 
-const server_url = 'LAMBDA_ENDPOINT';
+const server_url = '/.netlify/functions/lyrics';
 
 /**
  * Scrapes the lyrics based on the song URL
