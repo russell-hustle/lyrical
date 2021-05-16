@@ -1,6 +1,6 @@
 import axios from 'axios';
 import cio from 'cheerio-without-node-native';
-import qs from 'querystring';
+// import qs from 'querystring';
 
 // Sanitizes search parameters
 function getTitle(title, artist) {
@@ -52,6 +52,7 @@ async function extractLyrics(url) {
 	});
 	const $ = cio.load(data);
 	let lyrics = $('div[class="lyrics"]').text().trim();
+	console.log(lyrics);
 	if (!lyrics) {
 		lyrics = '';
 		$('div[class^="Lyrics__Container"]').each((_i, elem) => {
