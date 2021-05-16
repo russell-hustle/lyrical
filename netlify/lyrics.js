@@ -6,6 +6,7 @@ const headers = {
 
 exports.handler = async function(event, context, callback) {
   const { url } = JSON.parse(event.body);
+  console.log(url);
   let { data } = await axios.get(url);
   if (data != null) {
     callback(null, {
