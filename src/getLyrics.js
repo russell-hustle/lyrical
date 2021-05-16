@@ -51,7 +51,7 @@ async function extractLyrics(url) {
 		}
 	});
 	const $ = cio.load(data);
-	console.log($);
+	console.log($.text());
 	let lyrics = $('div[class="lyrics"]').text().trim();
 	console.log(lyrics);
 	if (!lyrics) {

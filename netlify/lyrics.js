@@ -13,7 +13,6 @@ exports.handler = async function(event, context, callback) {
       statusCode: 200,
       headers,
       body: JSON.stringify({
-        status: 200,
         data: data,
       }),
     });
