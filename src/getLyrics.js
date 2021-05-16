@@ -43,7 +43,7 @@ async function extractLyrics(url) {
 	let { data } = await axios({
 		method: 'post',
 		url: `${server_url}`,
-		data: qs.stringify({
+		data: JSON.stringify({
 			url: url,
 		}),
 		headers: {
