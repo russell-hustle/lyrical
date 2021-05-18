@@ -34,9 +34,11 @@ async function searchSong(title, artist) {
 }
 
 let server_url =
-	process.env.NODE_ENV === ("production" || "staging")
-		? "/.netlify/functions/lyrics"
-		: "http://localhost:9000/lyrics";
+	process.env.NODE_ENV === "production"
+      ? "/.netlify/functions/lyrics"
+      : process.env.NODE_ENV === "staging"
+      ? "/.netlify/functions/lyrics"
+      : "http://localhost:9000"
 
 /**
  * Scrapes the lyrics based on the song URL
