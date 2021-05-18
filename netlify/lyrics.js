@@ -4,19 +4,28 @@ const headers = {
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
-exports.handler = async function(event, context, callback) {
+exports.handler = async function (event, context, callback) {
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers,
+      body: "hello preflight how is your day?",
+    };
+  }
   const { url } = JSON.parse(event.body);
-  console.log(url);
-  let { data } = await axios.get(url);
+  let { data } = await axios.get(url, headers);
   if (data != null) {
-    callback(null, {
+    return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
-        data: data,
+        lyrics: data,
       }),
-    });
+    };
   } else {
-    callback(new Error("lyrics not found no cap"));
+    return {
+      statusCode: 404,
+      headers,
+    };
   }
 };

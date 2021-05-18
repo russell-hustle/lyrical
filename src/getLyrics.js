@@ -1,20 +1,20 @@
-import axios from 'axios';
-import cio from 'cheerio-without-node-native';
-// import qs from 'querystring';
+import axios from "axios";
+import cio from "cheerio-without-node-native";
 
 // Sanitizes search parameters
 function getTitle(title, artist) {
 	return `${title} ${artist}`
 		.toLowerCase()
-		.replace(/ *\([^)]*\) */g, '')
-		.replace(/ *\[[^\]]*]/, '')
-		.replace(/feat.|ft./g, '')
-		.replace(/\s+/g, ' ')
+		.replace(/ *\([^)]*\) */g, "")
+		.replace(/ *\[[^\]]*]/, "")
+		.replace(/feat.|ft./g, "")
+		.replace(/\s+/g, " ")
 		.trim();
 }
 
-const searchUrl = 'https://api.genius.com/search?q=';
-const genius_key = "jnk3Z7zFGcLZsSgZPk0kGifKBUhJzYlhqgDJmbYPCJBxKUVjE1EtudaHvco_90Tr";
+const searchUrl = "https://api.genius.com/search?q=";
+const genius_key =
+	"jnk3Z7zFGcLZsSgZPk0kGifKBUhJzYlhqgDJmbYPCJBxKUVjE1EtudaHvco_90Tr";
 
 /**
  * Gets the song data from the genius API
@@ -33,7 +33,10 @@ async function searchSong(title, artist) {
 	return results;
 }
 
-const server_url = '/.netlify/functions/lyrics';
+let server_url =
+	process.env.NODE_ENV === ("production" || "staging")
+		? "/.netlify/functions/lyrics"
+		: "http://localhost:9000/lyrics";
 
 /**
  * Scrapes the lyrics based on the song URL
@@ -41,27 +44,32 @@ const server_url = '/.netlify/functions/lyrics';
  */
 async function extractLyrics(url) {
 	let { data } = await axios({
-		method: 'post',
+		method: "post",
 		url: `${server_url}`,
 		data: JSON.stringify({
 			url: url,
 		}),
 		headers: {
-			'content-type': 'application/x-www-form-urlencoded'
-		}
+			"content-type": "application/json",
+		},
 	});
-	const $ = cio.load(data);
-	console.log($.text());
-	let lyrics = $('div[class="lyrics"]').text().trim();
-	console.log(lyrics);
+	const $ = cio.load(data.lyrics);
+	let lyrics = $('div[class="lyrics"]')
+		.text()
+		.trim();
 	if (!lyrics) {
-		lyrics = '';
+		lyrics = "";
 		$('div[class^="Lyrics__Container"]').each((_i, elem) => {
 			if ($(elem).text().length !== 0) {
-				let snippet = $(elem).html()
-					.replace(/<br>/g, '\n')
-					.replace(/<(?!\s*br\s*\/?)[^>]+>/gi, '');
-				lyrics += $('<textarea/>').html(snippet).text().trim() + '\n\n';
+				let snippet = $(elem)
+					.html()
+					.replace(/<br>/g, "\n")
+					.replace(/<(?!\s*br\s*\/?)[^>]+>/gi, "");
+				lyrics +=
+					$("<textarea/>")
+						.html(snippet)
+						.text()
+						.trim() + "\n\n";
 			}
 		});
 	}
@@ -74,17 +82,17 @@ async function extractLyrics(url) {
  * @param {string} lyrics A single string of all the lyrics
  */
 function parseLines(lyrics) {
-	let lines = lyrics.split('\n');
+	let lines = lyrics.split("\n");
 	let parsedLines = [];
 	// Remove genius stanza tags
-	lines = lines.filter((line) => line.charAt(0) != '[');
+	lines = lines.filter((line) => line.charAt(0) != "[");
 
 	let wordCounter = 0;
-	let badEndings = [',', '!', '?'];
+	let badEndings = [",", "!", "?"];
 	let chosen = false;
 
 	for (const line of lines) {
-		let words = line.split(' ');
+		let words = line.split(" ");
 		for (const word of words) {
 			// Every 12 words
 			if (wordCounter > 12) {
@@ -114,7 +122,7 @@ function parseLines(lyrics) {
 						words: lineWords,
 						guessing: true,
 						guess_index: idx,
-						correct: newWord
+						correct: newWord,
 					});
 				}
 			}
@@ -126,7 +134,7 @@ function parseLines(lyrics) {
 				words: line,
 				guessing: false,
 				guess_index: null,
-				correct: null
+				correct: null,
 			});
 		}
 		chosen = false;
@@ -134,7 +142,6 @@ function parseLines(lyrics) {
 
 	return parsedLines;
 }
-
 
 async function getLyrics(title, artist) {
 	let results = await searchSong(title, artist);
