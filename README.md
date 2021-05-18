@@ -41,7 +41,7 @@ We parse the lyrics and return data in a specific format to create a lyrics gues
 - [x] Handle token expiration better
 - [ ] Webpack optimization errors?
 - [ ] Look into [vue config](https://cli.vuejs.org/config/).
-- [ ] Use server better or go serverless
+- [x] Use server better or go serverless
 - [ ] Use more sites as fallback for more lyrics
 - [x] Make a Leaderboard
 - [ ] Optimize everything...
