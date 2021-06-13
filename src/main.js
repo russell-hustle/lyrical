@@ -12,8 +12,6 @@ Vue.prototype.$spotify = {
   redirect_uri:
     process.env.NODE_ENV === "production"
       ? "https://spotify-lyrical.netlify.app/"
-      : process.env.NODE_ENV === "staging"
-      ? "https://stage-spotify-lyrical.netlify.app/"
       : "http://localhost:8080",
   scopes: "user-read-currently-playing user-modify-playback-state",
 };

@@ -4,11 +4,10 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build; yarn build:lambda",
     "lint": "vue-cli-service lint",
-    "prod": "yarn build; npm run build:lambda",
-    "start:lambda": "netlify-lambda serve netlify",
-    "build:lambda": "netlify-lambda build netlify"
+    "start:lambda": "netlify-lambda serve lambda",
+    "build:lambda": "netlify-lambda build lambda"
   },
   "dependencies": {
     "@netlify/functions": "^0.7.2",
