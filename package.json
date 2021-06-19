@@ -7,7 +7,8 @@
     "build": "vue-cli-service build; yarn build:lambda",
     "lint": "vue-cli-service lint",
     "functions:serve": "netlify functions:serve --port 8888",
-    "functions:getLeaderboard": "netlify functions:invoke --port 8888 --no-identity --name getLeaderboard"
+    "functions:getLeaderboard": "netlify functions:invoke --port 8888 --no-identity --name getLeaderboard",
+    "functions:lyrics": "netlify functions:invoke --port 8888 --no-identity --name lyrics"
   },
   "dependencies": {
     "axios": "^0.21.1",

@@ -16,12 +16,13 @@ const handler = async (event, context) => {
 
     case 'POST':
       // POST /.netlify/functions/users 
-      // JSON body with name/points/efficiency
+      // Body contains spotifyID and name
+      // Only for first time users, initializes points to 0 and accuracy to 1.0
       return createRoute.handler(event, context);
 
     case 'PUT':
-      // PUT /.netlify/functions/users/<id> 
-      // JSON body with name/points/efficiency
+      // PUT /.netlify/functions/users/<spotify_id> 
+      // JSON body with points/efficiency
 
       if (segments.length === 1) {
         const [id] = segments;

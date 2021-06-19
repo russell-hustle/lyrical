@@ -5,28 +5,41 @@ const headers = {
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
-exports.handler = async function (event, context, callback) {
-  if (event.httpMethod === 'OPTIONS') {
+const handler = async (event) => {
+  // if (event.httpMethod === 'OPTIONS') {
+  //   return {
+  //     statusCode: 200,
+  //     headers,
+  //     body: "hello preflight how is your day?",
+  //   };
+  // }
+
+  try {
+    // Get genius song URL
+    const { url } = JSON.parse(event.body);
+    let { data } = await axios.get(url, headers);
+    if (data != null) {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          lyrics: data,
+        }),
+      };
+    } else {
+      return {
+        statusCode: 404,
+        headers,
+      };
+    }
+  } catch (error) {
+    console.error(error);
     return {
-      statusCode: 200,
-      headers,
-      body: "hello preflight how is your day?",
+      statusCode: 500,
+      body: JSON.stringify(error),
     };
   }
-  const { url } = JSON.parse(event.body);
-  let { data } = await axios.get(url, headers);
-  if (data != null) {
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({
-        lyrics: data,
-      }),
-    };
-  } else {
-    return {
-      statusCode: 404,
-      headers,
-    };
-  }
+
 };
+
+module.exports = { handler };

@@ -18,6 +18,7 @@ spotify.interceptors.request.use(
 	}
 );
 
+// NETLIFY FUNCTION CALLS
 const functions = axios.create({
 	baseURL: '/.netlify/functions'
 });

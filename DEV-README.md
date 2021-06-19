@@ -25,16 +25,14 @@ and after the the netlify dev command it should list all the environment variabl
 
 # IMPROVEMENTS
 
-- [x] Make guessing case insensitive
 - [x] Mobile friendly
 - [x] Scrolling with song?
 - [ ] Allow progress bar clicking (if possible using spotify API)
 - [x] Handle token expiration better
 - [ ] Webpack optimization errors?
 - [ ] Look into [vue config](https://cli.vuejs.org/config/).
-- [x] Use server better or go serverless
+- [-] Use server better or go serverless
 - [ ] Use more sites as fallback for more lyrics
-- [x] Make a Leaderboard
-- [ ] Optimize everything...
+- [ ] Use localstorage to save VueX state @Mark
 
 If we are crazy we can even do searching songs through our app and use more of the Spotify API

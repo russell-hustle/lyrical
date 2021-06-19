@@ -2,17 +2,17 @@ import Vue from "vue";
 import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
 import router from "./router";
-import { functions, spotify } from "./http";
+import { functions, spotify } from "./axiosInstances";
 import store from "./store";
 import browserDetect from "vue-browser-detect-plugin";
 
 Vue.prototype.$spotify = {
   http: spotify,
-  client_id: "8bcb169f90554b209a351f9016ec7b04",
+  client_id: process.env.SPOTIFY_CLIENT_ID,
   redirect_uri:
     process.env.NODE_ENV === "production"
       ? "https://spotify-lyrical.netlify.app/"
-      : "http://localhost:8080",
+      : "http://localhost:8888",
   scopes: "user-read-currently-playing user-modify-playback-state",
 };
 

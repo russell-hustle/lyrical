@@ -8,8 +8,6 @@ const client = new Client({
 });
 
 const handler = async () => {
-  console.log('Function `read-all` invoked');
-
   try {
     const response = await client.query(
       query.Paginate(
@@ -46,9 +44,9 @@ const handler = async () => {
       body: JSON.stringify(rankedData),
     };
   } catch (error) {
-    console.log('error', error);
+    console.error(error);
     return {
-      statusCode: 400,
+      statusCode: 500,
       body: JSON.stringify(error),
     };
   }

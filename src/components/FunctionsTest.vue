@@ -27,7 +27,7 @@
                 <v-text-field placeholder="ID" v-model="updateUserID"></v-text-field>
                 <v-text-field placeholder="Name" v-model="newUser.name"></v-text-field>
                 <v-text-field placeholder="Points" v-model="newUser.points"></v-text-field>
-                <v-text-field placeholder="Efficiency" v-model="newUser.efficiency"></v-text-field>
+                <v-text-field placeholder="Accuracy" v-model="newUser.efficiency"></v-text-field>
             </v-col>
         </v-row>
     </v-container>

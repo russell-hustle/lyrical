@@ -9,15 +9,19 @@ const client = new Client({
 
 /* export our lambda function as named "handler" export */
 const handler = async (event) => {
-  /* parse the string body into a useable JS object */
-  const data = JSON.parse(event.body);
-  console.log('Function `create` invoked', data);
-  const item = {
-    data,
-  };
-  /* construct the fauna query */
   try {
-    const response = await client.query(query.Create(query.Collection('users'), item));
+    // Get spotify ID
+    const userInfo = JSON.parse(event.body);
+    const newUser = {
+      points: 0,
+      accuracy: 1.0,
+      ...userInfo
+    };
+    console.log("New User creation:", newUser);
+    /* construct the fauna query */
+    const response = await client.query(
+      query.Create(query.Collection('users'), newUser)
+    );
     console.log('success', response);
     /* Success! return the response with statusCode 200 */
     return {
