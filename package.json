@@ -6,15 +6,14 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build; yarn build:lambda",
     "lint": "vue-cli-service lint",
-    "start:lambda": "netlify-lambda serve lambda",
-    "build:lambda": "netlify-lambda build lambda"
+    "functions:serve": "netlify functions:serve --port 8888",
+    "functions:getLeaderboard": "netlify functions:invoke --port 8888 --no-identity --name getLeaderboard"
   },
   "dependencies": {
-    "@netlify/functions": "^0.7.2",
     "axios": "^0.21.1",
     "cheerio-without-node-native": "^1.0.0-rc.2",
     "core-js": "^3.6.5",
-    "netlify-lambda": "^2.0.6",
+    "faunadb": "^4.3.0",
     "vue": "^2.6.11",
     "vue-browser-detect-plugin": "^0.1.13",
     "vue-router": "^3.4.9",
@@ -23,10 +22,10 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.10",
-    "@vue/cli-plugin-eslint": "^4.5.10",
+    "@vue/cli-plugin-eslint": "^3.1.1",
     "@vue/cli-plugin-router": "^4.5.10",
     "@vue/cli-plugin-vuex": "^4.5.10",
-    "@vue/cli-service": "^4.1.1",
+    "@vue/cli-service": "^3.12.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",

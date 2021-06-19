@@ -1,3 +1,6 @@
 [build]
-    functions = ".server"
-    Command = "yarn build"
+    command = "yarn build"
+    functions = "functions"
+
+[dev]
+    port = 8888

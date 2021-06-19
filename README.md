@@ -29,21 +29,3 @@ A Flask app that gets song requests and tries to find lyrics through a the Geniu
 A server was only necessary to bypass CORS, so thanks a lot CORS...
 
 We parse the lyrics and return data in a specific format to create a lyrics guessing game.
-
----
-
-# IMPROVEMENTS
-
-- [x] Make guessing case insensitive
-- [x] Mobile friendly
-- [x] Scrolling with song?
-- [ ] Allow progress bar clicking (if possible using spotify API)
-- [x] Handle token expiration better
-- [ ] Webpack optimization errors?
-- [ ] Look into [vue config](https://cli.vuejs.org/config/).
-- [x] Use server better or go serverless
-- [ ] Use more sites as fallback for more lyrics
-- [x] Make a Leaderboard
-- [ ] Optimize everything...
-
-If we are crazy we can even do searching songs through our app and use more of the Spotify API

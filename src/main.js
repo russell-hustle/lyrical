@@ -2,7 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
 import router from "./router";
-import { spotify } from "./axios";
+import { functions, spotify } from "./http";
 import store from "./store";
 import browserDetect from "vue-browser-detect-plugin";
 
@@ -15,6 +15,8 @@ Vue.prototype.$spotify = {
       : "http://localhost:8080",
   scopes: "user-read-currently-playing user-modify-playback-state",
 };
+
+Vue.prototype.$functions = functions;
 
 // For rate limiting
 const RATE = 800;

@@ -18,4 +18,8 @@ spotify.interceptors.request.use(
 	}
 );
 
-export { spotify };
+const functions = axios.create({
+	baseURL: '/.netlify/functions'
+});
+
+export { spotify, functions };

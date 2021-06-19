@@ -25,3 +25,5 @@ pnpm-debug.log*
 
 # directory for built lambda functions
 .server/
+# Local Netlify folder
+.netlify

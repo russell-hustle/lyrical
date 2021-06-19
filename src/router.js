@@ -23,6 +23,11 @@ const routes = [
     }
   },
   {
+    path: '/test',
+    name: 'FunctionsTest',
+    component: require('./components/FunctionsTest.vue').default,
+  },
+  {
     path: '*',
     redirect: '/'
   }
@@ -44,7 +49,7 @@ router.beforeEach((to, from, next) => {
         store.commit('setTokens', data);
         next({ name: 'Home' });
       } catch (error) {
-        console.log(error);
+        console.error(error);
         alert("Invalid access token.");
         next({ name: 'Landing' });
       }
