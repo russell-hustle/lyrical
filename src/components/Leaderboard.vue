@@ -20,6 +20,7 @@
 import { getLeaderboard } from '../leaderboard';
 
 export default {
+    // TODO: add refresh button w/ timeout (only refresh on command to avoid excessive function calls)
     data() {
         return {
             leaderboardHeaders: [
@@ -30,36 +31,15 @@ export default {
                 { text: 'Overall Score (points * accuracy)', value: 'score', sortable: true }
             ],
             leaderboardData: [],
-            loadingLeaderboardData: true
+            loadingLeaderboardData: false
         };
     },
     methods: {
         async getData() {
-            this.leaderboardData = [];
-            const responseData = await getLeaderboard();
-            console.log(responseData);
-            responseData.forEach((person) => {
-                this.leaderboardData.push({
-                    user_id: person.user_id,
-                    points: person.points,
-                    efficiency: person.efficiency,
-                    overall_score: person.overall_score,
-                    name: person.name
-                });
-            });
-            // sorts the leaderboard and adds the 'rank' value
-            this.leaderboardData.sort(this.compare);
-            for (var i = 0; i < this.leaderboardData.length; i++) {
-                this.leaderboardData[i].rank = i + 1;
-            }
+            this.loadingLeaderboardData = true;
+            this.leaderboardData = await getLeaderboard();
+            console.log('Leaderboard loaded', this.leaderboardData);
             this.loadingLeaderboardData = false;
-        },
-        compare(a, b) {
-            if (a.overall_score < b.overall_score) {
-                return 1;
-            } else {
-                return -1;
-            }
         }
     },
     created() {

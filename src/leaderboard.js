@@ -25,7 +25,7 @@ async function updateScore(user_id, points, efficiency, name = null) {
 
 /**
  * Get all user data for the leaderboard
- * @returns {Array} The array of users scores in ranked order
+ * @returns {Promise<Array>} The array of users scores in ranked order
  */
 async function getLeaderboard() {
 	try {
@@ -40,6 +40,7 @@ async function getLeaderboard() {
  * 
  * @param {number} spotifyID The spotify ID retrieved from the API
  * @param {string} name Spotify username for current user
+ * @returns {Promise}
  */
 async function addUser(spotifyID, name) {
 	try {
@@ -58,7 +59,8 @@ async function addUser(spotifyID, name) {
  * @param {number} spotifyID The spotify ID retrieved from the API
  * @param {string} newScoreData The new data to be uploaded
  * @param {number} newScoreData.points The new points total ?
- * @param {number} newScoreData.accuracy Thew new accuracy
+ * @param {number} newScoreData.accuracy The new accuracy
+ * @returns {Promise}
  */
 async function updateUser(spotifyID, newScoreData) {
 	try {

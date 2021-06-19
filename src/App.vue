@@ -1,43 +1,44 @@
 <template>
-	<v-app>
-		<v-main id="full-height" class="flex-grow-1">
-			<v-container fluid class="fill-height">
-				<router-view></router-view>
-			</v-container>
-		</v-main>
-		<tool-bar id="toolbar" />
-	</v-app>
+    <v-app>
+        <v-main id="full-height" class="flex-grow-1">
+            <v-container fluid class="fill-height">
+                <router-view></router-view>
+            </v-container>
+        </v-main>
+        <tool-bar id="toolbar" />
+    </v-app>
 </template>
 
 <script>
 import ToolBar from './components/ToolBar.vue';
 
 export default {
-	components: { ToolBar }
+    components: { ToolBar }
 };
 </script>
 
 <style lang="scss">
 html {
-	height: 100vh;
-	scroll-behavior: smooth;
+    height: 100vh;
+    scroll-behavior: smooth;
 }
 
 body {
-	height: 100%;
+    height: 100%;
 }
 
 * {
-	text-align: center;
+    text-align: center;
 }
 
 #full-height {
-	min-height: 100vh;
+    min-height: 100vh;
 }
 
 #toolbar {
-	position: fixed;
-	right: 1%;
-	top: 0;
+    position: fixed;
+    // FIX: ????
+    right: 1%;
+    top: 0;
 }
 </style>

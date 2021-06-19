@@ -2,12 +2,10 @@ const process = require('process');
 
 const { query, Client } = require('faunadb');
 
-/* configure faunaDB Client with our secret */
 const client = new Client({
   secret: process.env.FAUNADB_SERVER_SECRET,
 });
 
-/* export our lambda function as named "handler" export */
 const handler = async (event) => {
   try {
     // Get spotify ID

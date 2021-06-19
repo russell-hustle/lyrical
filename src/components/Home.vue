@@ -48,7 +48,7 @@ import GuessLine from './GuessLine.vue';
 import Player from './Player.vue';
 
 import { getLyrics, parseLines } from '../getLyrics';
-import { updateScore } from '../leaderboard';
+import { updateScore, updateUser } from '../leaderboard';
 
 export default {
     name: 'Home',
@@ -87,22 +87,23 @@ export default {
             } else {
                 this.wrong++;
             }
-            if (!this.currentUserId) {
-                this.$spotify.http.get('').then((response) => {
-                    if (response.status == 429) {
-                        this.timeout = this.$TIMEOUT;
-                    }
-                    console.log('New user has joined: ', response.data.id);
-                    this.currentUserId = response.data.id;
-                    updateScore(this.currentUserId, 0, 1.0, response.data.display_name);
-                });
-            } else {
-                if (correct) {
-                    updateScore(this.currentUserId, 1, 1.0);
-                } else {
-                    updateScore(this.currentUserId, 0, 0.0);
-                }
-            }
+            // if (!this.currentUserId) {
+            //     this.$spotify.http.get('').then((response) => {
+            //         if (response.status == 429) {
+            //             this.timeout = this.$TIMEOUT;
+            //         }
+            //         console.log('New user has joined: ', response.data.id);
+            //         this.currentUserId = response.data.id;
+            //         updateScore(this.currentUserId, 0, 1.0, response.data.display_name);
+            //     });
+            // } else {
+            //     if (correct) {
+            //         updateScore(this.currentUserId, 1, 1.0);
+            //     } else {
+            //         updateScore(this.currentUserId, 0, 0.0);
+            //     }
+            // }
+            // updateUser()
         },
         /** Scroll with song */
         autoScroll() {

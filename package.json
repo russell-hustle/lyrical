@@ -3,12 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build; yarn build:lambda",
-    "lint": "vue-cli-service lint",
-    "functions:serve": "netlify functions:serve --port 8888",
-    "functions:getLeaderboard": "netlify functions:invoke --port 8888 --no-identity --name getLeaderboard",
-    "functions:lyrics": "netlify functions:invoke --port 8888 --no-identity --name lyrics"
+    "start": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -30,7 +27,7 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "sass": "^1.19.0",
+    "sass": "1.32.*",
     "sass-loader": "^8.0.0",
     "vue-cli-plugin-vuetify": "^2.0.9",
     "vue-template-compiler": "^2.6.11",

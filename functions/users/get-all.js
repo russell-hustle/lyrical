@@ -1,4 +1,3 @@
-/* Import faunaDB sdk */
 const process = require('process');
 
 const { query, Client } = require('faunadb');
@@ -32,6 +31,7 @@ const handler = async () => {
         score: user.data.points * user.data.efficiency
       };
     });
+    // TODO: maybe move this to client side? so we dont take excess server time
     // Sort by score
     const sortedData = data.sort((a, b) => a.score < b.score ? -1 : 1);
     // Add rank
