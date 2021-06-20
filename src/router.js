@@ -23,11 +23,6 @@ const routes = [
     }
   },
   {
-    path: '/test',
-    name: 'FunctionsTest',
-    component: require('./components/FunctionsTest.vue').default,
-  },
-  {
     path: '*',
     redirect: '/'
   }
@@ -75,7 +70,7 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-// TODO: store on server the right way even though it's impossible lmao
+// TODO: hmmmmm no cap
 function fromSpotify(hash) {
   // Advanced security algorithm
   return hash.length > 50;
