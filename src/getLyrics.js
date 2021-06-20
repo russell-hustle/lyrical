@@ -16,7 +16,7 @@ function getTitle(title, artist) {
 
 // TODO: make this an environment variable
 const searchUrl = "https://api.genius.com/search?q=";
-const genius_key =
+const genius_key = process.env.GENIUS_API_KEY ||
 	"jnk3Z7zFGcLZsSgZPk0kGifKBUhJzYlhqgDJmbYPCJBxKUVjE1EtudaHvco_90Tr";
 
 /**
