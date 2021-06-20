@@ -45,11 +45,10 @@ async function getLeaderboard() {
 async function addUser(spotifyID, name) {
 	try {
 		console.log(spotifyID, name);
-		// let response = await functions.post("/users", {
-		// 	spotifyID,
-		// 	name
-		// });
-		console.log(response.data);
+		await functions.post("/users", {
+			spotifyID,
+			name
+		});
 	} catch (error) {
 		console.error(error);
 	}

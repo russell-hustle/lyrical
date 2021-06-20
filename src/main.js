@@ -6,7 +6,7 @@ import { functions, spotify } from "./axiosInstances";
 import store from "./store";
 import browserDetect from "vue-browser-detect-plugin";
 
-console.log(process.env.NODE_ENV, process.env.SPOTIFY_CLIENT_ID, process.env, process.env.VUE_APP_COLOR);
+// console.log(process.env.NODE_ENV, process.env.SPOTIFY_CLIENT_ID, process.env, process.env.VUE_APP_COLOR);
 
 Vue.prototype.$spotify = {
   http: spotify,
