@@ -6,17 +6,16 @@ const headers = {
 };
 
 const handler = async (event) => {
-  // if (event.httpMethod === 'OPTIONS') {
-  //   return {
-  //     statusCode: 200,
-  //     headers,
-  //     body: "hello preflight how is your day?",
-  //   };
-  // }
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers,
+    };
+  }
 
   try {
     // Get genius song URL
-    const { url } = JSON.parse(event.body);
+    const url = event.queryStringParameters.url;
     let { data } = await axios.get(url, headers);
     if (data != null) {
       return {

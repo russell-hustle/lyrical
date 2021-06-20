@@ -48,7 +48,7 @@ import GuessLine from './GuessLine.vue';
 import Player from './Player.vue';
 
 import { getLyrics, parseLines } from '../getLyrics';
-import { updateScore, updateUser } from '../leaderboard';
+import { updateScore } from '../leaderboard';
 
 export default {
     name: 'Home',
@@ -87,23 +87,8 @@ export default {
             } else {
                 this.wrong++;
             }
-            // if (!this.currentUserId) {
-            //     this.$spotify.http.get('').then((response) => {
-            //         if (response.status == 429) {
-            //             this.timeout = this.$TIMEOUT;
-            //         }
-            //         console.log('New user has joined: ', response.data.id);
-            //         this.currentUserId = response.data.id;
-            //         updateScore(this.currentUserId, 0, 1.0, response.data.display_name);
-            //     });
-            // } else {
-            //     if (correct) {
-            //         updateScore(this.currentUserId, 1, 1.0);
-            //     } else {
-            //         updateScore(this.currentUserId, 0, 0.0);
-            //     }
-            // }
-            // updateUser()
+            // Update score on DB
+            updateScore(this.$store.state.spotifyID, correct);
         },
         /** Scroll with song */
         autoScroll() {
@@ -130,24 +115,9 @@ export default {
                     this.noSong = this.current == null;
                     if (!this.noSong) {
                         if (prev != this.current.item.name) {
-                            console.log('Song changed! Refreshing lyrics data!');
-                            this.loadingLyrics = true;
-                            // Get lyrics data
-                            getLyrics(this.current.item.name, this.current.item.artists[0].name).then((lyrics) => {
-                                let parsedLines = parseLines(lyrics);
-                                if (parsedLines.length != 0) {
-                                    this.lines = parsedLines;
-                                    this.loadingLyrics = false;
-                                } else {
-                                    this.noLyrics = true;
-                                }
-                            });
-                            this.correct = 0;
-                            this.wrong = 0;
+                            this.songChanged();
                         }
                     }
-                    // Mark's shitty access token for testing -->
-                    // #access_token=BQCGmoi2_iGWs8dF2elzaZLcBp-UaG9G0SQIlHDG2yZAP9KXs3M2y_SIfNTu92M7kuL-9BxwYoAVBiC4QQc0E7r11JM7kyJ18U1wxeYaPB4pxJjyNsV28OO9lt67lbbMs4n3PT_e7wojhENfM_8rk3a7be-Ve4ViturHe_jY&token_type=Bearer&expires_in=3600
                 } catch (error) {
                     // If our token has expired
                     if (error.response.data.error.message == 'The access token expired') {
@@ -159,6 +129,22 @@ export default {
             } else {
                 this.timeout--;
             }
+        },
+        async songChanged() {
+            console.log('Song changed! Refreshing lyrics data!');
+            this.loadingLyrics = true;
+            // Get lyrics data
+            getLyrics(this.current.item.name, this.current.item.artists[0].name).then((lyrics) => {
+                let parsedLines = parseLines(lyrics);
+                if (parsedLines.length != 0) {
+                    this.lines = parsedLines;
+                    this.loadingLyrics = false;
+                } else {
+                    this.noLyrics = true;
+                }
+            });
+            this.correct = 0;
+            this.wrong = 0;
         }
     },
     mounted() {

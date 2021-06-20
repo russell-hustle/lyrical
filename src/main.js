@@ -32,6 +32,14 @@ Vue.config.productionTip = false;
 // For browser detection
 Vue.use(browserDetect);
 
+// Check for stored localstorage token
+const accessToken = localStorage.getItem("@accessToken");
+console.log("cached token:", accessToken);
+if (accessToken) {
+  store.commit("setTokens", accessToken);
+  router.push("/home");
+}
+
 new Vue({
   vuetify,
   router,

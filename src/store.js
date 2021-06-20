@@ -6,27 +6,22 @@ import { spotify } from './axiosInstances';
 
 Vue.use(Vuex);
 
-
-// Check for stored localstorage token
-const accessToken = localStorage.getItem("@accessToken");
-console.log("cached token:", accessToken);
-
 export default new Vuex.Store({
     state: {
-        access_token: accessToken,
-        authenticated: !!accessToken,
+        access_token: null,
+        authenticated: false,
         spotifyID: null,
         autoScroll: true,
         poller: null
     },
     mutations: {
-        async setTokens(state, tokens) {
+        async setTokens(state, accessToken) {
             try {
-                state.access_token = tokens.access_token;
+                state.access_token = accessToken;
                 state.authenticated = true;
 
                 // Save tokens to localstorage
-                localStorage.setItem("@accessToken", tokens.access_token);
+                localStorage.setItem("@accessToken", accessToken);
 
                 // Now create user if doesn't exist on db
                 let { data } = await spotify.get();

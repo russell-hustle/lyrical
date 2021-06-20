@@ -9,7 +9,8 @@ const client = new Client({
 
 // Body will recieve
 const handler = async (event) => {
-  const scoreData = JSON.parse(event.body);
+  const { correct } = JSON.parse(event.body);
+  console.log("updating score: ", correct);
   // The spotify id
   const { id } = event;
   console.log(`Function 'update' invoked. update spotify id: ${id}`);
@@ -20,13 +21,14 @@ const handler = async (event) => {
         client.Index('users'), id
       )
     );
+    console.log("match results", data);
     const faunaID = data[0].ref.id;
     console.log(`user with spotify ID ${id} found in FaunaDB, rref id: ${faunaID}`);
 
-    const response = await query.Update(
-      query.Ref(
-        query.Collection('users'), faunaID), { scoreData }
-    );
+    // const response = await query.Update(
+    //   query.Ref(
+    //     query.Collection('users'), faunaID), { scoreData }
+    // );
 
     console.log('success', response);
     return {
