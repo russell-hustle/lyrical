@@ -39,15 +39,11 @@ const handler = async (event) => {
                 )
             );
 
-            console.log(response);
-
             return {
                 statusCode: 200,
                 body: JSON.stringify(response),
             };
         } catch (error) {
-            console.log(DUPLICATE_USER_MSG);
-
             return {
                 statusCode: 200,
                 body: JSON.stringify({
