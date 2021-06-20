@@ -15,7 +15,8 @@
         >
             <!-- Format decimal places -->
             <template v-slot:item.accuracy="{ item }">
-                <span>{{ item.accuracy.toFixed(2) }}</span>
+                <!-- Convert to percent -->
+                <span>{{ (item.accuracy * 100).toFixed(1) + '%' }}</span>
             </template>
             <template v-slot:item.score="{ item }">
                 <span>{{ item.score.toFixed(2) }}</span>

@@ -22,7 +22,7 @@ const handler = async (event) => {
     );
     const user = data[0];
     const faunaID = user.ref.id;
-
+    // TODO: figure out how to make this one query (find and update at same time) using some FQL magic
     const response = await client.query(
       q.Update(
         q.Ref(q.Collection('users'), faunaID),

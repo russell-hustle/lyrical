@@ -14,6 +14,7 @@ function getTitle(title, artist) {
 		.trim();
 }
 
+// TODO: make this an environment variable
 const searchUrl = "https://api.genius.com/search?q=";
 const genius_key =
 	"jnk3Z7zFGcLZsSgZPk0kGifKBUhJzYlhqgDJmbYPCJBxKUVjE1EtudaHvco_90Tr";
