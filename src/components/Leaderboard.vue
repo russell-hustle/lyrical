@@ -47,7 +47,6 @@ export default {
         async getData() {
             this.loadingLeaderboardData = true;
             this.leaderboardData = await getLeaderboard();
-            console.log('Leaderboard loaded', this.leaderboardData);
             this.loadingLeaderboardData = false;
         }
     },

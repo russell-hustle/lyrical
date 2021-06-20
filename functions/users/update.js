@@ -39,7 +39,7 @@ const handler = async (event) => {
       body: JSON.stringify(response),
     };
   } catch (error) {
-    console.log('error', error);
+    console.error(error);
     return {
       statusCode: 400,
       body: JSON.stringify(error),

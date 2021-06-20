@@ -44,7 +44,6 @@ router.beforeEach((to, from, next) => {
     if (fromSpotify(to.hash)) {
       try {
         let data = querystring.decode(to.hash.substring(1));
-        console.log(data);
         store.commit('setTokens', data.access_token);
         next({ name: 'Home' });
       } catch (error) {

@@ -34,7 +34,10 @@ The the netlify dev command lists all the environment variables it loaded at the
 - [ ] Use edit distance for threshold guessing
 - [ ] Use more sites as fallback for more lyrics
 - [ ] Use localstorage to save VueX state @Mark
+- [ ] Convert all .then() to async/await
 
 If we are crazy we can even do searching songs through our app and use more of the Spotify API
 
 It would be cool to not have to configure the spotify redirect whitelist, but I don't think we have an option there.
+
+** May have to switch to different DB (mongo), depending on usage

@@ -51,7 +51,6 @@ async function getLeaderboard() {
  */
 async function addUser(spotifyID, name) {
 	try {
-		console.log(spotifyID, name);
 		await functions.post("/users", {
 			spotifyID,
 			name

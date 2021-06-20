@@ -13,8 +13,6 @@ const handler = async (event) => {
         // Parse body
         const userInfo = JSON.parse(event.body);
 
-        console.log("New User request:", userInfo);
-
         // See if exists
         // Wrap int try/catch because abort throws an error
         try {
@@ -52,7 +50,7 @@ const handler = async (event) => {
             };
         }
     } catch (error) {
-        console.log('error', error);
+        console.error(error);
         return {
             statusCode: 500,
             body: JSON.stringify(error),
