@@ -20,7 +20,11 @@ Netlify dev actually reads the environment variables that are set on the Netlify
 ```bash
 netlify link
 ```
-The the netlify dev command lists all the environment variables it loaded at the start, but honestly I have no idea how it works and I have a local `.env` file too because sometimes it doesn't work.
+Also this will list all environment variables for the site
+```bash
+netlify env:list
+```
+For environment variables that are need by the Vue build (anything but netlify functions basically), it does some funky stuff (doesn't actually add to the process.env) and Vue only loads environment variables prefixed with VUE_APP_, so just an FYI.
 
 
 

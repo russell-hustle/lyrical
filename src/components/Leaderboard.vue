@@ -14,11 +14,11 @@
             no-data-text="No users yet, be the first!"
         >
             <!-- Format decimal places -->
-            <template v-slot:item.accuracy="{ item }">
+            <template v-slot:[`item.accuracy`]="{ item }">
                 <!-- Convert to percent -->
                 <span>{{ (item.accuracy * 100).toFixed(1) + '%' }}</span>
             </template>
-            <template v-slot:item.score="{ item }">
+            <template v-slot:[`item.score`]="{ item }">
                 <span>{{ item.score.toFixed(2) }}</span>
             </template>
         </v-data-table>
