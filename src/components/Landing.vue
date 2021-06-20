@@ -13,7 +13,13 @@ export default {
     },
     computed: {
         spotify_url() {
-            return `https://accounts.spotify.com/authorize?client_id=${this.$spotify.client_id}&response_type=token&redirect_uri=${this.$spotify.redirect_uri}&scope=${this.$spotify.scopes}&show_dialog=true`;
+            const encodedParams = new URLSearchParams({
+                response_type: 'token',
+                client_id: this.$spotify.client_id,
+                redirect_uri: this.$spotify.redirect_uri,
+                scope: this.$spotify.scopes
+            }).toString();
+            return `https://accounts.spotify.com/authorize?${encodedParams}`;
         }
     },
     methods: {},
