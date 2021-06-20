@@ -71,10 +71,9 @@ async function addUser(spotifyID, name) {
  */
 async function updateScore(spotifyID, correct) {
 	try {
-		let response = await functions.put(`/users/${spotifyID}`, {
+		await functions.put(`/users/${spotifyID}`, {
 			correct
 		});
-		console.log(response.data);
 	} catch (error) {
 		console.error(error);
 	}

@@ -1,7 +1,7 @@
 /* Import faunaDB sdk */
 const process = require('process');
 
-const { query, Client } = require('faunadb');
+const { query: q, Client } = require('faunadb');
 
 const client = new Client({
   secret: process.env.FAUNADB_SERVER_SECRET,
@@ -9,28 +9,31 @@ const client = new Client({
 
 // Body will recieve
 const handler = async (event) => {
-  const { correct } = JSON.parse(event.body);
-  console.log("updating score: ", correct);
-  // The spotify id
-  const { id } = event;
-  console.log(`Function 'update' invoked. update spotify id: ${id}`);
   try {
+    const { correct } = JSON.parse(event.body);
+    // The spotify id
+    const { id } = event;
     // Find user with spotify id
     const { data } = await client.query(
-      client.Match(
-        client.Index('users'), id
+      q.Map(
+        q.Paginate(q.Match(q.Index('users'), id)),
+        q.Lambda(x => q.Get(x))
       )
     );
-    console.log("match results", data);
-    const faunaID = data[0].ref.id;
-    console.log(`user with spotify ID ${id} found in FaunaDB, rref id: ${faunaID}`);
+    const user = data[0];
+    const faunaID = user.ref.id;
 
-    // const response = await query.Update(
-    //   query.Ref(
-    //     query.Collection('users'), faunaID), { scoreData }
-    // );
+    const response = await client.query(
+      q.Update(
+        q.Ref(q.Collection('users'), faunaID),
+        {
+          data: {
+            total_guessed: user.data.total_guessed + 1,
+            correct: correct ? user.data.correct + 1 : user.data.correct
+          }
+        }
+      ));
 
-    console.log('success', response);
     return {
       statusCode: 200,
       body: JSON.stringify(response),
