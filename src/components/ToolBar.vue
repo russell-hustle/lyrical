@@ -63,8 +63,8 @@
                     <v-icon v-else>mdi-arrow-up-down</v-icon>
                 </v-btn>
             </template>
-            <span v-if="$store.state.autoScroll">Disable auto scroll</span>
-            <span v-else>Enable auto scroll</span>
+            <span v-if="$store.state.autoScroll">Disable Auto Scroll</span>
+            <span v-else>Enable Auto Scroll</span>
         </v-tooltip>
         <v-tooltip v-else bottom style="display: none">
             <template v-slot:activator="{}">
