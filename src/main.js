@@ -6,13 +6,16 @@ import { functions, spotify } from "./axiosInstances";
 import store from "./store";
 import browserDetect from "vue-browser-detect-plugin";
 
+console.log(process.env.NODE_ENV, process.env.SPOTIFY_CLIENT_ID, process.env, process.env.VUE_APP_COLOR);
+
 Vue.prototype.$spotify = {
   http: spotify,
-  client_id: process.env.SPOTIFY_CLIENT_ID,
+  client_id: process.env.SPOTIFY_CLIENT_ID || process.env.VUE_APP_SPOTIFY_CLIENT_ID,
   redirect_uri:
+    //TODO: use document.location or smth
     process.env.NODE_ENV === "production"
       ? "https://spotify-lyrical.netlify.app/"
-      : "http://localhost:8888",
+      : "http://localhost:8080",
   scopes: "user-read-currently-playing user-modify-playback-state",
 };
 

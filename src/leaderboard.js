@@ -44,7 +44,7 @@ async function getLeaderboard() {
  */
 async function addUser(spotifyID, name) {
 	try {
-		let response = await functions.post(`/users/${this.updateUserID}`, {
+		let response = await functions.post("/users", {
 			spotifyID,
 			name
 		});

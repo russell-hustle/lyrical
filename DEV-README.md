@@ -12,7 +12,7 @@ Netlify dev gets funky with the ports. [This article](https://cli.netlify.com/ne
 
 The important thing to remember is that the URL that gets shown when the vue frontend (or react or whatever) is built is not correct and if you call netlify functions relatively from there you will 404.
 
-http://localhost:8888/ is the correct URL, and is specified in the netlify.toml file.
+http://localhost:8080/ is the correct URL, and is specified in the netlify.toml file.
 
 ### Environment Variables
 

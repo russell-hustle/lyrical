@@ -4,3 +4,4 @@
 
 [dev]
     port = 8080
+    targetPort = 9000
