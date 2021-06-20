@@ -26,7 +26,6 @@ export default new Vuex.Store({
             localStorage.setItem("@accessToken", tokens.access_token);
             // Now create user if doesn't exist on db
             userLoggedIn();
-
         },
         unauthenticate(state) {
             state.authenticated = false;
@@ -46,12 +45,17 @@ export default new Vuex.Store({
         expire(context) {
             context.commit('unauthenticate');
             context.commit('stopPolling');
+            // Remove localstorage token because either expired or user requested
+            localStorage.removeItem("@accessToken");
         }
     },
     modules: {
     }
 });
 
+/**
+ * Sends spotify user info to DB to create user record if it doesn't exist yet
+ */
 async function userLoggedIn() {
     try {
         let { data } = await spotify.get();

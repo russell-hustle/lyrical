@@ -1,7 +1,7 @@
 import axios from 'axios';
 import qs from 'querystring';
 
-import { functions } from './axiosInstances';
+import { functions, spotify } from './axiosInstances';
 
 
 const server_url = 'https://lyrical-middleman.herokuapp.com';
@@ -44,10 +44,11 @@ async function getLeaderboard() {
  */
 async function addUser(spotifyID, name) {
 	try {
-		let response = await functions.post("/users", {
-			spotifyID,
-			name
-		});
+		console.log(spotifyID, name);
+		// let response = await functions.post("/users", {
+		// 	spotifyID,
+		// 	name
+		// });
 		console.log(response.data);
 	} catch (error) {
 		console.error(error);

@@ -1,12 +1,13 @@
 <template>
     <div id="toolbar">
+        <!-- MODALS -->
+
         <v-dialog v-model="aboutModal" eager transition="fade-transition">
             <v-card id="about-modal" tile elevation="20">
                 <v-btn id="modal-close" icon @click="aboutModal = false">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
                 <v-img class="mx-auto" width="60%" :src="getThemedImage" eager />
-                <!-- <v-img class="mx-auto" width="60%" :src="require('getThemedImage()')" /> -->
                 <v-card-text class="text-h5"
                     >This web app was made for Southern Utah Code Camp 2020 Remote by team Ru$$el Hustle. It even won
                     first place in the Intermediate Division!
@@ -18,6 +19,27 @@
             <leaderboard @close="leaderboardModal = false" />
         </v-dialog>
 
+        <!-- TOOLTIPS -->
+
+        <template v-if="$store.state.authenticated">
+            <v-tooltip v-if="!ifOnIOS" bottom>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn class="pa-5" @click="logout" icon v-bind="attrs" v-on="on">
+                        <v-icon>mdi-logout</v-icon>
+                    </v-btn>
+                </template>
+                <span>Logout</span>
+            </v-tooltip>
+            <v-tooltip v-else bottom style="display: none">
+                <template v-slot:activator="{}">
+                    <v-btn class="pa-5" @click="logout" icon v-bind="attrs" v-on="on">
+                        <v-icon>mdi-logout</v-icon>
+                    </v-btn>
+                </template>
+            </v-tooltip>
+        </template>
+
+        <!-- TODO: create wrapper component for ifOnIOS -->
         <v-tooltip v-if="!ifOnIOS" bottom>
             <template v-slot:activator="{ on, attrs }">
                 <v-btn class="pa-5" @click="leaderboardModal = true" icon v-bind="attrs" v-on="on">
@@ -121,6 +143,12 @@ export default {
             darkImg: require('@/assets/codecamp-dark.png'),
             lightImg: require('@/assets/codecamp-light.png')
         };
+    },
+    methods: {
+        logout() {
+            this.$store.dispatch('expire');
+            this.$router.push({ name: 'Landing' });
+        }
     },
     computed: {
         getThemedImage() {
