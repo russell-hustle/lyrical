@@ -36,3 +36,5 @@ The the netlify dev command lists all the environment variables it loaded at the
 - [ ] Use localstorage to save VueX state @Mark
 
 If we are crazy we can even do searching songs through our app and use more of the Spotify API
+
+It would be cool to not have to configure the spotify redirect whitelist, but I don't think we have an option there.

@@ -28,7 +28,7 @@
                         <v-icon>mdi-logout</v-icon>
                     </v-btn>
                 </template>
-                <span>Logout</span>
+                <span>Log Out</span>
             </v-tooltip>
             <v-tooltip v-else bottom style="display: none">
                 <template v-slot:activator="{}">
