@@ -12,7 +12,15 @@
             :headers="leaderboardHeaders"
             :items="leaderboardData"
             no-data-text="No users yet, be the first!"
-        ></v-data-table>
+        >
+            <!-- Format decimal places -->
+            <template v-slot:item.accuracy="{ item }">
+                <span>{{ item.accuracy.toFixed(2) }}</span>
+            </template>
+            <template v-slot:item.score="{ item }">
+                <span>{{ item.score.toFixed(2) }}</span>
+            </template>
+        </v-data-table>
     </v-card>
 </template>
 
@@ -26,9 +34,9 @@ export default {
             leaderboardHeaders: [
                 { text: 'Rank', value: 'rank', sortable: false, align: 'center' },
                 { text: 'Name', value: 'name', sortable: false, searchable: true },
+                { text: 'Overall Score (Points * Accuracy)', value: 'score', sortable: true },
                 { text: 'Points', value: 'points', sortable: true },
-                { text: 'Accuracy', value: 'accuracy', sortable: true },
-                { text: 'Overall Score (points * accuracy)', value: 'score', sortable: true }
+                { text: 'Accuracy', value: 'accuracy', sortable: true }
             ],
             leaderboardData: [],
             loadingLeaderboardData: false

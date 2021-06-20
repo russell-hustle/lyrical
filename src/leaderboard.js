@@ -30,7 +30,26 @@ async function updateScore(user_id, points, efficiency, name = null) {
 async function getLeaderboard() {
 	try {
 		let response = await functions.get('/users');
-		return response.data;
+		// Map to expected format and calculate derivatives
+		const data = response.data.map((user) => {
+			const accuracy = user.data.correct / user.data.total_guessed;
+			return {
+				id: user.ref.id,
+				name: user.data.name,
+				points: user.data.correct,
+				accuracy: accuracy,
+				score: user.data.correct * accuracy
+			};
+		});
+		// Sort by score
+		const sortedData = data.sort((a, b) => a.score > b.score ? -1 : 1);
+		// Add rank
+		const rankedData = sortedData.map((user, index) => ({
+			rank: index + 1,
+			...user
+		}));
+
+		return rankedData;
 	} catch (error) {
 		console.error(error);
 	}
