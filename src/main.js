@@ -11,11 +11,7 @@ import browserDetect from "vue-browser-detect-plugin";
 Vue.prototype.$spotify = {
   http: spotify,
   client_id: process.env.SPOTIFY_CLIENT_ID || process.env.VUE_APP_SPOTIFY_CLIENT_ID,
-  redirect_uri:
-    //TODO: use document.location or smth
-    process.env.NODE_ENV === "production"
-      ? "https://spotify-lyrical.netlify.app/"
-      : "http://localhost:8080",
+  redirect_uri: document.location.origin,
   scopes: "user-read-currently-playing user-modify-playback-state",
 };
 

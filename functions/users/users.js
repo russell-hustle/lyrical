@@ -22,7 +22,7 @@ const handler = async (event, context) => {
 
     case 'PUT':
       // PUT /.netlify/functions/users/<spotify_id> 
-      // JSON body with points/efficiency
+      // JSON body with if guess was correct boolean
 
       if (segments.length === 1) {
         const [id] = segments;

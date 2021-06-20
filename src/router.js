@@ -34,7 +34,7 @@ const router = new VueRouter({
   routes
 });
 
-// Mark's shitty access token for testing -->
+// Mark's shitty access token for testing (and reference) -->
 // #access_token=BQCGmoi2_iGWs8dF2elzaZLcBp-UaG9G0SQIlHDG2yZAP9KXs3M2y_SIfNTu92M7kuL-9BxwYoAVBiC4QQc0E7r11JM7kyJ18U1wxeYaPB4pxJjyNsV28OO9lt67lbbMs4n3PT_e7wojhENfM_8rk3a7be-Ve4ViturHe_jY&token_type=Bearer&expires_in=3600
 
 router.beforeEach((to, from, next) => {
