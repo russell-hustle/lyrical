@@ -9,7 +9,6 @@ import browserDetect from "vue-browser-detect-plugin";
 Vue.prototype.$spotify = {
   http: spotify,
   client_id: process.env.SPOTIFY_CLIENT_ID || process.env.VUE_APP_SPOTIFY_CLIENT_ID,
-  redirect_uri: document.location.href, // Trailing slash
   scopes: "user-read-currently-playing user-modify-playback-state",
 };
 
