@@ -15,17 +15,27 @@ export default new Vuex.Store({
     state: {
         access_token: accessToken,
         authenticated: !!accessToken,
+        spotifyID: null,
         autoScroll: true,
         poller: null
     },
     mutations: {
-        setTokens(state, tokens) {
-            state.access_token = tokens.access_token;
-            state.authenticated = true;
-            // Save tokens to localstorage
-            localStorage.setItem("@accessToken", tokens.access_token);
-            // Now create user if doesn't exist on db
-            userLoggedIn();
+        async setTokens(state, tokens) {
+            try {
+                state.access_token = tokens.access_token;
+                state.authenticated = true;
+
+                // Save tokens to localstorage
+                localStorage.setItem("@accessToken", tokens.access_token);
+
+                // Now create user if doesn't exist on db
+                let { data } = await spotify.get();
+                // Save spotify ID
+                state.spotifyID = data.id;
+                addUser(data.id, data.display_name);
+            } catch (error) {
+                console.error(error);
+            }
         },
         unauthenticate(state) {
             state.authenticated = false;
@@ -52,15 +62,3 @@ export default new Vuex.Store({
     modules: {
     }
 });
-
-/**
- * Sends spotify user info to DB to create user record if it doesn't exist yet
- */
-async function userLoggedIn() {
-    try {
-        let { data } = await spotify.get();
-        addUser(data.id, data.display_name);
-    } catch (error) {
-        console.error(error);
-    }
-}
