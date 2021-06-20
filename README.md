@@ -24,8 +24,8 @@ Integrates with the Spotify API
 
 ## Backend
 
-A Flask app that gets song requests and tries to find lyrics through a the Genius API. It also performs queries on an AWS database to manage our leaderboard data.
+We have transition to use Netlify Functions (through AWS Lambda) with FaunaDB for a complete serverless experience.
 
-A server was only necessary to bypass CORS, so thanks a lot CORS...
+We use FaunaDB for the leaderboard along with Netlify Functions 
 
-We parse the lyrics and return data in a specific format to create a lyrics guessing game.
+For getting lyrics, we use the Genius API and then scrape the lyrics page.

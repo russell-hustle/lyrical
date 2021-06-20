@@ -20,18 +20,18 @@ Netlify dev actually reads the environment variables that are set on the Netlify
 ```bash
 netlify link
 ```
-and after the the netlify dev command it should list all the environment variables it loaded.
+The the netlify dev command lists all the environment variables it loaded at the start, but honestly I have no idea how it works and I have a local `.env` file too because sometimes it doesn't work.
+
 
 
 # IMPROVEMENTS
 
-- [x] Mobile friendly
-- [x] Scrolling with song?
+- [?] Scrolling with song?
 - [ ] Allow progress bar clicking (if possible using spotify API)
 - [x] Handle token expiration better
-- [ ] Webpack optimization errors?
-- [ ] Look into [vue config](https://cli.vuejs.org/config/).
-- [-] Use server better or go serverless
+- [ ] Hide ALL environment variables from version control (this includes retroactively erasing them)
+- [ ] Better lyrics scraping for line guesses (trailing parens)
+- [ ] Use edit distance for threshold guessing
 - [ ] Use more sites as fallback for more lyrics
 - [ ] Use localstorage to save VueX state @Mark
 
