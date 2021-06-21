@@ -60,7 +60,7 @@ export default {
         },
         guess() {
             // Don't count empty guess
-            if (this.answer.length == 0) return;
+            if (this.guessed || this.answer.length == 0) return;
             // Case-insensitive
             this.correct = this.answer.toUpperCase() == this.line.correct.toUpperCase();
             // If they got it right, then show correct casing

@@ -34,6 +34,9 @@ const router = new VueRouter({
   routes
 });
 
+// Mark's shitty access token for testing (and reference) -->
+// #access_token=BQCGmoi2_iGWs8dF2elzaZLcBp-UaG9G0SQIlHDG2yZAP9KXs3M2y_SIfNTu92M7kuL-9BxwYoAVBiC4QQc0E7r11JM7kyJ18U1wxeYaPB4pxJjyNsV28OO9lt67lbbMs4n3PT_e7wojhENfM_8rk3a7be-Ve4ViturHe_jY&token_type=Bearer&expires_in=3600
+
 router.beforeEach((to, from, next) => {
   // If not auth
   if (!store.state.authenticated) {
@@ -41,10 +44,10 @@ router.beforeEach((to, from, next) => {
     if (fromSpotify(to.hash)) {
       try {
         let data = querystring.decode(to.hash.substring(1));
-        store.commit('setTokens', data);
+        store.commit('setTokens', data.access_token);
         next({ name: 'Home' });
       } catch (error) {
-        console.log(error);
+        console.error(error);
         alert("Invalid access token.");
         next({ name: 'Landing' });
       }
@@ -66,7 +69,7 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-// TODO: store on server the right way even though it's impossible lmao
+// TODO: hmmmmm no cap
 function fromSpotify(hash) {
   // Advanced security algorithm
   return hash.length > 50;
