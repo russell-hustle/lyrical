@@ -3,19 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "prod": "yarn build; npm run build:lambda",
-    "start:lambda": "netlify-lambda serve netlify",
-    "build:lambda": "netlify-lambda build netlify"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@netlify/functions": "^0.7.2",
     "axios": "^0.21.1",
     "cheerio-without-node-native": "^1.0.0-rc.2",
     "core-js": "^3.6.5",
-    "netlify-lambda": "^2.0.6",
+    "faunadb": "^4.3.0",
     "vue": "^2.6.11",
     "vue-browser-detect-plugin": "^0.1.13",
     "vue-router": "^3.4.9",
@@ -24,14 +20,14 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.10",
-    "@vue/cli-plugin-eslint": "^4.5.10",
+    "@vue/cli-plugin-eslint": "^3.1.1",
     "@vue/cli-plugin-router": "^4.5.10",
     "@vue/cli-plugin-vuex": "^4.5.10",
-    "@vue/cli-service": "^4.1.1",
+    "@vue/cli-service": "^3.12.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "sass": "^1.19.0",
+    "sass": "1.32.*",
     "sass-loader": "^8.0.0",
     "vue-cli-plugin-vuetify": "^2.0.9",
     "vue-template-compiler": "^2.6.11",
@@ -58,6 +54,6 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mabraham23/code_camp"
+    "url": "https://github.com/russell-hustle/lyrical"
   }
 }

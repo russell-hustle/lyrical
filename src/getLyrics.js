@@ -1,6 +1,8 @@
 import axios from "axios";
 import cio from "cheerio-without-node-native";
 
+import { functions } from './axiosInstances';
+
 // Sanitizes search parameters
 function getTitle(title, artist) {
 	return `${title} ${artist}`
@@ -12,6 +14,7 @@ function getTitle(title, artist) {
 		.trim();
 }
 
+// TODO: make this an environment variable
 const searchUrl = "https://api.genius.com/search?q=";
 const genius_key =
 	"jnk3Z7zFGcLZsSgZPk0kGifKBUhJzYlhqgDJmbYPCJBxKUVjE1EtudaHvco_90Tr";
@@ -21,7 +24,7 @@ const genius_key =
  * @param {string} title The title of the song
  * @param {artist} artist The artist of the song
  */
-async function searchSong(title, artist) {
+async function searchGeniusAPI(title, artist) {
 	const song = getTitle(title, artist);
 	const reqUrl = `${searchUrl}${encodeURI(song)}&access_token=${genius_key}`;
 	let { data } = await axios.get(reqUrl);
@@ -33,27 +36,16 @@ async function searchSong(title, artist) {
 	return results;
 }
 
-let server_url =
-	process.env.NODE_ENV === "production"
-      ? "/.netlify/functions/lyrics"
-      : process.env.NODE_ENV === "staging"
-      ? "/.netlify/functions/lyrics"
-      : "http://localhost:9000"
-
 /**
  * Scrapes the lyrics based on the song URL
  * @param {string} url - Genius URL
  */
 async function extractLyrics(url) {
-	let { data } = await axios({
-		method: "post",
-		url: `${server_url}`,
-		data: JSON.stringify({
-			url: url,
-		}),
-		headers: {
-			"content-type": "application/json",
-		},
+	// Use querystring for GET requests
+	let { data } = await functions.get("/lyrics", {
+		params: {
+			url
+		}
 	});
 	const $ = cio.load(data.lyrics);
 	let lyrics = $('div[class="lyrics"]')
@@ -146,7 +138,7 @@ function parseLines(lyrics) {
 }
 
 async function getLyrics(title, artist) {
-	let results = await searchSong(title, artist);
+	let results = await searchGeniusAPI(title, artist);
 	if (!results) return null;
 	let lyrics = await extractLyrics(results[0].url);
 	return lyrics;
