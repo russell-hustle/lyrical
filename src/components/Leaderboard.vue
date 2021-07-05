@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { getLeaderboard } from '../leaderboard';
+import { getLeaderboard } from '../scripts/leaderboard';
 
 export default {
     // TODO: add refresh button w/ timeout (only refresh on command to avoid excessive function calls)
