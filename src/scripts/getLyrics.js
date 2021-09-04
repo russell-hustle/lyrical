@@ -1,7 +1,7 @@
 import axios from "axios";
 import cio from "cheerio-without-node-native";
 
-import { functions } from './axiosInstances';
+import { functions } from '~/axiosInstances';
 
 // Sanitizes search parameters
 function getTitle(title, artist) {

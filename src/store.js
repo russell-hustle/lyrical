@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { addUser } from './leaderboard';
+import { addUser } from '~scripts/leaderboard';
 import { spotify } from './axiosInstances';
 
 Vue.use(Vuex);
