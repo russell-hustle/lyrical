@@ -30,7 +30,6 @@ For environment variables that are need by the Vue build (anything but netlify f
 
 # IMPROVEMENTS
 
-- [ ] Allow progress bar clicking (if possible using spotify API)
 - [ ] Hide ALL environment variables from version control (this includes retroactively erasing them)
 - [ ] Use more sites as fallback for more lyrics
 - [ ] Use localstorage to save VueX state @Mark
