@@ -69,8 +69,6 @@ export default {
             } catch (error) {
                 console.error(error);
             }
-            console.log(this.current);
-            console.log(n);
         },
         async playTrack() {
             try {

@@ -82,6 +82,8 @@ async function extractLyrics(url) {
 	return lyrics.trim();
 }
 
+// Regex to match any non-word characters
+const INVALID_CHARS = /\W/;
 /**
  * Parses the lyrics into the necessary format for our guessing game
  * @param {string} lyrics A single string of all the lyrics
@@ -93,7 +95,6 @@ function parseLines(lyrics) {
 	lines = lines.filter((line) => line.charAt(0) != "[");
 
 	let wordCounter = 0;
-	let badEndings = [",", "!", "?"];
 	let chosen = false;
 
 	for (const line of lines) {
@@ -102,32 +103,15 @@ function parseLines(lyrics) {
 			// Every 12 words
 			if (wordCounter > 12) {
 				// If we have a good word
-				if (word.length > 4) {
+				if (word.length > 4 && !INVALID_CHARS.test(word)) {
 					wordCounter = 0;
 					chosen = true;
-					let lineWords = words;
 					let idx = words.indexOf(word);
-					let newWord = word;
-					// Check for trailing baddies
-					let ending = word.charAt(word.length - 1);
-					if (badEndings.includes(ending)) {
-						// Remove last char
-						newWord = newWord.substring(0, word.length - 1);
-						// Decide where to put the char
-						// Add new word with it
-						if (words[idx] == word) {
-							lineWords.push(ending);
-						}
-						// Add it to start of next word
-						else {
-							lineWords[idx + 1] = `${ending} ${lineWords[idx + 1]}`;
-						}
-					}
 					parsedLines.push({
-						words: lineWords,
+						words,
 						guessing: true,
 						guess_index: idx,
-						correct: newWord,
+						correct: word,
 					});
 				}
 			}
