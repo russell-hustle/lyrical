@@ -47,8 +47,8 @@
 import GuessLine from './GuessLine.vue';
 import Player from './Player.vue';
 
-import { getLyrics, parseLines } from '../getLyrics';
-import { updateScore } from '../leaderboard';
+import { getLyrics, parseLines } from '../scripts/getLyrics';
+import { updateScore } from '../scripts/leaderboard';
 
 export default {
     name: 'Home',

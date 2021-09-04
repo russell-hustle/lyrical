@@ -25,6 +25,8 @@
 
 
 <script>
+import { editDistance } from '~scripts/editDistance';
+
 export default {
     name: 'GuessLine',
     props: {
@@ -61,8 +63,9 @@ export default {
         guess() {
             // Don't count empty guess
             if (this.guessed || this.answer.length == 0) return;
-            // Case-insensitive
-            this.correct = this.answer.toUpperCase() == this.line.correct.toUpperCase();
+            // Case-insensitive edit distance
+            let dist = editDistance(this.answer.toUpperCase(), this.line.correct.toUpperCase());
+            this.correct = dist < this.line.correct.length * 0.2;
             // If they got it right, then show correct casing
             if (this.correct) this.answer = this.line.correct;
             this.color = this.correct ? 'green' : 'red';

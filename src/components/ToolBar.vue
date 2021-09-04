@@ -21,117 +21,74 @@
 
         <!-- TOOLTIPS -->
 
-        <template v-if="$store.state.authenticated">
-            <v-tooltip v-if="!ifOnIOS" bottom>
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn class="pa-5" @click="logout" icon v-bind="attrs" v-on="on">
-                        <v-icon>mdi-logout</v-icon>
-                    </v-btn>
-                </template>
+        <!-- LOG OUT -->
+        <ios-tooltip v-if="$store.state.authenticated" @click="logout">
+            <template v-slot:icon>
+                <v-icon>mdi-logout</v-icon>
+            </template>
+            <template v-slot:text>
                 <span>Log Out</span>
-            </v-tooltip>
-            <v-tooltip v-else bottom style="display: none">
-                <template v-slot:activator="{}">
-                    <v-btn class="pa-5" @click="logout" icon v-bind="attrs" v-on="on">
-                        <v-icon>mdi-logout</v-icon>
-                    </v-btn>
-                </template>
-            </v-tooltip>
-        </template>
-
-        <!-- TODO: create wrapper component for ifOnIOS -->
-        <v-tooltip v-if="!ifOnIOS" bottom>
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn class="pa-5" @click="leaderboardModal = true" icon v-bind="attrs" v-on="on">
-                    <v-icon>mdi-account-group</v-icon>
-                </v-btn>
             </template>
-            <span>View Player Leaderboard</span>
-        </v-tooltip>
-        <v-tooltip v-else bottom style="display: none">
-            <template v-slot:activator="{}">
-                <v-btn class="pa-5" @click="leaderboardModal = true" icon v-bind="attrs" v-on="on">
-                    <v-icon>mdi-account-group</v-icon>
-                </v-btn>
+        </ios-tooltip>
+        <!-- LEADERBOARD -->
+        <ios-tooltip @click="leaderboardModal = true">
+            <template v-slot:icon>
+                <v-icon>mdi-account-group</v-icon>
             </template>
-        </v-tooltip>
-
-        <v-tooltip v-if="!ifOnIOS" bottom>
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn class="pa-5" @click="$store.commit('toggleAutoScroll')" icon v-bind="attrs" v-on="on">
-                    <v-icon v-if="$store.state.autoScroll">mdi-arrow-vertical-lock</v-icon>
-                    <v-icon v-else>mdi-arrow-up-down</v-icon>
-                </v-btn>
+            <template v-slot:text>
+                <span>Leaderboard</span>
             </template>
-            <span v-if="$store.state.autoScroll">Disable Auto Scroll</span>
-            <span v-else>Enable Auto Scroll</span>
-        </v-tooltip>
-        <v-tooltip v-else bottom style="display: none">
-            <template v-slot:activator="{}">
-                <v-btn class="pa-5" @click="$store.commit('toggleAutoScroll')" icon v-bind="attrs" v-on="on">
-                    <v-icon v-if="$store.state.autoScroll">mdi-arrow-vertical-lock</v-icon>
-                    <v-icon v-else>mdi-arrow-up-down</v-icon>
-                </v-btn>
+        </ios-tooltip>
+        <!-- AUTOSCROLL -->
+        <ios-tooltip @click="$store.commit('toggleAutoScroll')">
+            <template v-slot:icon>
+                <v-icon v-if="$store.state.autoScroll">mdi-arrow-vertical-lock</v-icon>
+                <v-icon v-else>mdi-arrow-up-down</v-icon>
             </template>
-        </v-tooltip>
-
-        <v-tooltip v-if="!ifOnIOS" bottom>
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn class="pa-5" @click="aboutModal = true" icon v-bind="attrs" v-on="on">
-                    <v-icon>mdi-information</v-icon>
-                </v-btn>
+            <template v-slot:text>
+                <span v-if="$store.state.autoScroll">Disable Auto Scroll</span>
+                <span v-else>Enable Auto Scroll</span>
             </template>
-            <span>About</span>
-        </v-tooltip>
-        <v-tooltip v-else bottom style="display: none">
-            <template v-slot:activator="{}">
-                <v-btn class="pa-5" @click="aboutModal = true" icon v-bind="attrs" v-on="on">
-                    <v-icon>mdi-information</v-icon>
-                </v-btn>
+        </ios-tooltip>
+        <!-- ABOUT -->
+        <ios-tooltip @click="aboutModal = true">
+            <template v-slot:icon>
+                <v-icon>mdi-information</v-icon>
             </template>
-        </v-tooltip>
-
-        <v-tooltip v-if="!ifOnIOS" bottom>
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn icon href="https://github.com/russell-hustle" v-bind="attrs" v-on="on">
-                    <v-icon>mdi-github</v-icon>
-                </v-btn>
+            <template v-slot:text>
+                <span>About</span>
             </template>
-            <span>Source Code</span>
-        </v-tooltip>
-        <v-tooltip v-else bottom style="display: none">
-            <template v-slot:activator="{}">
-                <v-btn icon href="https://github.com/russell-hustle" v-bind="attrs" v-on="on">
-                    <v-icon>mdi-github</v-icon>
-                </v-btn>
+        </ios-tooltip>
+        <!-- SOURCE CODE -->
+        <ios-tooltip :href="'https://github.com/russell-hustle'">
+            <template v-slot:icon>
+                <v-icon>mdi-github</v-icon>
             </template>
-        </v-tooltip>
-
-        <v-tooltip v-if="!ifOnIOS" bottom>
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn class="pa-5" @click="$vuetify.theme.dark = !$vuetify.theme.dark" icon v-bind="attrs" v-on="on">
-                    <v-icon>mdi-white-balance-sunny</v-icon>
-                </v-btn>
+            <template v-slot:text>
+                <span>Source Code</span>
             </template>
-            <span v-if="$vuetify.theme.dark">Light Mode</span>
-            <span v-else>Dark Mode</span>
-        </v-tooltip>
-        <v-tooltip v-else bottom style="display: none">
-            <template v-slot:activator="{}">
-                <v-btn class="pa-5" @click="$vuetify.theme.dark = !$vuetify.theme.dark" icon v-bind="attrs" v-on="on">
-                    <v-icon>mdi-white-balance-sunny</v-icon>
-                </v-btn>
+        </ios-tooltip>
+        <!-- LIGHT/DARK MODE -->
+        <ios-tooltip @click="$vuetify.theme.dark = !$vuetify.theme.dark">
+            <template v-slot:icon>
+                <v-icon>mdi-white-balance-sunny</v-icon>
             </template>
-        </v-tooltip>
+            <template v-slot:text>
+                <span v-if="$vuetify.theme.dark">Light Mode</span>
+                <span v-else>Dark Mode</span>
+            </template>
+        </ios-tooltip>
     </div>
 </template>
 
 <script>
+import IosTooltip from './IosTooltip.vue';
 import Leaderboard from './Leaderboard.vue';
 
 export default {
     name: 'ToolBar',
     components: {
+        IosTooltip,
         Leaderboard
     },
     data() {
@@ -179,11 +136,11 @@ export default {
 }
 
 // Get ride of ripple effect lingering
-.v-btn:before {
+.v-btn:before:not(#modal-close) {
     opacity: 0 !important;
 }
 
-.v-ripple__container {
+.v-ripple__container:not(#modal-close) {
     opacity: 0 !important;
 }
 </style>

@@ -9,7 +9,7 @@ const spotify = axios.create({
 
 spotify.interceptors.request.use(
 	function (config) {
-		const token = store.state.access_token;
+		const token = store.state.accessToken;
 		if (token) config.headers.Authorization = `Bearer ${token}`;
 		return config;
 	},

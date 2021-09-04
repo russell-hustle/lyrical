@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { addUser } from './leaderboard';
-import { spotify } from './axiosInstances';
+import { addUser } from '~scripts/leaderboard';
+import { spotify } from '~/axiosInstances';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        access_token: null,
+        accessToken: null,
         authenticated: false,
         spotifyID: null,
         autoScroll: true,
@@ -17,7 +17,7 @@ export default new Vuex.Store({
     mutations: {
         async setTokens(state, accessToken) {
             try {
-                state.access_token = accessToken;
+                state.accessToken = accessToken;
                 state.authenticated = true;
 
                 // Save tokens to localstorage
@@ -34,6 +34,8 @@ export default new Vuex.Store({
         },
         unauthenticate(state) {
             state.authenticated = false;
+            state.accessToken = null;
+            state.spotifyID = null;
         },
         toggleAutoScroll(state) {
             state.autoScroll = !state.autoScroll;
