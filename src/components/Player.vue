@@ -3,9 +3,11 @@
         <div>
             <v-progress-linear
                 :value="percentComplete"
+                :buffer-value="bufferValue"
                 color="green"
                 class="my-0"
                 height="8"
+                stream
                 @change="changeProgress"
             ></v-progress-linear>
 
@@ -55,15 +57,20 @@ export default {
     computed: {
         percentComplete() {
             return 100 * (this.current.progress_ms / this.current.item.duration_ms);
+        },
+        bufferValue() {
+            return this.current.is_playing ? 0 : 100;
         }
     },
     methods: {
         async changeProgress(n) {
             // https://developer.spotify.com/documentation/web-api/reference/#endpoint-seek-to-position-in-currently-playing-track
             try {
+                let newPos = Math.round(this.current.item.duration_ms * (n / 100));
+                this.$emit('changeProgress', newPos);
                 await this.$spotify.http.put('/player/seek', null, {
                     params: {
-                        position_ms: Math.round(this.current.item.duration_ms * (n / 100))
+                        position_ms: newPos
                     }
                 });
             } catch (error) {
@@ -72,6 +79,7 @@ export default {
         },
         async playTrack() {
             try {
+                this.$emit('changeState', true);
                 await this.$spotify.http.put('/player/play');
             } catch (error) {
                 console.error(error);
@@ -79,6 +87,7 @@ export default {
         },
         async pauseTrack() {
             try {
+                this.$emit('changeState', false);
                 await this.$spotify.http.put('/player/pause');
             } catch (error) {
                 console.error(error);
@@ -103,4 +112,8 @@ export default {
 </script>
 
 <style>
+.v-progress-linear__bar,
+.v-progress-linear__bar__determinate {
+    transition: none;
+}
 </style>

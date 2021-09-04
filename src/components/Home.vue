@@ -31,7 +31,7 @@
             </v-col>
         </v-row>
         <v-footer fixed padless>
-            <player :current="current" />
+            <player :current="current" @changeProgress="changeProgress" @changeState="changeState" />
         </v-footer>
         <div id="score">
             <h2>Score: {{ correct }} / {{ correct + wrong }}</h2>
@@ -68,7 +68,8 @@ export default {
             noLyrics: false,
             loadingLyrics: true,
             lastScroll: 0,
-            currentUserId: null
+            currentUserId: null,
+            skipCurrentInterval: 0 // for lag between api post/get
         };
     },
     computed: {
@@ -100,7 +101,21 @@ export default {
                 window.scrollTo(0, pixelPercent);
             }
         },
+        changeProgress(newPos) {
+            this.current.progress_ms = newPos;
+            this.skipCurrentInterval = 2;
+            if (this.$store.state.autoScroll) this.autoScroll();
+        },
+        changeState(playing) {
+            this.current.is_playing = playing;
+            this.skipCurrentInterval = 2;
+        },
         async getCurrentSong() {
+            if (this.skipCurrentInterval > 0) {
+                this.skipCurrentInterval--;
+                console.log('skipping');
+                return;
+            }
             if (this.timeout <= 0) {
                 try {
                     let response = await this.$spotify.http.get('/player/currently-playing');

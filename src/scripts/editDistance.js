@@ -27,6 +27,4 @@ function editDistance(x, y) {
     return matrix[x.length][y.length];
 }
 
-console.log(editDistance("dog", "cat")); // 3
-
 module.exports = { editDistance };
