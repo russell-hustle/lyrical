@@ -113,7 +113,6 @@ export default {
         async getCurrentSong() {
             if (this.skipCurrentInterval > 0) {
                 this.skipCurrentInterval--;
-                console.log('skipping');
                 return;
             }
             if (this.timeout <= 0) {
