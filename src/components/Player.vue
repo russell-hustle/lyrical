@@ -4,14 +4,14 @@
             <v-progress-linear :value="percentComplete" color="green" class="my-0" height="3"></v-progress-linear>
 
             <v-row>
-                <v-col class="pa-0 mt-2">
+                <v-col class="pa-0 mt-4">
                     <h2>{{ current.item.name }}</h2>
-                    <p class="ma-0">{{ current.item.artists[0].name }}</p>
+                    <em class="ma-0">{{ current.item.artists[0].name }}</em>
                 </v-col>
             </v-row>
 
             <v-row>
-                <v-col class="pa-0 pb-2">
+                <v-col class="pa-0 mb-4">
                     <v-hover v-slot="{ hover }">
                         <v-btn :color="hover ? 'green' : ''" icon @click="prevTrack">
                             <v-icon>mdi-skip-previous</v-icon>
@@ -40,7 +40,6 @@
 </template>
 <script>
 export default {
-    // current.is_playing
     name: 'Player',
     props: {
         current: {
