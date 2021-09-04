@@ -1,7 +1,13 @@
 <template>
     <v-container fluid class="pa-0">
         <div>
-            <v-progress-linear :value="percentComplete" color="green" class="my-0" height="3"></v-progress-linear>
+            <v-progress-linear
+                :value="percentComplete"
+                color="green"
+                class="my-0"
+                height="8"
+                @change="changeProgress"
+            ></v-progress-linear>
 
             <v-row>
                 <v-col class="pa-0 mt-4">
@@ -52,6 +58,20 @@ export default {
         }
     },
     methods: {
+        async changeProgress(n) {
+            // https://developer.spotify.com/documentation/web-api/reference/#endpoint-seek-to-position-in-currently-playing-track
+            try {
+                await this.$spotify.http.put('/player/seek', null, {
+                    params: {
+                        position_ms: Math.round(this.current.item.duration_ms * (n / 100))
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+            }
+            console.log(this.current);
+            console.log(n);
+        },
         async playTrack() {
             try {
                 await this.$spotify.http.put('/player/play');

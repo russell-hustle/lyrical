@@ -18,9 +18,22 @@ const searchUrl = "https://api.genius.com/search?q=";
 const genius_key = process.env.VUE_APP_GENIUS_API_KEY;
 
 /**
+ * Multi-step process to fetch lyrics using APIs and scraping
+ * @param {string} title The title of the song
+ * @param {string} artist The artist of the song
+ * @returns A list of guessable lines following the app protocol
+ */
+async function getLyrics(title, artist) {
+	let results = await searchGeniusAPI(title, artist);
+	if (!results) return null;
+	let lyrics = await extractLyrics(results[0].url);
+	return lyrics;
+}
+
+/**
  * Gets the song data from the genius API
  * @param {string} title The title of the song
- * @param {artist} artist The artist of the song
+ * @param {string} artist The artist of the song
  */
 async function searchGeniusAPI(title, artist) {
 	const song = getTitle(title, artist);
@@ -133,13 +146,6 @@ function parseLines(lyrics) {
 	}
 
 	return parsedLines;
-}
-
-async function getLyrics(title, artist) {
-	let results = await searchGeniusAPI(title, artist);
-	if (!results) return null;
-	let lyrics = await extractLyrics(results[0].url);
-	return lyrics;
 }
 
 export { getLyrics, parseLines };
