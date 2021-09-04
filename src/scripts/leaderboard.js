@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { functions } from './axiosInstances';
+import { functions } from '../axiosInstances';
 
 
 const server_url = 'https://lyrical-middleman.herokuapp.com';

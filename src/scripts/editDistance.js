@@ -24,14 +24,6 @@ function editDistance(x, y) {
         }
     }
 
-    // Debug
-    for (const row of matrix) {
-        for (const col of row) {
-            process.stdout.write(col + " | ");
-        }
-        process.stdout.write("\n");
-    }
-
     return matrix[x.length][y.length];
 }
 
