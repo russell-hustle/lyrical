@@ -69,10 +69,12 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-// TODO: hmmmmm no cap
+// Advanced security algorithm
 function fromSpotify(hash) {
-  // Advanced security algorithm
-  return hash.length > 50;
+  const data = querystring.decode(hash.substring(1));
+  if ("access_token" in data && "expires_in" in data && "token_type" in data) {
+    return true;
+  }
 }
 
 export default router;

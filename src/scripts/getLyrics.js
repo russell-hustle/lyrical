@@ -1,7 +1,7 @@
 import axios from "axios";
 import cio from "cheerio-without-node-native";
 
-import { functions } from './axiosInstances';
+import { functions } from '~/axiosInstances';
 
 // Sanitizes search parameters
 function getTitle(title, artist) {
@@ -14,15 +14,26 @@ function getTitle(title, artist) {
 		.trim();
 }
 
-// TODO: make this an environment variable
 const searchUrl = "https://api.genius.com/search?q=";
-const genius_key =
-	"jnk3Z7zFGcLZsSgZPk0kGifKBUhJzYlhqgDJmbYPCJBxKUVjE1EtudaHvco_90Tr";
+const genius_key = process.env.VUE_APP_GENIUS_API_KEY;
+
+/**
+ * Multi-step process to fetch lyrics using APIs and scraping
+ * @param {string} title The title of the song
+ * @param {string} artist The artist of the song
+ * @returns A list of guessable lines following the app protocol
+ */
+async function getLyrics(title, artist) {
+	let results = await searchGeniusAPI(title, artist);
+	if (!results) return null;
+	let lyrics = await extractLyrics(results[0].url);
+	return lyrics;
+}
 
 /**
  * Gets the song data from the genius API
  * @param {string} title The title of the song
- * @param {artist} artist The artist of the song
+ * @param {string} artist The artist of the song
  */
 async function searchGeniusAPI(title, artist) {
 	const song = getTitle(title, artist);
@@ -71,6 +82,8 @@ async function extractLyrics(url) {
 	return lyrics.trim();
 }
 
+// Regex to match any non-word characters
+const INVALID_CHARS = /\W/;
 /**
  * Parses the lyrics into the necessary format for our guessing game
  * @param {string} lyrics A single string of all the lyrics
@@ -82,7 +95,6 @@ function parseLines(lyrics) {
 	lines = lines.filter((line) => line.charAt(0) != "[");
 
 	let wordCounter = 0;
-	let badEndings = [",", "!", "?"];
 	let chosen = false;
 
 	for (const line of lines) {
@@ -91,32 +103,15 @@ function parseLines(lyrics) {
 			// Every 12 words
 			if (wordCounter > 12) {
 				// If we have a good word
-				if (word.length > 4) {
+				if (word.length > 4 && !INVALID_CHARS.test(word)) {
 					wordCounter = 0;
 					chosen = true;
-					let lineWords = words;
 					let idx = words.indexOf(word);
-					let newWord = word;
-					// Check for trailing baddies
-					let ending = word.charAt(word.length - 1);
-					if (badEndings.includes(ending)) {
-						// Remove last char
-						newWord = newWord.substring(0, word.length - 1);
-						// Decide where to put the char
-						// Add new word with it
-						if (words[idx] == word) {
-							lineWords.push(ending);
-						}
-						// Add it to start of next word
-						else {
-							lineWords[idx + 1] = `${ending} ${lineWords[idx + 1]}`;
-						}
-					}
 					parsedLines.push({
-						words: lineWords,
+						words,
 						guessing: true,
 						guess_index: idx,
-						correct: newWord,
+						correct: word,
 					});
 				}
 			}
@@ -135,13 +130,6 @@ function parseLines(lyrics) {
 	}
 
 	return parsedLines;
-}
-
-async function getLyrics(title, artist) {
-	let results = await searchGeniusAPI(title, artist);
-	if (!results) return null;
-	let lyrics = await extractLyrics(results[0].url);
-	return lyrics;
 }
 
 export { getLyrics, parseLines };
