@@ -1,71 +1,68 @@
 <template>
-    <v-container v-if="loadingSong">
-        <v-progress-circular indeterminate color="green"></v-progress-circular>
-    </v-container>
-    <v-container id="content" v-else-if="!noSong" class="fill-height">
-        <v-row style="height: 100%">
-            <v-col>
-                <h1>{{ current.item.name }}</h1>
-                <p class="font-italic">
-                    {{ all_artists }}
-                </p>
-                <img :src="current.item.album.images[1].url" class="my-6" />
+    <v-container>
+        <v-container v-if="loadingSong">
+            <v-progress-circular indeterminate color="green"></v-progress-circular>
+        </v-container>
+        <v-container id="content" v-else-if="!noSong" class="fill-height">
+            <v-row style="height: 100%">
+                <v-col>
+                    <h1>{{ current.item.name }}</h1>
+                    <p class="font-italic">
+                        {{ all_artists }}
+                    </p>
+                    <img :src="current.item.album.images[1].url" class="my-6" />
+                    <v-divider></v-divider>
+                    <div v-if="loadingLyrics" class="mt-16">
+                        <v-progress-circular indeterminate color="green"></v-progress-circular>
+                    </div>
+                    <div v-else-if="!noLyrics" class="rounded-xl">
+                        <v-list v-for="(line, index) in lines" :key="index" class="pa-4">
+                            <guess-line v-if="line.guessing" @enter="score" :line="line" />
+                            <p v-else>
+                                {{ line.words }}
+                            </p>
+                        </v-list>
+                        <v-btn
+                            @click="newLyrics"
+                            class="mt-8 mb-12"
+                            elevation="4"
+                            color="green"
+                            large
+                            v-bind="attrs"
+                            v-on="on"
+                            >New Lyrics</v-btn
+                        >
+                    </div>
+                    <div v-else>
+                        <h1>Sorry!</h1>
+                        <h3>We couldn't find any lyrics for that song.</h3>
+                    </div>
+                </v-col>
+            </v-row>
+            <v-footer fixed padless>
+                <player :current="current" @changeProgress="changeProgress" @changeState="changeState" />
+            </v-footer>
+            <div id="score">
+                <h2>Score: {{ correct }} / {{ correct + wrong }}</h2>
+            </div>
+        </v-container>
+        <v-container v-else>
+            <h1 class="text-h2 mb-6 font-weight-medium">No song detected</h1>
+            <h3>Start playing music in spotify to get started</h3>
+        </v-container>
+        <v-dialog v-model="tokenExpired" width="500">
+            <v-card raised>
+                <v-card-title class="text-h4 justify-center">Please log in</v-card-title>
 
-                <v-divider></v-divider>
+                <v-card-text>
+                    Your spotify access token has expired. Please log in again to continue using Lyrical.
+                </v-card-text>
 
-                <div v-if="loadingLyrics" class="mt-16">
-                    <v-progress-circular indeterminate color="green"></v-progress-circular>
-                </div>
-                <div v-else-if="!noLyrics" class="rounded-xl">
-                    <v-list v-for="(line, index) in lines" :key="index" class="pa-4">
-                        <guess-line v-if="line.guessing" @enter="score" :line="line" />
-                        <p v-else>
-                            {{ line.words }}
-                        </p>
-                    </v-list>
-                    <v-dialog v-model="tokenExpired" width="500">
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn
-                                @click="newLyrics"
-                                class="mt-8 mb-12"
-                                elevation="4"
-                                color="green"
-                                large
-                                v-bind="attrs"
-                                v-on="on"
-                                >New Lyrics</v-btn
-                            >
-                        </template>
-
-                        <v-card raised>
-                            <v-card-title class="text-h4 justify-center">Please log in</v-card-title>
-
-                            <v-card-text>
-                                Your spotify access token has expired. Please log in again to continue using Lyrical.
-                            </v-card-text>
-
-                            <v-card-actions class="justify-center">
-                                <v-btn large color="primary" elevation="4" @click="relogin">OK</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
-                </div>
-                <div v-else>
-                    <h1>Sorry!</h1>
-                    <h3>We couldn't find any lyrics for that song.</h3>
-                </div>
-            </v-col>
-        </v-row>
-        <v-footer fixed padless>
-            <player :current="current" @changeProgress="changeProgress" @changeState="changeState" />
-        </v-footer>
-        <div id="score">
-            <h2>Score: {{ correct }} / {{ correct + wrong }}</h2>
-        </div>
-    </v-container>
-    <v-container v-else>
-        <h1 class="text-h2 mb-6 font-weight-medium">No song detected</h1>
-        <h3>Start playing music in spotify to get started</h3>
+                <v-card-actions class="justify-center">
+                    <v-btn large color="primary" elevation="4" @click="relogin">OK</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-container>
 </template>
 
