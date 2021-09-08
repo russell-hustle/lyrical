@@ -93,7 +93,7 @@ export default {
             lines: [], // The lines to guess
             correct: 0,
             wrong: 0,
-            tokenExpired: true,
+            tokenExpired: false,
             lastScroll: 0, // Autoscroll
             timeout: 0, // To handle rate limiting
             skipCurrentInterval: 0 // for lag between api post/get

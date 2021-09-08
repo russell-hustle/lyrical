@@ -1,6 +1,9 @@
 <template>
     <v-card id="leaderboard-modal" tile>
         <div id="title-container">
+            <v-btn :disabled="refreshTimeout" id="refresh" icon @click="getData">
+                <v-icon>mdi-refresh</v-icon>
+            </v-btn>
             <v-card-title id="title">Leaderboard</v-card-title>
             <v-btn id="modal-close" icon @click="$emit('close')">
                 <v-icon>mdi-close</v-icon>
@@ -28,8 +31,9 @@
 <script>
 import { getLeaderboard } from '../scripts/leaderboard';
 
+const LEADERBOARD_TIMEOUT = 10 * 1000;
+
 export default {
-    // TODO: add refresh button w/ timeout (only refresh on command to avoid excessive function calls)
     data() {
         return {
             leaderboardHeaders: [
@@ -40,7 +44,8 @@ export default {
                 { text: 'Accuracy', value: 'accuracy', sortable: true }
             ],
             leaderboardData: [],
-            loadingLeaderboardData: false
+            loadingLeaderboardData: false,
+            refreshTimeout: false
         };
     },
     methods: {
@@ -48,6 +53,10 @@ export default {
             this.loadingLeaderboardData = true;
             this.leaderboardData = await getLeaderboard();
             this.loadingLeaderboardData = false;
+            this.refreshTimeout = true;
+            setTimeout(() => {
+                this.refreshTimeout = false;
+            }, LEADERBOARD_TIMEOUT);
         }
     },
     created() {
@@ -60,6 +69,12 @@ export default {
 #title {
     text-align: center;
     justify-content: center;
+}
+
+#refresh {
+    position: absolute;
+    left: 5px;
+    top: 5px;
 }
 
 #modal-close {
