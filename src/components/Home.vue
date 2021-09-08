@@ -23,7 +23,32 @@
                             {{ line.words }}
                         </p>
                     </v-list>
-                    <v-btn @click="newLyrics" class="mt-8 mb-12" elevation="10" color="green" large>New Lyrics</v-btn>
+                    <v-dialog v-model="tokenExpired" width="500">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                                @click="newLyrics"
+                                class="mt-8 mb-12"
+                                elevation="4"
+                                color="green"
+                                large
+                                v-bind="attrs"
+                                v-on="on"
+                                >New Lyrics</v-btn
+                            >
+                        </template>
+
+                        <v-card raised>
+                            <v-card-title class="text-h4 justify-center">Please log in</v-card-title>
+
+                            <v-card-text>
+                                Your spotify access token has expired. Please log in again to continue using Lyrical.
+                            </v-card-text>
+
+                            <v-card-actions class="justify-center">
+                                <v-btn large color="primary" elevation="4" @click="relogin">OK</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
                 </div>
                 <div v-else>
                     <h1>Sorry!</h1>
@@ -68,6 +93,7 @@ export default {
             lines: [], // The lines to guess
             correct: 0,
             wrong: 0,
+            tokenExpired: true,
             lastScroll: 0, // Autoscroll
             timeout: 0, // To handle rate limiting
             skipCurrentInterval: 0 // for lag between api post/get
@@ -111,6 +137,20 @@ export default {
             this.current.is_playing = playing;
             this.skipCurrentInterval = 2;
         },
+        newLyrics() {
+            let parsedLines = parseLines(this.savedLyrics);
+            if (parsedLines.length != 0) {
+                this.lines = parsedLines;
+                this.loadingLyrics = false;
+            } else {
+                this.noLyrics = true;
+            }
+            this.correct = 0;
+            this.wrong = 0;
+        },
+        relogin() {
+            this.$router.push({ name: 'Landing' });
+        },
         async getCurrentSong() {
             if (this.skipCurrentInterval > 0) {
                 this.skipCurrentInterval--;
@@ -137,8 +177,7 @@ export default {
                     // If our token has expired
                     if (error.response.data.error.message == 'The access token expired') {
                         this.$store.dispatch('expire');
-                        alert('Your spotify access token has expired. Please log in again to continue using Lyrical.');
-                        this.$router.push({ name: 'Landing' });
+                        this.tokenExpired = true;
                     }
                 }
             } else {
@@ -146,7 +185,6 @@ export default {
             }
         },
         async songChanged() {
-            console.log('Song changed! Refreshing lyrics data...');
             this.loadingLyrics = true;
             // Get lyrics data
             let lyrics = await getLyrics(this.current.item.name, this.current.item.artists[0].name);
@@ -154,18 +192,6 @@ export default {
             this.savedLyrics = lyrics;
             // Parse
             let parsedLines = parseLines(lyrics);
-            if (parsedLines.length != 0) {
-                this.lines = parsedLines;
-                this.loadingLyrics = false;
-            } else {
-                this.noLyrics = true;
-            }
-            this.correct = 0;
-            this.wrong = 0;
-        },
-        async newLyrics() {
-            console.log('Calculating new lines...');
-            let parsedLines = parseLines(this.savedLyrics);
             if (parsedLines.length != 0) {
                 this.lines = parsedLines;
                 this.loadingLyrics = false;
@@ -186,7 +212,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #content {
     margin-bottom: 80px;
 }
@@ -199,5 +225,9 @@ export default {
     * {
         line-height: 40px;
     }
+}
+
+div::v-deep .v-dialog {
+    box-shadow: 0px 2px 10px 0px #4caf4f70, 0px 4px 20px 13px #4caf4f6b, 0px 1px 10px 5px #4caf4f7a !important;
 }
 </style>

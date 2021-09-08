@@ -11,7 +11,7 @@ export default new Vuex.Store({
         accessToken: null,
         authenticated: false,
         spotifyID: null,
-        autoScroll: true,
+        autoScroll: false,
         poller: null
     },
     mutations: {
