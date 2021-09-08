@@ -23,6 +23,7 @@
                             {{ line.words }}
                         </p>
                     </v-list>
+                    <v-btn @click="newLyrics" class="mt-8 mb-12" elevation="10" color="green" large>New Lyrics</v-btn>
                 </div>
                 <div v-else>
                     <h1>Sorry!</h1>
@@ -58,17 +59,17 @@ export default {
     },
     data() {
         return {
-            current: null,
-            lines: [],
-            timeout: 0,
-            correct: 0,
-            wrong: 0,
+            current: null, // Current song data from spotify
             noSong: false,
             loadingSong: true,
             noLyrics: false,
             loadingLyrics: true,
-            lastScroll: 0,
-            currentUserId: null,
+            savedLyrics: null,
+            lines: [], // The lines to guess
+            correct: 0,
+            wrong: 0,
+            lastScroll: 0, // Autoscroll
+            timeout: 0, // To handle rate limiting
             skipCurrentInterval: 0 // for lag between api post/get
         };
     },
@@ -145,18 +146,32 @@ export default {
             }
         },
         async songChanged() {
-            console.log('Song changed! Refreshing lyrics data!');
+            console.log('Song changed! Refreshing lyrics data...');
             this.loadingLyrics = true;
             // Get lyrics data
-            getLyrics(this.current.item.name, this.current.item.artists[0].name).then((lyrics) => {
-                let parsedLines = parseLines(lyrics);
-                if (parsedLines.length != 0) {
-                    this.lines = parsedLines;
-                    this.loadingLyrics = false;
-                } else {
-                    this.noLyrics = true;
-                }
-            });
+            let lyrics = await getLyrics(this.current.item.name, this.current.item.artists[0].name);
+            // Cache currently fetched lyrics in case we want to reuse
+            this.savedLyrics = lyrics;
+            // Parse
+            let parsedLines = parseLines(lyrics);
+            if (parsedLines.length != 0) {
+                this.lines = parsedLines;
+                this.loadingLyrics = false;
+            } else {
+                this.noLyrics = true;
+            }
+            this.correct = 0;
+            this.wrong = 0;
+        },
+        async newLyrics() {
+            console.log('Calculating new lines...');
+            let parsedLines = parseLines(this.savedLyrics);
+            if (parsedLines.length != 0) {
+                this.lines = parsedLines;
+                this.loadingLyrics = false;
+            } else {
+                this.noLyrics = true;
+            }
             this.correct = 0;
             this.wrong = 0;
         }
