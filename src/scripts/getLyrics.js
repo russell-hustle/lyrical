@@ -87,6 +87,7 @@ const INVALID_CHARS = /\W/;
 /**
  * Parses the lyrics into the necessary format for our guessing game
  * @param {string} lyrics A single string of all the lyrics
+ * @returns {Array} An array of parsed lines
  */
 function parseLines(lyrics) {
 	let lines = lyrics.split("\n");
@@ -95,15 +96,16 @@ function parseLines(lyrics) {
 	lines = lines.filter((line) => line.charAt(0) != "[");
 
 	let wordCounter = 0;
+	let interval = 0;
 	let chosen = false;
 
 	for (const line of lines) {
 		let words = line.split(" ");
 		for (const word of words) {
-			// Every 12 words
-			if (wordCounter > 12) {
+			// Every few words (random)
+			if (wordCounter > interval) {
 				// If we have a good word
-				if (word.length > 4 && !INVALID_CHARS.test(word)) {
+				if (word.length > 2 && !INVALID_CHARS.test(word)) {
 					wordCounter = 0;
 					chosen = true;
 					let idx = words.indexOf(word);
@@ -113,6 +115,8 @@ function parseLines(lyrics) {
 						guess_index: idx,
 						correct: word,
 					});
+					// Reset interval to new random number 
+					interval = Math.floor(Math.random() * 6) + 6;
 				}
 			}
 			wordCounter++;
