@@ -82,12 +82,23 @@ async function extractLyrics(url) {
 	return lyrics.trim();
 }
 
+// https://github.com/russell-hustle/lyrical/blob/e18f6d5987d412155808e51c9f50d6edd8423578/src/getLyrics.js
 // Regex to match any non-word characters
 const INVALID_CHARS = /\W/;
+const VARIANCE = 6;
+const INTERVAL = 6;
 /**
  * Parses the lyrics into the necessary format for our guessing game
  * @param {string} lyrics A single string of all the lyrics
- * @returns {Array} An array of parsed lines
+ * @returns {ParsedLine[]} An array of parsed lines
+ * 
+ * @typedef {Object} ParsedLine
+ * @property {Array|string} words The words in the line (Array if guessing, string if not)
+ * @property {boolean} guessing Whether this line has a guess in it
+ * @property {string|null} correct The word to guess (sanitized)
+ * @property {number|null} guessIndex The index into the words array of the correct word
+ * @property {string} start Optional prefix for sanitization
+ * @property {string} end Optional suffix for sanitization
  */
 function parseLines(lyrics) {
 	let lines = lyrics.split("\n");
@@ -96,27 +107,45 @@ function parseLines(lyrics) {
 	lines = lines.filter((line) => line.charAt(0) != "[");
 
 	let wordCounter = 0;
-	let interval = 0;
+	// First guess randomness
+	let interval = Math.floor(Math.random() * VARIANCE);
 	let chosen = false;
 
 	for (const line of lines) {
 		let words = line.split(" ");
 		for (const word of words) {
 			// Every few words (random)
-			if (wordCounter > interval) {
+			if (wordCounter >= interval) {
 				// If we have a good word
-				if (word.length > 2 && !INVALID_CHARS.test(word)) {
+				if (word.length > 2) {
 					wordCounter = 0;
 					chosen = true;
-					let idx = words.indexOf(word);
-					parsedLines.push({
+					// Starter data
+					/** @type {ParsedLine} */
+					let parsed = {
 						words,
 						guessing: true,
-						guess_index: idx,
-						correct: word,
-					});
+						guessIndex: words.indexOf(word),
+						start: "",
+						end: "",
+					};
+					// First/last character fixing/handling
+					let tempWord = word;
+					let first = word[0];
+					// Bad first char
+					if (INVALID_CHARS.test(first)) {
+						parsed.start = first;
+						tempWord = tempWord.substring(1);
+					}
+					let last = word[word.length - 1];
+					// Bad last char
+					if (INVALID_CHARS.test(last)) {
+						parsed.end = last;
+						tempWord = tempWord.substring(0, tempWord.length - 1);
+					}
+					parsedLines.push({ correct: tempWord, ...parsed });
 					// Reset interval to new random number 
-					interval = Math.floor(Math.random() * 6) + 6;
+					interval = Math.floor(Math.random() * VARIANCE) + INTERVAL;
 				}
 			}
 			wordCounter++;
@@ -126,8 +155,6 @@ function parseLines(lyrics) {
 			parsedLines.push({
 				words: line,
 				guessing: false,
-				guess_index: null,
-				correct: null,
 			});
 		}
 		chosen = false;
