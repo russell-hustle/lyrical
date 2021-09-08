@@ -22,14 +22,7 @@
                                 {{ line.words }}
                             </p>
                         </v-list>
-                        <v-btn
-                            @click="newLyrics"
-                            class="mt-8 mb-12"
-                            elevation="4"
-                            color="green"
-                            large
-                            v-bind="attrs"
-                            v-on="on"
+                        <v-btn @click="newLyrics" class="mt-8 mb-12" elevation="4" color="green" large
                             >New Lyrics</v-btn
                         >
                     </div>
@@ -144,6 +137,7 @@ export default {
             }
             this.correct = 0;
             this.wrong = 0;
+            window.scrollTo(0, 0);
         },
         relogin() {
             this.$router.push({ name: 'Landing' });
