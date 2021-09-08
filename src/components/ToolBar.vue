@@ -122,6 +122,8 @@ export default {
     left: 0;
     width: 100vw;
     margin: auto;
+
+    box-shadow: 0px -4px 20px 3px #4caf4f69 !important;
 }
 #leaderboard-modal {
     position: absolute;

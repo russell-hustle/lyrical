@@ -1,5 +1,5 @@
 <template>
-    <v-card id="leaderboard-modal" tile elevation="20">
+    <v-card id="leaderboard-modal" tile>
         <div id="title-container">
             <v-card-title id="title">Leaderboard</v-card-title>
             <v-btn id="modal-close" icon @click="$emit('close')">
@@ -70,5 +70,9 @@ export default {
 
 #title-container {
     position: relative;
+}
+
+#leaderboard-modal {
+    box-shadow: 0px -4px 20px 3px #4caf4f69 !important;
 }
 </style>
