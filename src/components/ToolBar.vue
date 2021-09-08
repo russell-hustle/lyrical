@@ -2,7 +2,7 @@
     <div id="toolbar">
         <!-- MODALS -->
 
-        <v-dialog v-model="aboutModal" eager transition="fade-transition">
+        <v-dialog v-model="aboutModal" eager transition="fade-transition" content-class="elevation-0">
             <v-card id="about-modal" tile elevation="20">
                 <v-btn id="modal-close" icon @click="aboutModal = false">
                     <v-icon>mdi-close</v-icon>
@@ -15,7 +15,7 @@
             </v-card>
         </v-dialog>
 
-        <v-dialog v-model="leaderboardModal" eager transition="fade-transition">
+        <v-dialog v-model="leaderboardModal" eager transition="fade-transition" content-class="elevation-0">
             <leaderboard @close="leaderboardModal = false" />
         </v-dialog>
 
