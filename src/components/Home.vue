@@ -16,7 +16,7 @@
                         <v-progress-circular indeterminate color="green"></v-progress-circular>
                     </div>
                     <div v-else-if="!noLyrics">
-                        <div id="lyrics-container" class="mt-4 pt-8">
+                        <div id="lyrics-container" class="my-4 py-8 rounded" :style="lyricsContainerStyle">
                             <div v-for="(line, index) in lines" :key="`${index}-${line.correct}`" class="pa-4">
                                 <guess-line v-if="line.guessing" @guess="score" :line="line" />
                                 <p v-else>
@@ -98,6 +98,10 @@ export default {
                 artists += ` | ${this.current.item.artists[index].name}`;
             }
             return artists;
+        },
+        lyricsContainerStyle() {
+            let bgColor = this.$vuetify.theme.isDark ? '#1e1e1e' : '#eee';
+            return `background-color: ${bgColor}`;
         }
     },
     methods: {
@@ -219,10 +223,6 @@ export default {
     * {
         line-height: 40px;
     }
-}
-
-#lyrics-container {
-    background-color: #1e1e1e;
 }
 
 div::v-deep .v-dialog {

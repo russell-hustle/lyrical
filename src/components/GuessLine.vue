@@ -92,11 +92,6 @@ export default {
     height: 26px;
 }
 
-.v-list:first-of-type {
-    margin-top: 10px;
-    padding-top: 30px;
-}
-
 .guess-container {
     position: relative;
 }
