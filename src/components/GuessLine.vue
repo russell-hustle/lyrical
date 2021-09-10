@@ -13,9 +13,11 @@
                 hide-details
                 v-model="answer"
                 @keydown="handleKeydown"
+                @focus="handleFocus"
                 @blur="guess"
                 dense
                 solo
+                outlined
                 light
             ></v-text-field>
         </div>
@@ -43,7 +45,8 @@ export default {
             answer: '',
             color: null,
             guessed: false,
-            correct: false
+            correct: false,
+            focused: false
         };
     },
     computed: {
@@ -54,6 +57,9 @@ export default {
             if (this.guessed && !this.correct) {
                 classes += ' text-decoration-line-through';
             }
+            if (this.focused) {
+                classes += ' focused';
+            }
             return classes;
         }
     },
@@ -63,7 +69,12 @@ export default {
                 this.guess();
             }
         },
+        handleFocus() {
+            this.focused = true;
+            document.activeElement.scrollIntoView({ block: 'center' });
+        },
         guess() {
+            this.focused = false;
             // Don't count empty guess
             if (this.guessed || this.answer.length == 0) return;
             // Case-insensitive edit distance
@@ -103,5 +114,13 @@ export default {
 .correct-word {
     position: absolute;
     top: -25px;
+}
+
+.focused .v-input__slot {
+    // border: 3px solid map-get($green, base) !important;
+    // border-color: red;
+    // border-width: 3px;
+    // border-style: solid;
+    // border: 3px solid red;
 }
 </style>

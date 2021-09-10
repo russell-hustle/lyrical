@@ -189,6 +189,7 @@ export default {
         },
         async songChanged() {
             this.repeats = 0;
+            this.noLyrics = false;
             this.loadingLyrics = true;
             // Get lyrics data
             let lyrics = await getLyrics(this.current.item.name, this.current.item.artists[0].name);
