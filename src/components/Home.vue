@@ -17,7 +17,11 @@
                     </div>
                     <div v-else-if="!noLyrics">
                         <div id="lyrics-container" class="my-4 py-8 rounded" :style="lyricsContainerStyle">
-                            <div v-for="(line, index) in lines" :key="`${index}-${line.correct}`" class="pa-4">
+                            <div
+                                v-for="(line, index) in lines"
+                                :key="`${index}-${line.correct}-${repeats}`"
+                                class="pa-4"
+                            >
                                 <guess-line v-if="line.guessing" @guess="score" :line="line" />
                                 <p v-else>
                                     {{ line.words }}
@@ -85,6 +89,7 @@ export default {
             lines: [], // The lines to guess
             correct: 0,
             wrong: 0,
+            repeats: 0, // For getting new lyrics for the same song, so vue updates correctly
             tokenExpired: false,
             lastScroll: 0, // Autoscroll
             timeout: 0, // To handle rate limiting
@@ -134,6 +139,7 @@ export default {
             this.skipCurrentInterval = 2;
         },
         newLyrics() {
+            this.repeats++;
             let parsedLines = parseLines(this.savedLyrics);
             if (parsedLines.length != 0) {
                 this.lines = parsedLines;
@@ -141,7 +147,7 @@ export default {
             } else {
                 this.noLyrics = true;
             }
-            this.$forceUpdate();
+            // this.$forceUpdate();
             this.correct = 0;
             this.wrong = 0;
             window.scrollTo(0, 0);
@@ -183,6 +189,7 @@ export default {
             }
         },
         async songChanged() {
+            this.repeats = 0;
             this.loadingLyrics = true;
             // Get lyrics data
             let lyrics = await getLyrics(this.current.item.name, this.current.item.artists[0].name);
