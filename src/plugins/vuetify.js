@@ -10,7 +10,7 @@ export default new Vuetify({
 		dark: true,
 		themes: {
 			dark: {
-				primary: colors.green //#4CAF50
+				primary: colors.green //#4CAF50 or 'map-get($green, base)' as scss
 			},
 			light: {
 				primary: colors.green

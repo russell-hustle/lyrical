@@ -15,7 +15,7 @@ Vue.prototype.$spotify = {
 Vue.prototype.$functions = functions;
 
 // For rate limiting
-const RATE = 800;
+const RATE = 1000;
 const SECONDS = 5;
 Vue.prototype.$POLL_RATE = RATE;
 Vue.prototype.$TIMEOUT = (1000 / RATE) * SECONDS;

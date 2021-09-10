@@ -10,8 +10,9 @@
                 :background-color="color"
                 :readonly="guessed"
                 :disabled="guessed && !correct"
+                hide-details
                 v-model="answer"
-                @keydown="enter"
+                @keydown="handleKeydown"
                 @blur="guess"
                 dense
                 solo
@@ -47,7 +48,9 @@ export default {
     },
     computed: {
         getTextClass() {
-            let classes = 'guess-input mx-4';
+            let classes = 'guess-input';
+            classes += this.line.start ? ' ml-1' : ' ml-4';
+            classes += this.line.end ? ' mr-1' : ' mr-4';
             if (this.guessed && !this.correct) {
                 classes += ' text-decoration-line-through';
             }
@@ -55,7 +58,7 @@ export default {
         }
     },
     methods: {
-        enter(e) {
+        handleKeydown(e) {
             if (e.key == 'Enter') {
                 this.guess();
             }
@@ -70,20 +73,12 @@ export default {
             if (this.correct) this.answer = this.line.correct;
             this.color = this.correct ? 'green' : 'red';
             this.guessed = true;
-            this.$emit('enter', this.correct);
+            this.$emit('guess', this.correct);
         }
     },
     mounted() {
-        let idx = this.line.guess_index;
-        this.start = this.line.words.slice(0, idx).join(' ');
-        // Check for trailing comma
-        let add = '';
-        if (this.line.correct[this.line.correct.length - 1] == ',') {
-            add += this.line.correct[this.line.correct.length - 1];
-            this.line.correct = this.line.correct.slice(0, -1);
-        }
-        this.end = this.line.words.slice(idx + 1).join(' ');
-        this.end = add + ' ' + this.end;
+        this.start = this.line.words.slice(0, this.line.guessIndex).join(' ') + ' ' + this.line.start;
+        this.end = this.line.end + ' ' + this.line.words.slice(this.line.guessIndex + 1).join(' ');
     }
 };
 </script>
@@ -93,13 +88,12 @@ export default {
     min-height: auto !important;
     display: flex !important;
     align-items: center !important;
-    width: 160px;
-    height: 26px;
-}
+    width: 100px;
+    height: 24px;
 
-.v-list:first-of-type {
-    margin-top: 10px;
-    padding-top: 30px;
+    & input {
+        padding: 0;
+    }
 }
 
 .guess-container {

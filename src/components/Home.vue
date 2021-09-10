@@ -15,21 +15,16 @@
                     <div v-if="loadingLyrics" class="mt-16">
                         <v-progress-circular indeterminate color="green"></v-progress-circular>
                     </div>
-                    <div v-else-if="!noLyrics" class="rounded-xl">
-                        <v-list v-for="(line, index) in lines" :key="index" class="pa-4">
-                            <guess-line v-if="line.guessing" @enter="score" :line="line" />
-                            <p v-else>
-                                {{ line.words }}
-                            </p>
-                        </v-list>
-                        <v-btn
-                            @click="newLyrics"
-                            class="mt-8 mb-12"
-                            elevation="4"
-                            color="green"
-                            large
-                            v-bind="attrs"
-                            v-on="on"
+                    <div v-else-if="!noLyrics">
+                        <div id="lyrics-container" class="my-4 py-8 rounded" :style="lyricsContainerStyle">
+                            <div v-for="(line, index) in lines" :key="`${index}-${line.correct}`" class="pa-4">
+                                <guess-line v-if="line.guessing" @guess="score" :line="line" />
+                                <p v-else>
+                                    {{ line.words }}
+                                </p>
+                            </div>
+                        </div>
+                        <v-btn @click="newLyrics" class="mt-8 mb-12" elevation="4" color="green" large
                             >New Lyrics</v-btn
                         >
                     </div>
@@ -103,6 +98,10 @@ export default {
                 artists += ` | ${this.current.item.artists[index].name}`;
             }
             return artists;
+        },
+        lyricsContainerStyle() {
+            let bgColor = this.$vuetify.theme.isDark ? '#1e1e1e' : '#eee';
+            return `background-color: ${bgColor}`;
         }
     },
     methods: {
@@ -142,8 +141,10 @@ export default {
             } else {
                 this.noLyrics = true;
             }
+            this.$forceUpdate();
             this.correct = 0;
             this.wrong = 0;
+            window.scrollTo(0, 0);
         },
         relogin() {
             this.$router.push({ name: 'Landing' });
@@ -226,5 +227,9 @@ export default {
 
 div::v-deep .v-dialog {
     box-shadow: 0px 2px 10px 0px #4caf4f70, 0px 4px 20px 13px #4caf4f6b, 0px 1px 10px 5px #4caf4f7a !important;
+}
+
+.v-divider {
+    border-color: map-get($green, base) !important;
 }
 </style>
