@@ -32,7 +32,7 @@
                             >New Lyrics</v-btn
                         >
                     </div>
-                    <div v-else>
+                    <div v-else class="mt-10">
                         <h1>Sorry!</h1>
                         <h3>We couldn't find any lyrics for that song.</h3>
                     </div>
@@ -143,11 +143,10 @@ export default {
             let parsedLines = parseLines(this.savedLyrics);
             if (parsedLines.length != 0) {
                 this.lines = parsedLines;
-                this.loadingLyrics = false;
             } else {
                 this.noLyrics = true;
             }
-            // this.$forceUpdate();
+            this.loadingLyrics = false;
             this.correct = 0;
             this.wrong = 0;
             window.scrollTo(0, 0);
@@ -199,10 +198,10 @@ export default {
             let parsedLines = parseLines(lyrics);
             if (parsedLines.length != 0) {
                 this.lines = parsedLines;
-                this.loadingLyrics = false;
             } else {
                 this.noLyrics = true;
             }
+            this.loadingLyrics = false;
             this.correct = 0;
             this.wrong = 0;
         }

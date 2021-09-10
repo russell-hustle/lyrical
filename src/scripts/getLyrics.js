@@ -101,6 +101,10 @@ const INTERVAL = 6;
  * @property {string} end Optional suffix for sanitization
  */
 function parseLines(lyrics) {
+	// Songs with no lyrics
+	if (!lyrics) {
+		return [];
+	}
 	let lines = lyrics.split("\n");
 	let parsedLines = [];
 	// Remove genius stanza tags
