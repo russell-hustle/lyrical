@@ -88,8 +88,12 @@ export default {
     min-height: auto !important;
     display: flex !important;
     align-items: center !important;
-    width: 160px;
-    height: 26px;
+    width: 100px;
+    height: 24px;
+
+    & input {
+        padding: 0;
+    }
 }
 
 .guess-container {
