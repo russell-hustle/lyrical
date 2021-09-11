@@ -33,9 +33,6 @@ For environment variables that are need by the Vue build (anything but netlify f
 - [ ] Hide ALL environment variables from version control (this includes retroactively erasing them)
 - [ ] Use localstorage to save VueX state (dark mode stuff) @Mark
 
-<!-- TODO: -->
-- Fix remaster song lyrics search (david bowie)
-
 If we are crazy we can even do searching songs through our app and use more of the Spotify API
 
 It would be cool to not have to configure the spotify redirect whitelist, but I don't think we have an option there.
