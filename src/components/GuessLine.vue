@@ -1,5 +1,5 @@
 <template>
-    <div class="d-inline-flex justify-center flex-wrap">
+    <div :style="lineStyle" class="d-inline-flex justify-center flex-wrap">
         <p>{{ start }}</p>
         <div class="guess-container d-flex justify-center">
             <p v-if="guessed && !correct" class="correct-word green--text">
@@ -61,6 +61,9 @@ export default {
                 classes += ' focused';
             }
             return classes;
+        },
+        lineStyle() {
+            return this.focused ? 'color: green' : '';
         }
     },
     methods: {
