@@ -63,7 +63,12 @@ export default {
             return classes;
         },
         lineStyle() {
-            return this.focused ? 'color: green' : '';
+            if (this.focused) {
+                return this.$vuetify.theme.isDark
+                    ? `color: ${this.$vuetify.theme.themes.dark.primary.base}`
+                    : `color: ${this.$vuetify.theme.themes.dark.primary.darken2}`;
+            }
+            return '';
         }
     },
     methods: {
@@ -117,13 +122,5 @@ export default {
 .correct-word {
     position: absolute;
     top: -25px;
-}
-
-.focused .v-input__slot {
-    // border: 3px solid map-get($green, base) !important;
-    // border-color: red;
-    // border-width: 3px;
-    // border-style: solid;
-    // border: 3px solid red;
 }
 </style>
