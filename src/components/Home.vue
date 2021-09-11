@@ -17,7 +17,11 @@
                     </div>
                     <div v-else-if="!noLyrics">
                         <div id="lyrics-container" class="my-4 py-8 rounded" :style="lyricsContainerStyle">
-                            <div v-for="(line, index) in lines" :key="`${index}-${line.correct}`" class="pa-4">
+                            <div
+                                v-for="(line, index) in lines"
+                                :key="`${index}-${line.correct}-${repeats}`"
+                                class="pa-4"
+                            >
                                 <guess-line v-if="line.guessing" @guess="score" :line="line" />
                                 <p v-else>
                                     {{ line.words }}
@@ -28,7 +32,7 @@
                             >New Lyrics</v-btn
                         >
                     </div>
-                    <div v-else>
+                    <div v-else class="mt-10">
                         <h1>Sorry!</h1>
                         <h3>We couldn't find any lyrics for that song.</h3>
                     </div>
@@ -85,6 +89,7 @@ export default {
             lines: [], // The lines to guess
             correct: 0,
             wrong: 0,
+            repeats: 0, // For getting new lyrics for the same song, so vue updates correctly
             tokenExpired: false,
             lastScroll: 0, // Autoscroll
             timeout: 0, // To handle rate limiting
@@ -134,14 +139,14 @@ export default {
             this.skipCurrentInterval = 2;
         },
         newLyrics() {
+            this.repeats++;
             let parsedLines = parseLines(this.savedLyrics);
             if (parsedLines.length != 0) {
                 this.lines = parsedLines;
-                this.loadingLyrics = false;
             } else {
                 this.noLyrics = true;
             }
-            this.$forceUpdate();
+            this.loadingLyrics = false;
             this.correct = 0;
             this.wrong = 0;
             window.scrollTo(0, 0);
@@ -183,6 +188,8 @@ export default {
             }
         },
         async songChanged() {
+            this.repeats = 0;
+            this.noLyrics = false;
             this.loadingLyrics = true;
             // Get lyrics data
             let lyrics = await getLyrics(this.current.item.name, this.current.item.artists[0].name);
@@ -192,10 +199,10 @@ export default {
             let parsedLines = parseLines(lyrics);
             if (parsedLines.length != 0) {
                 this.lines = parsedLines;
-                this.loadingLyrics = false;
             } else {
                 this.noLyrics = true;
             }
+            this.loadingLyrics = false;
             this.correct = 0;
             this.wrong = 0;
         }

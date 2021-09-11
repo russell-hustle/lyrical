@@ -5,13 +5,20 @@ import { functions } from '~/axiosInstances';
 
 // Sanitizes search parameters
 function getTitle(title, artist) {
-	return `${title} ${artist}`
-		.toLowerCase()
-		.replace(/ *\([^)]*\) */g, "")
-		.replace(/ *\[[^\]]*]/, "")
+	title = title.toLowerCase()
+		.replace(/ *\([^)]*\) */g, "") // Replace anything in parentheses
+		.replace(/ *\[[^\]]*] */g, "") // Replace anything in brackets
+		.replace(/feat.|ft./g, "")
+		.replace(/ -.*remaster.*/g, "") // Replace remasters to the end of line
+		.replace(/\s+/g, " ")
+		.trim();
+	artist = artist.toLowerCase()
+		.replace(/ *\([^)]*\) */g, "") // Replace anything in parentheses
+		.replace(/ *\[[^\]]*] */g, "") // Replace anything in brackets
 		.replace(/feat.|ft./g, "")
 		.replace(/\s+/g, " ")
 		.trim();
+	return `${title} ${artist}`;
 }
 
 const searchUrl = "https://api.genius.com/search?q=";
@@ -37,6 +44,7 @@ async function getLyrics(title, artist) {
  */
 async function searchGeniusAPI(title, artist) {
 	const song = getTitle(title, artist);
+	console.log(song);
 	const reqUrl = `${searchUrl}${encodeURI(song)}&access_token=${genius_key}`;
 	let { data } = await axios.get(reqUrl);
 	if (data.response.hits.length === 0) return null;
@@ -101,6 +109,10 @@ const INTERVAL = 6;
  * @property {string} end Optional suffix for sanitization
  */
 function parseLines(lyrics) {
+	// Songs with no lyrics
+	if (!lyrics) {
+		return [];
+	}
 	let lines = lyrics.split("\n");
 	let parsedLines = [];
 	// Remove genius stanza tags

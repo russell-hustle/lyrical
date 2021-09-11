@@ -1,5 +1,5 @@
 <template>
-    <div class="d-inline-flex justify-center flex-wrap">
+    <div :style="lineStyle" class="d-inline-flex justify-center flex-wrap">
         <p>{{ start }}</p>
         <div class="guess-container d-flex justify-center">
             <p v-if="guessed && !correct" class="correct-word green--text">
@@ -13,9 +13,11 @@
                 hide-details
                 v-model="answer"
                 @keydown="handleKeydown"
+                @focus="handleFocus"
                 @blur="guess"
                 dense
                 solo
+                outlined
                 light
             ></v-text-field>
         </div>
@@ -43,7 +45,8 @@ export default {
             answer: '',
             color: null,
             guessed: false,
-            correct: false
+            correct: false,
+            focused: false
         };
     },
     computed: {
@@ -54,7 +57,18 @@ export default {
             if (this.guessed && !this.correct) {
                 classes += ' text-decoration-line-through';
             }
+            if (this.focused) {
+                classes += ' focused';
+            }
             return classes;
+        },
+        lineStyle() {
+            if (this.focused) {
+                return this.$vuetify.theme.isDark
+                    ? `color: ${this.$vuetify.theme.themes.dark.primary.base}`
+                    : `color: ${this.$vuetify.theme.themes.dark.primary.darken2}`;
+            }
+            return '';
         }
     },
     methods: {
@@ -63,7 +77,12 @@ export default {
                 this.guess();
             }
         },
+        handleFocus() {
+            this.focused = true;
+            document.activeElement.scrollIntoView({ block: 'center' });
+        },
         guess() {
+            this.focused = false;
             // Don't count empty guess
             if (this.guessed || this.answer.length == 0) return;
             // Case-insensitive edit distance
