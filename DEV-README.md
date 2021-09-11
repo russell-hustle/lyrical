@@ -35,7 +35,6 @@ For environment variables that are need by the Vue build (anything but netlify f
 
 <!-- TODO: -->
 - Fix remaster song lyrics search (david bowie)
-- i like borders on focus
 
 If we are crazy we can even do searching songs through our app and use more of the Spotify API
 
