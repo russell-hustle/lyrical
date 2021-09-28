@@ -44,7 +44,7 @@ async function getLyrics(title, artist) {
  */
 async function searchGeniusAPI(title, artist) {
 	const song = getTitle(title, artist);
-	console.log(song);
+	console.log(`genius search query: ${song}`);
 	const reqUrl = `${searchUrl}${encodeURI(song)}&access_token=${genius_key}`;
 	let { data } = await axios.get(reqUrl);
 	if (data.response.hits.length === 0) return null;
