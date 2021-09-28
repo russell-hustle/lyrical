@@ -187,10 +187,20 @@ export default {
                 this.timeout--;
             }
         },
+        // Set document title to playing song like spotify
+        updateTitle() {
+            let title = `${this.current.item.name} -`;
+            for (const artist of this.current.item.artists) {
+                title += ` ${artist.name},`;
+            }
+            title = title.slice(0, title.length - 1);
+            document.title = title;
+        },
         async songChanged() {
             this.repeats = 0;
             this.noLyrics = false;
             this.loadingLyrics = true;
+            this.updateTitle();
             // Get lyrics data
             let lyrics = await getLyrics(this.current.item.name, this.current.item.artists[0].name);
             // Cache currently fetched lyrics in case we want to reuse
